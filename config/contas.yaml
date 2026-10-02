@@ -1,0 +1,58 @@
+# Contas bancárias cadastradas no Protheus (SA6), informadas pela cliente em 13/08/2026.
+#
+# chave:    identificador interno (usado nas regras e no registro)
+# arquivo:  regex aplicada ao nome do PDF (maiúsculo, sem acento, espaços simples).
+#           Sem "arquivo" = conta que não tem extrato próprio (aplicação, caução central...).
+# conciliar: false para contas sem extrato ou que não passam pela Rotina 5.
+#
+# ⚠ Agência/conta precisam bater EXATAMENTE com o cadastro do Protheus — confirmar na lupa na calibração.
+
+bancos:
+  "001": {nome: BANCO DO BRASIL, sigla: BB, arquivo_tarifas: '^(EXTRATO DE )?TARIFAS (BB|BANCO DO BRASIL)\b'}
+  "033": {nome: SANTANDER, sigla: SANT, arquivo_tarifas: '^(EXTRATO DE )?TARIFAS SANTANDER\b'}
+  "104": {nome: CAIXA ECONOMICA, sigla: CEF, arquivo_tarifas: '^(EXTRATO DE )?TARIFAS (CAIXA|CEF)\b'}
+  "237": {nome: BRADESCO, sigla: BRAD, arquivo_tarifas: '^(EXTRATO DE )?TARIFAS BRADESCO\b'}
+  "246": {nome: ABC, sigla: ABC, arquivo_tarifas: '^(EXTRATO DE )?TARIFAS ABC\b'}
+  "341": {nome: ITAU, sigla: ITAU, arquivo_tarifas: '^(EXTRATO DE )?TARIFAS ITAU\b'}
+  "422": {nome: SAFRA, sigla: SAFRA, arquivo_tarifas: '^(EXTRATO DE )?TARIFAS SAFRA\b'}
+
+contas:
+  # --- Banco do Brasil
+  - {chave: bb_cc,        banco: "001", agencia: "3404",  numero: "41000",      tipo: corrente,  arquivo: '^BANCO DO BRASIL 41000-?4\b'}
+  - {chave: bb_aplic,     banco: "001", agencia: "3404",  numero: "9999999999", tipo: aplicacao}
+
+  # --- Bradesco
+  - {chave: bradesco_cc,     banco: "237", agencia: "06349", numero: "0000050542", tipo: corrente, arquivo: '^BRADESCO 0*50542-?0\b'}
+  - {chave: bradesco_caucao, banco: "237", agencia: "6349",  numero: "3179",       tipo: caucao,   arquivo: '^BRADESCO 0*3179-?8\b'}
+  - {chave: bradesco_trianon, banco: "237", agencia: "0895", numero: "140419",     tipo: auxiliar}
+  - {chave: bradesco_aplic,  banco: "237", agencia: "06349", numero: "9999999999", tipo: aplicacao}
+
+  # --- Santander
+  - {chave: santander_cc,             banco: "033", agencia: "04296", numero: "0013001842", tipo: corrente, arquivo: '^SANTANDER 0*13001842-?0\b'}
+  - {chave: santander_caucao_central, banco: "033", agencia: "4296",  numero: "29000181",   tipo: caucao, conciliar: false}
+  - {chave: santander_caucao_371,     banco: "033", agencia: "4296",  numero: "29000371",   tipo: caucao, arquivo: '^SANTANDER 29000371-?\d\b'}
+  - {chave: santander_caucao_376,     banco: "033", agencia: "4296",  numero: "29000376",   tipo: caucao, arquivo: '^SANTANDER 29000376-?\d\b'}
+  - {chave: santander_caucao_432,     banco: "033", agencia: "4296",  numero: "29000432",   tipo: caucao, arquivo: '^SANTANDER 29000432-?\d\b'}
+  - {chave: santander_aplic,          banco: "033", agencia: "3731",  numero: "9999999999", tipo: aplicacao}
+
+  # --- ABC
+  - {chave: abc_cc,     banco: "246", agencia: "0001", numero: "006609345",  tipo: corrente, arquivo: '^ABC 0*6609345-?9\b'}
+  - {chave: abc_caucao, banco: "246", agencia: "0001", numero: "006609348",  tipo: caucao,   arquivo: '^ABC 0*6609348-?3\b'}
+  - {chave: abc_cambio, banco: "246", agencia: "0001", numero: "9999999",    tipo: cambio}
+  - {chave: abc_aplic,  banco: "246", agencia: "0001", numero: "9999999999", tipo: aplicacao}
+
+  # --- Safra
+  - {chave: safra_cc,        banco: "422", agencia: "03800", numero: "580275",     tipo: corrente,  arquivo: '^SAFRA 0*580275-?7\b'}
+  - {chave: safra_vinculada, banco: "422", agencia: "03800", numero: "326613",     tipo: vinculada, arquivo: '^SAFRA 0*326613-?1\b'}
+  - {chave: safra_aplic,     banco: "422", agencia: "03800", numero: "9999999999", tipo: aplicacao}
+
+  # --- Itaú
+  - {chave: itau_cc,     banco: "341", agencia: "4685", numero: "06896",      tipo: corrente, arquivo: '^ITAU 0*6896-?9\b'}
+  - {chave: itau_caucao, banco: "341", agencia: "4685", numero: "83117",      tipo: caucao,   arquivo: '^ITAU 0*8311-?7\b'}
+  - {chave: itau_cambio, banco: "341", agencia: "4685", numero: "0000000000", tipo: cambio}
+  - {chave: itau_aplic,  banco: "341", agencia: "4685", numero: "9999999999", tipo: aplicacao}
+
+  # --- Caixa (o arquivo pode vir sem número de conta: "BANCO CAIXA 10-09.pdf")
+  - {chave: caixa_cc,        banco: "104", agencia: "4266", numero: "0005769805", tipo: corrente,  arquivo: '^(BANCO )?CAIXA( 0*5769805-?\d+)? \d{2}-\d{2}\b'}
+  - {chave: caixa_vinculada, banco: "104", agencia: "4266", numero: "57845528",   tipo: vinculada, arquivo: '^(BANCO )?CAIXA 0*57845528'}
+  - {chave: caixa_aplic,     banco: "104", agencia: "4266", numero: "9999999999", tipo: aplicacao}

@@ -1,0 +1,10 @@
+<html><body><po-page-login>
+<po-login name="login"><input id="po-login[e122d257-2f8c]" name="login" type="text"></po-login>
+<po-password name="password"><input id="po-password[c7922bd4-fb1c]" name="password" type="password"></po-password>
+<po-button><button class="po-button">Entrar</button></po-button></po-page-login>
+<script>
+document.getElementById("po-password[c7922bd4-fb1c]").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") parent.postMessage({u: document.getElementById("po-login[e122d257-2f8c]").value,
+                                             s: e.target.value.length}, "*");
+});
+</script></body></html>

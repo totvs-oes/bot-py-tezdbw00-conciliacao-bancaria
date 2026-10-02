@@ -1,0 +1,6177 @@
+{
+ "banco_0246": [
+  {
+   "arquivo": "ABC 6609345-9 10-09.pdf",
+   "metodo": "layout ABC",
+   "aviso": null,
+   "conta": "0066093459",
+   "lancamentos": [
+    {
+     "data": "08/09/2026",
+     "historico": "RECEBIMENTO DE COBRANCA",
+     "operacao": "credito",
+     "valor": 16454.16
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "TARIFA MANUTENCAO TIT.VENCIDO",
+     "operacao": "debito",
+     "valor": 12.11
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "TARIFA SOBRE COBRANCA",
+     "operacao": "debito",
+     "valor": 185.12
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "TARIFA S/INSTRUCOES COBRANCA",
+     "operacao": "debito",
+     "valor": 10.79
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "TARIFA S/BAIXA DE TIT.COBRANCA",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "TRANSFERENCIA ENTRE C/C",
+     "operacao": "credito",
+     "valor": 74780.39
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "PAGTO. DESPESAS DE CARTORIO",
+     "operacao": "debito",
+     "valor": 9.19
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "APLICACAO FINANCEIRA",
+     "operacao": "debito",
+     "valor": 162401.6
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TARIFA MANUTENCAO TIT.VENCIDO",
+     "operacao": "debito",
+     "valor": 3.46
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TARIFA S/BAIXA DE TIT.COBRANCA",
+     "operacao": "debito",
+     "valor": 1.78
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "RECEBIMENTO DE COBRANCA",
+     "operacao": "credito",
+     "valor": 2880.25
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TRANSFERENCIA ENTRE C/C",
+     "operacao": "credito",
+     "valor": 56998.97
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTO PIX",
+     "operacao": "debito",
+     "valor": 230000.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "RESGATE APLIC. FINANCEIRA",
+     "operacao": "credito",
+     "valor": 170237.03
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "RECEBIMENTO DE COBRANCA",
+     "operacao": "credito",
+     "valor": 113167.61
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TARIFA PAGTO. PIX",
+     "operacao": "debito",
+     "valor": 0.5
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TARIFA SOBRE COBRANCA",
+     "operacao": "debito",
+     "valor": 109.47
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TARIFA S/INSTRUCOES COBRANCA",
+     "operacao": "debito",
+     "valor": 130.48
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TARIFA MANUTENCAO TIT.VENCIDO",
+     "operacao": "debito",
+     "valor": 3.46
+    }
+   ],
+   "conferencia": {
+    "saldo_anterior": 71775.43,
+    "saldo_final": 113424.99,
+    "total_creditos": 434518.41,
+    "total_debitos": 392868.85,
+    "movimentacoes_nao_listadas": [],
+    "diferenca": -0.0,
+    "ok": true
+   }
+  },
+  {
+   "arquivo": "ABC 6609348-3 10-09.pdf",
+   "metodo": "layout ABC",
+   "aviso": null,
+   "conta": "0066093483",
+   "lancamentos": [
+    {
+     "data": "08/09/2026",
+     "historico": "RECEBIMENTO DE COBRANCA",
+     "operacao": "credito",
+     "valor": 74780.39
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "TRANSFERENCIA ENTRE C/C",
+     "operacao": "debito",
+     "valor": 74780.39
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "RECEBIMENTO DE COBRANCA",
+     "operacao": "credito",
+     "valor": 56998.97
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TRANSFERENCIA ENTRE C/C",
+     "operacao": "debito",
+     "valor": 56998.97
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "RECEBIMENTO DE COBRANCA",
+     "operacao": "credito",
+     "valor": 628083.11
+    }
+   ],
+   "conferencia": {
+    "saldo_anterior": 0.0,
+    "saldo_final": 628083.11,
+    "total_creditos": 759862.47,
+    "total_debitos": 131779.36,
+    "movimentacoes_nao_listadas": [],
+    "diferenca": 0.0,
+    "ok": true
+   }
+  },
+  {
+   "arquivo": "TARIFAS ABC 09-09.pdf",
+   "metodo": "layout Tarifas ABC",
+   "aviso": null,
+   "conta": "0066093459",
+   "lancamentos": [
+    {
+     "data": "09/09/2026",
+     "historico": "Baixa simples",
+     "operacao": "debito",
+     "valor": 1.78
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "Manutencao de titulos em carteira",
+     "operacao": "debito",
+     "valor": 3.46
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "Pagto pix",
+     "operacao": "debito",
+     "valor": 0.5
+    }
+   ],
+   "conferencia": {
+    "saldo_anterior": null,
+    "saldo_final": null,
+    "total_creditos": 0.0,
+    "total_debitos": 5.74,
+    "movimentacoes_nao_listadas": [],
+    "diferenca": null,
+    "ok": null
+   }
+  }
+ ],
+ "banco_0104": [
+  {
+   "arquivo": "BANCO CAIXA 10-09.pdf",
+   "metodo": "layout Caixa",
+   "aviso": null,
+   "conta": "000576980561-3",
+   "lancamentos": [
+    {
+     "data": "10/09/2026",
+     "historico": "COB INTERN 090926",
+     "operacao": "debito",
+     "valor": 1.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COB LOTERI 090926",
+     "operacao": "debito",
+     "valor": 1.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COB COMPE 090926",
+     "operacao": "debito",
+     "valor": 159.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "CRED TEV 101111",
+     "operacao": "credito",
+     "valor": 490401.14
+    }
+   ],
+   "conferencia": {
+    "saldo_anterior": 6161.5,
+    "saldo_final": 496401.64,
+    "total_creditos": 490401.14,
+    "total_debitos": 161.0,
+    "movimentacoes_nao_listadas": [],
+    "diferenca": 0.0,
+    "ok": true
+   }
+  }
+ ],
+ "banco_0001": [
+  {
+   "arquivo": "BANCO DO BRASIL 410004 10-09.pdf",
+   "metodo": "layout Banco do Brasil",
+   "aviso": null,
+   "conta": "41000-4",
+   "lancamentos": [
+    {
+     "data": "08/09/2026",
+     "historico": "Cobrança",
+     "operacao": "credito",
+     "valor": 68875.15
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "Débito Serviço Cobrança",
+     "operacao": "debito",
+     "valor": 9.19
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "Débito Serviço Cobrança Tar. agrupadas - ocorrencia 08/09/2026",
+     "operacao": "debito",
+     "valor": 6.87
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "Cobrança",
+     "operacao": "credito",
+     "valor": 19692.38
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "Impostos GNRE ACRE - SEFAZ",
+     "operacao": "debito",
+     "valor": 13305.2
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "Pix - Enviado 09/09 14:15 AEROFLEX INDUSTRIA DE AER",
+     "operacao": "debito",
+     "valor": 300000.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "Pix - Enviado 09/09 17:24 COREMACO COMERCIO DE MATE",
+     "operacao": "debito",
+     "valor": 55.74
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "Pix - Enviado 09/09 17:26 DISTRIBUIDORA AMAZONIA",
+     "operacao": "debito",
+     "valor": 16.41
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "Débito Serviço Cobrança",
+     "operacao": "debito",
+     "valor": 9.19
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "Débito Serviço Cobrança Tar. agrupadas - ocorrencia 09/09/2026",
+     "operacao": "debito",
+     "valor": 14.34
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "Cobrança",
+     "operacao": "credito",
+     "valor": 318414.38
+    }
+   ],
+   "conferencia": {
+    "saldo_anterior": 266966.65,
+    "saldo_final": 360531.62,
+    "total_creditos": 406981.91,
+    "total_debitos": 313416.94,
+    "movimentacoes_nao_listadas": [],
+    "diferenca": 0.0,
+    "ok": true
+   }
+  }
+ ],
+ "banco_0237": [
+  {
+   "arquivo": "BRADESCO 3179-8 10-09.pdf",
+   "metodo": "layout Bradesco",
+   "aviso": null,
+   "conta": "0003179-8",
+   "lancamentos": [
+    {
+     "data": "09/09/2026",
+     "historico": "LIQUIDACAO DE COBRANCA VALOR DISPONIVEL 2003179",
+     "operacao": "credito",
+     "valor": 51315.72
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "LIQUIDACAO DE COBRANCA VALOR DISPONIVEL 2003179",
+     "operacao": "credito",
+     "valor": 126933.86
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TRANSF.EXCEDENTEGARANTIA 06349 00505420 4975",
+     "operacao": "debito",
+     "valor": 51315.72
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TRANSF.EXCEDENTEGARANTIA 06349 00505420 4975",
+     "operacao": "debito",
+     "valor": 126933.86
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "LIQUIDACAO DE COBRANCA VALOR DISPONIVEL 2003179",
+     "operacao": "credito",
+     "valor": 357436.04
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TRANSF.EXCEDENTEGARANTIA 06349 0050542 4975",
+     "operacao": "debito",
+     "valor": 357436.04
+    }
+   ],
+   "conferencia": {
+    "saldo_anterior": 0.0,
+    "saldo_final": 0.0,
+    "total_creditos": 535685.62,
+    "total_debitos": 535685.62,
+    "movimentacoes_nao_listadas": [],
+    "diferenca": 0.0,
+    "ok": true
+   }
+  },
+  {
+   "arquivo": "BRADESCO 50542-0 10-09.pdf",
+   "metodo": "layout Bradesco",
+   "aviso": null,
+   "conta": "0050542-0",
+   "lancamentos": [
+    {
+     "data": "09/09/2026",
+     "historico": "RESGATE MERCADO ABERTO 3595454",
+     "operacao": "credito",
+     "valor": 8047715.82
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TRANSF.EXCEDENTEGARANTIA 06349 00031798 4975",
+     "operacao": "credito",
+     "valor": 51315.72
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TRANSF.EXCEDENTEGARANTIA 06349 00031798 4975",
+     "operacao": "credito",
+     "valor": 126933.86
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TARIFA REGISTRO COBRANCA QUANDO DO REGISTRO 00000090 2003179",
+     "operacao": "debito",
+     "valor": 90.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TARIFA AUTORIZ COBRANCA EXTRATO DE COBRANCA 00000001 2003179",
+     "operacao": "debito",
+     "valor": 4.85
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TARIFA AUTORIZ COBRANCA EXTRATO DE COBRANCA 00000002 2003179",
+     "operacao": "debito",
+     "valor": 9.7
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TED D CC HBANK* DEST. AEROFLEX INDUSTRIA D 1704220",
+     "operacao": "debito",
+     "valor": 2000000.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TARIFA BANCARIA TRANSF PGTO PIX 30926",
+     "operacao": "debito",
+     "valor": 2.06
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TARIFA MANUTENCAO C/C TAR.MANUT.C/C 10926",
+     "operacao": "debito",
+     "valor": 84.2
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "DOC/TED INTERNET TED INTERNET 1704220",
+     "operacao": "debito",
+     "valor": 6.93
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PIX ENVIADO DES: Aeroflex Ind stria de 09/09 1456067",
+     "operacao": "debito",
+     "valor": 900000.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PIX ENVIADO DES: Aeroflex Ind stria de 09/09 1457316",
+     "operacao": "debito",
+     "valor": 800000.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TRANSF.EXCEDENTEGARANTIA 06349 0003179 4975",
+     "operacao": "credito",
+     "valor": 357436.04
+    }
+   ],
+   "conferencia": {
+    "saldo_anterior": 172937.07,
+    "saldo_final": 5056140.77,
+    "total_creditos": 8583401.44,
+    "total_debitos": 3700197.74,
+    "movimentacoes_nao_listadas": [],
+    "diferenca": 0.0,
+    "ok": true
+   }
+  }
+ ],
+ "banco_desconhecido": [
+  {
+   "arquivo": "extrato-da-sua-conta-01M3W87ER91YP40H0021HDGZ9W.pdf",
+   "metodo": "nenhum",
+   "aviso": "PDF sem texto (escaneado ou exportado como imagem). É necessário OCR para ler este arquivo.",
+   "conta": null,
+   "lancamentos": [],
+   "conferencia": {
+    "saldo_anterior": null,
+    "saldo_final": null,
+    "total_creditos": 0.0,
+    "total_debitos": 0.0,
+    "movimentacoes_nao_listadas": [],
+    "diferenca": null,
+    "ok": null
+   }
+  }
+ ],
+ "banco_0341": [
+  {
+   "arquivo": "ITAU 6896-9 10-09.pdf",
+   "metodo": "layout Itaú",
+   "aviso": null,
+   "conta": "0006896-9",
+   "lancamentos": [
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS",
+     "operacao": "debito",
+     "valor": 418288.4
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR/CUSTAS COBRANCA",
+     "operacao": "debito",
+     "valor": 132.12
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR/CUSTAS COBRANCA",
+     "operacao": "debito",
+     "valor": 342.76
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS GNRE-RO",
+     "operacao": "debito",
+     "valor": 50194.93
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS GNRE/MG",
+     "operacao": "debito",
+     "valor": 836.42
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS GNRE-AP",
+     "operacao": "debito",
+     "valor": 11591.47
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS GNRE/RJ",
+     "operacao": "debito",
+     "valor": 27546.91
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS DARE",
+     "operacao": "debito",
+     "valor": 80361.37
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS GNRE-AM",
+     "operacao": "debito",
+     "valor": 46992.11
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS GNRE-RS",
+     "operacao": "debito",
+     "valor": 151986.01
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS GNRE PI ON",
+     "operacao": "debito",
+     "valor": 12319.36
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS SEFAZ-ES",
+     "operacao": "debito",
+     "valor": 34337.85
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS DARE",
+     "operacao": "debito",
+     "valor": 286.3
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS GNRE/BA",
+     "operacao": "debito",
+     "valor": 82095.51
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS GNRE-RN",
+     "operacao": "debito",
+     "valor": 11341.17
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS GNRE-PR",
+     "operacao": "debito",
+     "valor": 278822.37
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS GNRE-TO",
+     "operacao": "debito",
+     "valor": 27334.54
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS GNRE/MG",
+     "operacao": "debito",
+     "valor": 480056.68
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS GNRE-CE",
+     "operacao": "debito",
+     "valor": 55960.1
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS GNRE/RJ",
+     "operacao": "debito",
+     "valor": 787.43
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS GNRE-MA",
+     "operacao": "debito",
+     "valor": 52510.6
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS GNRE-PA",
+     "operacao": "debito",
+     "valor": 56275.67
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS GNRE/MG",
+     "operacao": "debito",
+     "valor": 3417.25
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS GNRE/SE",
+     "operacao": "debito",
+     "valor": 20421.46
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SISPAG TRIBUTOS GRPR",
+     "operacao": "debito",
+     "valor": 6364.81
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "CONTR IMP 4026271347",
+     "operacao": "debito",
+     "valor": 251519.7
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 17456.78
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 6072.07
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1005.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 10690.8
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 33027.75
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 3000.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 67853.58
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 919.29
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 104.96
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1152.65
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 227419.81
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 21266.39
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 115455.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 307608.91
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 10610.84
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 129.13
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 127989.5
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 4800.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 516.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 9800.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 178.9
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 140630.19
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 18393.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 25349.26
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 227.27
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 35887.71
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 4526.09
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 4487.25
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 129.13
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 259.78
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 43553.94
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1318.32
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 35275.61
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 56394.97
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 740.99
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 5500.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 6000.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 127989.5
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 129.13
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 2780.33
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 17300.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 49968.23
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1255.5
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 30000.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1291.7
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 332.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 5576.78
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 172565.66
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 4800.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 511.36
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 115455.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1602.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 3001.99
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1590.9
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1725.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 203.02
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 3958.98
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 893.71
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 235482.28
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 20550.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 978.51
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1563.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 120.57
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 650.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 576.8
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 19245.9
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1902.46
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 63936.31
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 172.44
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 900.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 18599.77
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 34275.23
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 2977.5
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 10253.63
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 243.13
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 102.47
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 736.03
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 202.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 852.59
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 39.16
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 129.13
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 387.29
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 598.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 3500.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 16228.72
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1906.39
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1500.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 3524.06
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 4680.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 18699.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 300.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 350000.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 804.4
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 32632.08
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 416.16
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 486.04
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1063.97
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 320.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 7490.38
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 21374.85
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1916.67
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 6420.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 359.48
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 11526.84
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 3127.28
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 22653.62
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 4150.26
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 494.56
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 9611.7
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1940.96
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1090.03
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 2903.51
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 23165.23
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1929.8
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 127989.5
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 49246.25
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 331.33
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 10.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 340.91
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 8421.41
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1800.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 14077.5
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 2661.54
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1325.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 473.95
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 115455.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 103622.25
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1932.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 43619.63
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 98.87
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 15115.1
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 607.6
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 173254.82
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 234.33
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 8750.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 4553.18
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 357.8
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 67220.91
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 129.13
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 13850.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 4198.37
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 259.78
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 154.85
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 568.18
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 121.07
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 14036.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR NEGAT EXC 468506896",
+     "operacao": "debito",
+     "valor": 15.65
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR NEGAT ENT 468506896",
+     "operacao": "debito",
+     "valor": 66.25
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "KG 3361823",
+     "operacao": "debito",
+     "valor": 546127.35
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "RECEBIMENTOS",
+     "operacao": "credito",
+     "valor": 33943.39
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "RES APLIC AUT MAIS",
+     "operacao": "credito",
+     "valor": 2530.96
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "RES APLIC AUT MAIS AP",
+     "operacao": "credito",
+     "valor": 540478.62
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "RENDIMENTOS REND PAGO APLIC AUT MAIS",
+     "operacao": "credito",
+     "valor": 0.04
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "REND PAGO APLIC AUT APR",
+     "operacao": "credito",
+     "valor": 3.55
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PIX RECEBIDO AEROFLE09/09",
+     "operacao": "credito",
+     "valor": 900000.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PIX RECEBIDO AEROFLE09/09",
+     "operacao": "credito",
+     "valor": 1000000.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PIX RECEBIDO MEEP PA09/09",
+     "operacao": "credito",
+     "valor": 15354.98
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PIX RECEBIDO AEROFLE09/09",
+     "operacao": "credito",
+     "valor": 230000.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PIX RECEBIDO AEROFLE09/09",
+     "operacao": "credito",
+     "valor": 800000.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PIX RECEBIDO AEROFLE09/09",
+     "operacao": "credito",
+     "valor": 300000.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PIX RECEBIDO ROTA DO09/09",
+     "operacao": "credito",
+     "valor": 1621.95
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TEG EX GAR 4685-0008311-7",
+     "operacao": "credito",
+     "valor": 2226.56
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TEG EX GAR 4685-0008311-7",
+     "operacao": "credito",
+     "valor": 2148.19
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TEG EX GAR 4685-0008311-7",
+     "operacao": "credito",
+     "valor": 185437.73
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TEG EX GAR 4685-0008311-7",
+     "operacao": "credito",
+     "valor": 8651.99
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TEG EX GAR 4685-0008311-7",
+     "operacao": "credito",
+     "valor": 1166.29
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TEG EX GAR 4685-0008311-7",
+     "operacao": "credito",
+     "valor": 2480.01
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TEG EX GAR 4685-0008311-7",
+     "operacao": "credito",
+     "valor": 41621.77
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TEG EX GAR 4685-0008311-7",
+     "operacao": "credito",
+     "valor": 2727.11
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TEG EX GAR 4685-0008311-7",
+     "operacao": "credito",
+     "valor": 1696.16
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TED 237.6349.AEROFLEX I",
+     "operacao": "credito",
+     "valor": 2000000.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TED RECEBIDA 104.4266.AEROFLEX I",
+     "operacao": "credito",
+     "valor": 270000.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "DEV PAG BOL JADIMO TRANSPORTES RODOVIARI",
+     "operacao": "credito",
+     "valor": 511.36
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "DEV PAG BOL JADIMO TRANSPORTES RODOVIARI",
+     "operacao": "credito",
+     "valor": 900.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 15500.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 3065.18
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 6119.4
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 181.79
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 2611.77
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 29517.17
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1591.73
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 13572.52
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 5492.4
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 8077.02
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1629.1
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 7517.4
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 2611.77
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 138272.4
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1862.74
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 295.64
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 86020.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 72360.36
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 154.06
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1165.49
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 8920.04
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 127989.5
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 5000.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 25.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 6550.04
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 295380.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 16284.66
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 2318.43
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 11100.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 937.32
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 356.26
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 24834.1
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 65673.86
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 91800.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1503.7
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 5159.11
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 18771.08
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 154.06
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 14.17
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 776.94
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 278.43
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 504.79
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 27151.5
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 7132.8
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 787.2
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 6699.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 30657.04
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 12440.25
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 3168.85
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 2836.72
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 205188.51
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 253.12
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 366.5
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 7627.61
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 4975.66
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 2297.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 333.24
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1539.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 27820.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 42.51
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1734.05
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 391.89
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 14640.3
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 5244.86
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 210364.27
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 2571.34
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 62052.66
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 51.6
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 11626.65
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 56.68
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 65790.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 2701.64
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 33660.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 14688.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 14870.87
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 28.34
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 162670.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 782.93
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 41500.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 2898.23
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 81866.6
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 2556.69
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 106680.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 494.84
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 538.05
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 2909.26
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 5276.99
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 454425.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 12212.96
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 4640.52
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 181.79
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 756.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 49928.6
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 22336.59
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 2206.11
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 75597.83
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 28882.8
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 369.42
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 2754.03
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 4380.73
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 795.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 12200.23
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1005.83
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 14300.32
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 1636.4
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 551.46
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 2008.49
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 610.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PAGAMENTOS A FORNECEDORES",
+     "operacao": "debito",
+     "valor": 63059.87
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "RECEBIMENTOS",
+     "operacao": "credito",
+     "valor": 237797.76
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "RECEBIMENTOS",
+     "operacao": "credito",
+     "valor": 157691.17
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "RECEBIMENTOS",
+     "operacao": "credito",
+     "valor": 223594.93
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "RECEBIMENTOS",
+     "operacao": "credito",
+     "valor": 142824.66
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "RECEBIMENTOS",
+     "operacao": "credito",
+     "valor": 342128.79
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "RECEBIMENTOS",
+     "operacao": "credito",
+     "valor": 286711.22
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "RECEBIMENTOS",
+     "operacao": "credito",
+     "valor": 231091.04
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "RECEBIMENTOS",
+     "operacao": "credito",
+     "valor": 143355.61
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "RECEBIMENTOS",
+     "operacao": "credito",
+     "valor": 285981.17
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "RECEBIMENTOS",
+     "operacao": "credito",
+     "valor": 232424.05
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "RECEBIMENTOS",
+     "operacao": "credito",
+     "valor": 86485.85
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "RECEBIMENTOS",
+     "operacao": "credito",
+     "valor": 127969.2
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PIX RECEBIDO FLORA P10/09",
+     "operacao": "credito",
+     "valor": 104710.95
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TEG EX GAR 4685-0008311-7",
+     "operacao": "credito",
+     "valor": 2943719.77
+    }
+   ],
+   "conferencia": {
+    "saldo_anterior": 1010295.22,
+    "saldo_final": 2987021.39,
+    "total_creditos": 11889986.83,
+    "total_debitos": 9370253.32,
+    "movimentacoes_nao_listadas": [
+     {
+      "data": "09/09/2026",
+      "valor": -1010294.22,
+      "descricao": "Aplicação automática (não listada pelo banco)",
+      "explicada": true
+     },
+     {
+      "data": "10/09/2026",
+      "valor": 467286.88,
+      "descricao": "Resgate automático (não listado pelo banco)",
+      "explicada": true
+     }
+    ],
+    "diferenca": 0.0,
+    "ok": true
+   }
+  },
+  {
+   "arquivo": "ITAU 8311-7 10-09.pdf",
+   "metodo": "layout Itaú",
+   "aviso": null,
+   "conta": "0008311-7",
+   "lancamentos": [
+    {
+     "data": "09/09/2026",
+     "historico": "TEG EX GAR 4685-0008311-7",
+     "operacao": "debito",
+     "valor": 2480.01
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TEG EX GAR 4685-0008311-7",
+     "operacao": "debito",
+     "valor": 8651.99
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TEG EX GAR 4685-0008311-7",
+     "operacao": "debito",
+     "valor": 2226.56
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TEG EX GAR 4685-0008311-7",
+     "operacao": "debito",
+     "valor": 185437.73
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TEG EX GAR 4685-0008311-7",
+     "operacao": "debito",
+     "valor": 41621.77
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TEG EX GAR 4685-0008311-7",
+     "operacao": "debito",
+     "valor": 1166.29
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TEG EX GAR 4685-0008311-7",
+     "operacao": "debito",
+     "valor": 2727.11
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TEG EX GAR 4685-0008311-7",
+     "operacao": "debito",
+     "valor": 2148.19
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TEG EX GAR 4685-0008311-7",
+     "operacao": "debito",
+     "valor": 1696.16
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "BOLETO RECEBIDO 05/09L",
+     "operacao": "credito",
+     "valor": 8651.99
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "BOLETO RECEBIDO 09/09L",
+     "operacao": "credito",
+     "valor": 750.32
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "BOLETO RECEBIDO 07/09L",
+     "operacao": "credito",
+     "valor": 1696.16
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "BOLETO RECEBIDO 09/09L",
+     "operacao": "credito",
+     "valor": 2942969.45
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "BOLETO RECEBIDO 08/09L",
+     "operacao": "credito",
+     "valor": 185437.73
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PIX QR CODE RECEBIDO LITTLE ANGE09/09",
+     "operacao": "credito",
+     "valor": 805.37
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PIX QR CODE RECEBIDO BUENO COMER09/09",
+     "operacao": "credito",
+     "valor": 222.24
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PIX QR CODE RECEBIDO HERMANO M P09/09",
+     "operacao": "credito",
+     "valor": 2148.19
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PIX QR CODE RECEBIDO MACEDO E BA09/09",
+     "operacao": "credito",
+     "valor": 2226.56
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PIX QR CODE RECEBIDO TS - PRODUT08/09",
+     "operacao": "credito",
+     "valor": 1957.28
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PIX QR CODE RECEBIDO A SUA CASA 09/09",
+     "operacao": "credito",
+     "valor": 1452.4
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PIX QR CODE RECEBIDO DANIEL MARIANO DOS",
+     "operacao": "credito",
+     "valor": 769.83
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PIX QR CODE RECEBIDO M.D.S. COME09/09",
+     "operacao": "credito",
+     "valor": 1166.29
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TEG EX GAR 4685-0008311-7",
+     "operacao": "debito",
+     "valor": 2943719.77
+    }
+   ],
+   "conferencia": {
+    "saldo_anterior": 41621.77,
+    "saldo_final": 0.0,
+    "total_creditos": 3150253.81,
+    "total_debitos": 3191875.58,
+    "movimentacoes_nao_listadas": [],
+    "diferenca": 0.0,
+    "ok": true
+   }
+  }
+ ],
+ "banco_0422": [
+  {
+   "arquivo": "SAFRA 326613-1  10-09.pdf",
+   "metodo": "layout Safra",
+   "aviso": null,
+   "conta": "000000326613-1",
+   "lancamentos": [
+    {
+     "data": "08/09/2026",
+     "historico": "LIBERACAO DE VINCULADA 5802757",
+     "operacao": "debito",
+     "valor": 170593.87
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "CREDITO COBRANCA DISPONIVEL RESERVA 38326613",
+     "operacao": "credito",
+     "valor": 170593.87
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "LIBERACAO DE VINCULADA 5802757",
+     "operacao": "debito",
+     "valor": 35908.23
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "CREDITO COBRANCA DISPONIVEL RESERVA 38326613",
+     "operacao": "credito",
+     "valor": 35908.23
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "LIBERACAO DE VINCULADA 5802757",
+     "operacao": "debito",
+     "valor": 319102.83
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "CREDITO COBRANCA DISPONIVEL RESERVA 38326613",
+     "operacao": "credito",
+     "valor": 319102.83
+    }
+   ],
+   "conferencia": {
+    "saldo_anterior": null,
+    "saldo_final": null,
+    "total_creditos": 525604.93,
+    "total_debitos": 525604.93,
+    "movimentacoes_nao_listadas": [],
+    "diferenca": null,
+    "ok": null
+   }
+  },
+  {
+   "arquivo": "SAFRA 580275-7  10-09.pdf",
+   "metodo": "layout Safra",
+   "aviso": null,
+   "conta": "00580275-7",
+   "lancamentos": [
+    {
+     "data": "10/09/2026",
+     "historico": "LIBERACAO DE CONTA VINCULADA 3266131",
+     "operacao": "credito",
+     "valor": 319102.83
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TED ENVIADA OUTRA TIT",
+     "operacao": "debito",
+     "valor": 14000.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TED ENVIADA OUTRA TIT",
+     "operacao": "debito",
+     "valor": 12711.38
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TED ENVIADA OUTRA TIT",
+     "operacao": "debito",
+     "valor": 14343.74
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TED ENVIADA OUTRA TIT",
+     "operacao": "debito",
+     "valor": 26217.43
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TED ENVIADA OUTRA TIT",
+     "operacao": "debito",
+     "valor": 12069.77
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TED ENVIADA OUTRA TIT",
+     "operacao": "debito",
+     "valor": 13790.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TED ENVIADA OUTRA TIT",
+     "operacao": "debito",
+     "valor": 14000.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TED ENVIADA OUTRA TIT",
+     "operacao": "debito",
+     "valor": 4692.5
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TED ENVIADA OUTRA TIT",
+     "operacao": "debito",
+     "valor": 13595.05
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TED ENVIADA OUTRA TIT",
+     "operacao": "debito",
+     "valor": 13304.36
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TED ENVIADA OUTRA TIT",
+     "operacao": "debito",
+     "valor": 13343.32
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TED ENVIADA OUTRA TIT",
+     "operacao": "debito",
+     "valor": 13953.9
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TED ENVIADA OUTRA TIT",
+     "operacao": "debito",
+     "valor": 13529.29
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TED ENVIADA OUTRA TIT",
+     "operacao": "debito",
+     "valor": 21404.6
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TED ENVIADA OUTRA TIT",
+     "operacao": "debito",
+     "valor": 13525.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR LIQUIDACAO BOLETO COBRANÇA 5802757",
+     "operacao": "debito",
+     "valor": 1.5
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "LIBERACAO DE CONTA VINCULADA 3266131",
+     "operacao": "credito",
+     "valor": 35908.23
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "APLICACAO CDB AUTOMATICO 5802749",
+     "operacao": "debito",
+     "valor": 170000.0
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "PACOTE PJ SIMPLES 5802757",
+     "operacao": "debito",
+     "valor": 580.0
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "TAR COBRANCA DIRETA 5802757",
+     "operacao": "debito",
+     "valor": 308.4
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "LIBERACAO DE CONTA VINCULADA 3266131",
+     "operacao": "credito",
+     "valor": 170593.87
+    }
+   ],
+   "conferencia": {
+    "saldo_anterior": null,
+    "saldo_final": null,
+    "total_creditos": 525604.93,
+    "total_debitos": 385370.24,
+    "movimentacoes_nao_listadas": [],
+    "diferenca": null,
+    "ok": null
+   }
+  }
+ ],
+ "banco_0033": [
+  {
+   "arquivo": "SANTANDER 130018420 10-09.pdf",
+   "metodo": "layout Santander",
+   "aviso": null,
+   "conta": "130018420",
+   "lancamentos": [
+    {
+     "data": "08/09/2026",
+     "historico": "LIQUIDO DE COBRANCA CHEQUE-R ESERVA 4296/004690737 000000",
+     "operacao": "credito",
+     "valor": 7670.56
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "CR COB COMPENSACAO - DISPONI VEL 4296/004690737 000000",
+     "operacao": "credito",
+     "valor": 43524.43
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "TRANSF VALORES MESMA TITULARI DADE 000000",
+     "operacao": "credito",
+     "valor": 1232.16
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "TRANSF VALORES MESMA TITULARI DADE 000000",
+     "operacao": "credito",
+     "valor": 47449.17
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "PIX ENVIADO ANA MARIA VANIN KU KLIK 000000",
+     "operacao": "debito",
+     "valor": 14191.89
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "TARIFA PAGFOR COMPROVANTE LO TE 499172",
+     "operacao": "debito",
+     "valor": 0.3
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "TRANSF VALORES MESMA TITULARI DADE 000000",
+     "operacao": "credito",
+     "valor": 18707.6
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "TRANSF VALORES MESMA TITULARI DADE 000000",
+     "operacao": "credito",
+     "valor": 114263.94
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "PIX RECEBIDO 41424561000103 000000",
+     "operacao": "credito",
+     "valor": 22548.16
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "TARIFA PRORROGACAO VCTO TITUL O 197372",
+     "operacao": "debito",
+     "valor": 1.76
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "TARIFA MANUTENCAO TIT VENCIDO 197372",
+     "operacao": "debito",
+     "valor": 9.1
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "TARIFA ENVIO TITULO CARTORIO 197372",
+     "operacao": "debito",
+     "valor": 17.91
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "TARIFA PAGFOR COMPROVANTE LO TE 496071",
+     "operacao": "debito",
+     "valor": 0.3
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "DEB. CUSTAS CARTORARIAS COBRA NCA 4296/004690737 000000",
+     "operacao": "debito",
+     "valor": 9.19
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "APLICACAO CONTAMAX 000000",
+     "operacao": "debito",
+     "valor": 241165.57
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "CR COB COMPENSACAO - DISPONI VEL 4296/004690737 000000",
+     "operacao": "credito",
+     "valor": 6139.2
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "LIQUIDO DE COBRANCA CHEQUE-R 4296/004690737 ESERVA 000000",
+     "operacao": "credito",
+     "valor": 12712.41
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TRANSF VALORES MESMA TITULARI DADE 000000",
+     "operacao": "credito",
+     "valor": 70416.2
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TRANSF VALORES MESMA TITULARI DADE 000000",
+     "operacao": "credito",
+     "valor": 107036.94
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PIX RECEBIDO 03951042000104 000000",
+     "operacao": "credito",
+     "valor": 5690.6
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PIX RECEBIDO 52297327000170 000000",
+     "operacao": "credito",
+     "valor": 3000.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PIX RECEBIDO 97181515000177 552480",
+     "operacao": "credito",
+     "valor": 4679.43
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "DEB. CUSTAS CARTORARIAS COBRA NCA 000000",
+     "operacao": "debito",
+     "valor": 9.19
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "DEB. CUSTAS CARTORARIAS COBRA NCA 000000",
+     "operacao": "debito",
+     "valor": 91.9
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "15823232000117 PIX RECEBIDO 000000",
+     "operacao": "credito",
+     "valor": 1032.97
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "18 458 886 PIX ENVIADO ANA PAU LA FRAN 000000",
+     "operacao": "debito",
+     "valor": 8125.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PIX ENVIADO HAPPYHOME 000000",
+     "operacao": "debito",
+     "valor": 3342.92
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "PAGFOR PIX OUTRA INST- MESMA T IT D - 000001 030909",
+     "operacao": "debito",
+     "valor": 1000000.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR PIX PGTO FORNEC - OUTRA INS T 496071",
+     "operacao": "debito",
+     "valor": 2.48
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TARIFA MANUTENCAO TIT VENCIDO 197372",
+     "operacao": "debito",
+     "valor": 26.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TARIFA ENVIO TITULO CARTORIO 197372",
+     "operacao": "debito",
+     "valor": 1.99
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "RESGATE CONTAMAX AUTOMATICO 000000",
+     "operacao": "credito",
+     "valor": 800891.73
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "LIQUIDO DE COBRANCA CHEQUE-R ESERVA 4296/004690737 000000",
+     "operacao": "credito",
+     "valor": 7561.22
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "CR COB COMPENSACAO - DISPONI VEL 4296/004690737 000000",
+     "operacao": "credito",
+     "valor": 70334.74
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PRESTACAO CONSORCIO PGTO EVE NTUAIS 000000",
+     "operacao": "debito",
+     "valor": 1956.26
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "PIX RECEBIDO 19578006000179 000000",
+     "operacao": "credito",
+     "valor": 147.79
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "19578006000179 PIX RECEBIDO 000000",
+     "operacao": "credito",
+     "valor": 150.42
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TRANSF VALORES MESMA TITULARI DADE 000000",
+     "operacao": "credito",
+     "valor": 223731.19
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "TRANSF VALORES MESMA TITULARI DADE 000000",
+     "operacao": "credito",
+     "valor": 6361.35
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "DEBITO AUT. FATURA CARTAO VISA FINAL 7415 000000",
+     "operacao": "debito",
+     "valor": 389.55
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "DEBITO AUT. FAT.CARTAO MASTER 9116 CARD FINAL 000000",
+     "operacao": "debito",
+     "valor": 21436.39
+    }
+   ],
+   "conferencia": {
+    "saldo_anterior": 0.0,
+    "saldo_final": 284504.51,
+    "total_creditos": 1575282.21,
+    "total_debitos": 1290777.7,
+    "movimentacoes_nao_listadas": [],
+    "diferenca": 0.0,
+    "ok": true
+   }
+  },
+  {
+   "arquivo": "SANTANDER 290003762 10-09.pdf",
+   "metodo": "layout Santander",
+   "aviso": null,
+   "conta": "290003762",
+   "lancamentos": [
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1492.26
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1157.02
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 835.46
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2456.23
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1194.81
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 4379.2
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1181.33
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1121.97
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1197.27
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 899.92
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 841.74
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1055.41
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2127.14
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "SALDO VINCULADO LIBERADO 000000",
+     "operacao": "debito",
+     "valor": 1232.16
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "SALDO VINCULADO LIBERADO 000000",
+     "operacao": "debito",
+     "valor": 18707.6
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 993.87
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1280.64
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2226.42
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 985.42
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3996.32
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3106.94
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1301.16
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 355.74
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 4660.2
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 617.68
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3750.2
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 808.71
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2773.62
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1098.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1098.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1098.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 40265.28
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SALDO VINCULADO LIBERADO 000000",
+     "operacao": "debito",
+     "valor": 70416.2
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1945.86
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1223.4
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 842.44
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 862.26
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 531.45
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2188.8
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 507.78
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1345.77
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 343.41
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1260.38
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1264.2
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1278.15
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1280.16
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1366.74
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1369.92
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1370.05
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1372.36
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1461.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1461.39
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1728.6
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1890.6
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1942.77
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1959.66
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2000.16
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2050.94
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2087.88
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2171.52
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2409.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2504.61
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2630.7
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2750.4
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2999.4
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 702.67
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 6215.42
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1329.96
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 705.44
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 732.92
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 645.84
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 768.38
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 13640.76
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1754.4
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 874.1
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1348.06
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 4544.88
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1442.58
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 22685.64
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 29090.87
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 67129.02
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 16549.5
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1168.99
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "SALDO VINCULADO LIBERADO 000000",
+     "operacao": "debito",
+     "valor": 223731.19
+    }
+   ],
+   "conferencia": {
+    "saldo_anterior": 0.0,
+    "saldo_final": 0.0,
+    "total_creditos": 314087.15,
+    "total_debitos": 314087.15,
+    "movimentacoes_nao_listadas": [],
+    "diferenca": 0.0,
+    "ok": true
+   }
+  },
+  {
+   "arquivo": "SANTANDER 290004323 10-09.pdf",
+   "metodo": "layout Santander",
+   "aviso": null,
+   "conta": "290004323",
+   "lancamentos": [
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3389.57
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 17873.26
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 4575.6
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3160.03
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2618.4
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1756.22
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1108.56
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 976.19
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 884.52
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 763.18
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 435.6
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 418.52
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2942.65
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2782.67
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 861.5
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1910.06
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 5082.2
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 416.45
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 473.4
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 595.5
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 608.01
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 711.36
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 722.64
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 737.22
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 777.06
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 801.99
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 880.56
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 885.08
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 933.03
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1003.7
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1214.0
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1320.64
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1416.45
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1532.38
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1633.52
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2154.08
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2342.4
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 4911.08
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1505.91
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3536.34
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1259.69
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 723.95
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 762.04
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3241.3
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 702.54
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1120.08
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1588.57
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1988.72
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1582.32
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1988.0
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1988.0
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2140.0
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 4066.0
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 667.01
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 751.64
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 806.71
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 811.32
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 921.42
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1048.24
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1074.28
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1096.47
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1114.46
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1159.17
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1162.54
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1183.91
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1380.81
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1429.84
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1720.72
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1790.57
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1930.74
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2093.46
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2558.46
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2747.12
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2784.42
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3632.49
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 4301.43
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 5592.81
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1327.11
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 832.15
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1497.59
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 4042.4
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 4451.08
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "SALDO VINCULADO LIBERADO 000000",
+     "operacao": "debito",
+     "valor": 47449.17
+    },
+    {
+     "data": "08/09/2026",
+     "historico": "SALDO VINCULADO LIBERADO 000000",
+     "operacao": "debito",
+     "valor": 114263.94
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 846.12
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 640.47
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 8361.51
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1876.99
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1149.51
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 9895.25
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 822.14
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 933.7
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1055.8
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1190.16
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1219.44
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 5085.3
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 352.86
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 445.5
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1369.86
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1534.5
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1156.77
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1527.83
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 937.84
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 4355.33
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 822.78
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 897.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 991.54
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1001.67
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1098.0
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1120.72
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1237.32
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1367.04
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1498.05
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1585.15
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2062.08
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2104.47
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2562.88
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 5472.85
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2133.92
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1210.64
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1340.96
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1247.53
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2354.92
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1084.12
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1460.85
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 947.38
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 855.68
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1080.43
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 659.72
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 736.73
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1016.85
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2208.32
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1112.65
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1162.28
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1007.56
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2157.19
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 724.8
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 999.47
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1019.58
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1020.97
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2318.71
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1565.32
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1791.9
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3613.55
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1626.48
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "SALDO VINCULADO LIBERADO 000000",
+     "operacao": "debito",
+     "valor": 107036.94
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2030.28
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2612.28
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1047.8
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 686.07
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 6904.8
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3177.63
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2239.25
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1975.78
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1892.8
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1630.64
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1422.72
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 904.8
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2144.19
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 9615.96
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 31768.64
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1242.64
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1005.1
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1874.16
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 303.84
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 415.8
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 458.7
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 497.34
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 538.2
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 633.04
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 677.7
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 754.24
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 756.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 768.54
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 822.82
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 831.6
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 838.82
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 858.88
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 877.77
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 912.96
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 918.76
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 920.53
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 936.12
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1004.48
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1018.32
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1037.97
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1038.24
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1039.58
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1072.3
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1082.22
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1100.85
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1224.82
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1226.96
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1239.03
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1522.82
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1727.48
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3603.6
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3979.49
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 5062.12
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 5123.82
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 17795.44
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 20566.44
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 692.22
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 212.18
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 379.37
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 426.08
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 479.82
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 530.8
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 536.46
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 544.58
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 571.4
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 576.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 702.86
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 845.1
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 855.77
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 909.75
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 917.16
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 918.64
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 935.14
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1007.16
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1098.6
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1101.58
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1250.88
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1253.52
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1367.17
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1530.31
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1548.48
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1597.22
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1620.39
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1722.15
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1857.94
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1912.87
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1949.31
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2340.25
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2466.38
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2622.6
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3005.81
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3183.75
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3712.2
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 4283.57
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 4732.24
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 5567.69
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 8482.37
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 11511.54
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2530.4
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1063.45
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1091.2
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 4109.55
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1378.65
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 11640.07
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 254.76
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 303.12
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 341.48
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 380.78
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 440.25
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 501.3
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 502.99
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 519.69
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 703.82
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 757.44
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 760.98
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 763.23
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 779.22
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 780.69
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 782.7
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 793.15
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 798.9
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 799.84
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 840.9
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 878.4
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 916.98
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 946.2
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 949.4
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 977.16
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1004.62
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1008.28
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1043.94
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1044.81
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1053.12
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1096.36
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1130.96
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1194.64
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1228.5
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1275.2
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1295.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1295.36
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1308.96
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1311.32
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1329.19
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1338.72
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1377.88
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1427.41
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1444.08
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1494.9
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1527.43
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1583.64
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1586.7
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1701.95
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1704.22
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1754.9
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1797.36
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1850.77
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1853.44
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1927.36
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2039.44
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2113.02
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2130.79
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2293.42
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2547.72
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2803.68
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2842.72
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 4270.53
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 7000.68
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 694.52
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 776.12
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 910.4
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 993.28
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1083.24
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1128.28
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1184.28
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1313.14
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1621.72
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2307.6
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2212.56
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 683.18
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 781.8
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1138.27
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3627.7
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 299.73
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 460.84
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 683.68
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 703.92
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 722.06
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 736.02
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 785.2
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 794.68
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 800.6
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1033.68
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1186.4
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1202.88
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1212.8
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1402.26
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3210.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 4280.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 5136.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3204.72
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1988.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1263.04
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3733.02
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1005.98
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 680.32
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 723.01
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 739.1
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 756.97
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 765.12
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 800.68
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 812.04
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 818.25
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 829.6
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 846.46
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 853.28
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 864.66
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 865.2
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 895.38
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 899.77
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 990.0
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1022.97
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1035.3
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1059.17
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1100.51
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1106.2
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1124.52
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1132.8
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1226.69
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1303.24
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1311.72
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1336.69
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1347.25
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1353.48
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1434.6
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1525.09
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1544.04
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1569.05
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1607.1
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1714.37
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1803.31
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1901.93
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2016.5
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2067.84
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2345.16
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2354.64
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2591.22
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3450.54
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3939.55
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 5462.34
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 6577.33
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 7081.89
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 419.27
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 710.11
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 968.94
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1010.37
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1019.34
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1115.07
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1555.49
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2415.33
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 2956.18
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 692.8
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3414.52
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 519.98
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 835.06
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1203.3
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3840.51
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 4660.6
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 717.68
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 11223.82
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1246.74
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 22853.4
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 27846.9
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 56208.25
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 3060.98
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "COBRANCA GARANTIA 000000",
+     "operacao": "credito",
+     "valor": 1639.37
+    },
+    {
+     "data": "10/09/2026",
+     "historico": "SALDO VINCULADO LIBERADO 000000",
+     "operacao": "debito",
+     "valor": 6361.35
+    }
+   ],
+   "conferencia": {
+    "saldo_anterior": 0.0,
+    "saldo_final": 633103.35,
+    "total_creditos": 908214.75,
+    "total_debitos": 275111.4,
+    "movimentacoes_nao_listadas": [],
+    "diferenca": 0.0,
+    "ok": true
+   }
+  }
+ ]
+}

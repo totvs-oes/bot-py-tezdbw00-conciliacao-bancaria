@@ -1,0 +1,46 @@
+<html><body>
+<!-- Simulação do Protheus WebApp, fiel ao que foi mapeado na homologação em 02/10/2026:
+     1) login PO-UI num iframe criado depois, dentro do shadow DOM de um wa-webview;
+     2) tela 2 com botão "Entrar";
+     3) cabeçalho com a data base num botão; clicar abre o diálogo AdvPL (rótulo wa-text-view caption="Data base*"
+        e, ABAIXO dele, um wa-text-input com o <input> no shadow DOM) com "Confirmar". -->
+<div id="t2" style="display:none"><button id="entrar">Entrar</button></div>
+<div id="menu" style="display:none">
+  <wa-button id="COMP3079" caption="02/10/2026"></wa-button>
+</div>
+<div id="dlg" style="display:none; position:absolute; top:200px; left:300px">
+  <wa-text-view id="COMP4506" caption="Data base*" style="position:absolute; top:0; left:10px; width:80px; height:16px"></wa-text-view>
+  <wa-text-view id="COMP4511" caption="Filial*" style="position:absolute; top:60px; left:10px; width:80px; height:16px"></wa-text-view>
+  <wa-text-input id="COMP4507" style="position:absolute; top:18px; left:12px"></wa-text-input>
+  <wa-text-input id="COMP4512" style="position:absolute; top:78px; left:12px"></wa-text-input>
+  <wa-button id="COMP4522" caption="Confirmar" style="position:absolute; top:120px; left:10px"></wa-button>
+</div>
+<script>
+function componente(el) {
+  var sr = el.attachShadow({mode: "open"});
+  if (el.tagName === "WA-TEXT-VIEW") { sr.innerHTML = "<span>" + el.getAttribute("caption") + "</span>"; el.style.display = "block"; }
+  if (el.tagName === "WA-TEXT-INPUT") { sr.innerHTML = "<input type='text' style='width:100px'>"; el.style.display = "block"; }
+  if (el.tagName === "WA-BUTTON") { sr.innerHTML = "<button type='button'>" + el.getAttribute("caption") + "</button>"; el.style.display = "block"; }
+}
+document.querySelectorAll("wa-text-view, wa-text-input, wa-button").forEach(componente);
+var dataBase = document.getElementById("COMP4507").shadowRoot.querySelector("input");
+document.getElementById("COMP4512").shadowRoot.querySelector("input").value = "010101";
+
+setTimeout(function () {
+  var host = document.createElement("wa-webview"); host.id = "COMP3010"; document.body.appendChild(host);
+  var sr = host.attachShadow({mode: "open"});
+  var f = document.createElement("iframe"); f.src = "/app-root/login.html"; sr.appendChild(f);
+}, 3000);
+window.addEventListener("message", function (ev) {
+  window.u = ev.data.u; window.s = ev.data.s;
+  setTimeout(function () { document.getElementById("COMP3010").remove(); t2.style.display = "block"; }, 1500);
+});
+document.getElementById("entrar").onclick = function () { t2.style.display = "none"; menu.style.display = "block"; };
+var botaoData = document.getElementById("COMP3079").shadowRoot.querySelector("button");
+botaoData.onclick = function () { dataBase.value = botaoData.textContent; dlg.style.display = "block"; };
+document.getElementById("COMP4522").shadowRoot.querySelector("button").onclick = function () {
+  botaoData.textContent = dataBase.value;
+  dlg.style.display = "none";
+  document.title = "ENTROU " + dataBase.value + " " + window.u + " senha:" + window.s;
+};
+</script></body></html>

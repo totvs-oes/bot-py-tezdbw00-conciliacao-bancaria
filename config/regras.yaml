@@ -1,0 +1,119 @@
+# Regras de classificação dos lançamentos do extrato.
+#
+# O histórico é normalizado antes da comparação: MAIÚSCULO, sem acento, espaços simples.
+# As regras são avaliadas NA ORDEM; vale a primeira que casar.
+# Lançamento que não casa com nenhuma regra = "nao_reconhecido" -> pendência (nunca é lançado).
+#
+# Campos de cada regra:
+#   nome          identificador (aparece no relatório)
+#   categoria     transferencia | contrapartida | consolidacao | tarifa | tarifa_agrupada | rendimento | fora_do_escopo
+#   historico     regex (re.search) sobre o histórico normalizado, ou lista de regex (qualquer uma)
+#   operacao      debito | credito (opcional = qualquer)
+#   tipos_conta   tipos da conta do extrato (opcional = qualquer)
+#   bancos        códigos COMPE (opcional = qualquer)
+#   destino_tipo  (transferencia) tipo da conta destino no MESMO banco; a conta do extrato é a origem
+#   origem_tipo   (transferencia) tipo da conta origem no MESMO banco; a conta do extrato é o destino
+#   origem_conta  (consolidacao) chave da conta de origem
+#   historico_protheus  modelo do histórico gravado no Protheus (máx. 40 caracteres)
+#                       {so}/{sd} = sigla do banco origem/destino, {to}/{td} = tipo abreviado
+
+constantes:
+  filial: "010101"
+  natureza_transferencia: "2001037"
+  natureza_tarifa: "2009028"
+  natureza_rendimento: "1002002"
+  tipo_mov_transferencia: "TB"
+  numerario: "M1"
+  historico_rendimento: "REND APLIC"
+  beneficiario_transferencia: "AEROFLEX IND. DE AEROSOL LTDA"
+  beneficiario_rendimento: "AEROFLEX"
+  configuracao_conciliacao: "0024"
+  historico_transferencia: "TRANSF {so} {to} P/ {sd} {td}"
+  abreviacao_tipo:
+    corrente: "C/C"
+    caucao: "CAU"
+    vinculada: "VINC"
+    aplicacao: "APLIC"
+    cambio: "CAMBIO"
+    auxiliar: "AUX"
+
+regras:
+  # --- Santander: créditos de cobrança nas cauções -> base da transferência 29000181 -> caução (só no Protheus)
+  - nome: consolidacao_santander
+    categoria: consolidacao
+    bancos: ["033"]
+    tipos_conta: [caucao]
+    operacao: credito
+    historico: '^COBRANCA GARANTIA\b'
+    origem_conta: santander_caucao_central
+    historico_protheus: "TRANSF {so} CAU P/ {sd} CAU"
+
+  # --- Liberação de caução / vinculada -> conta corrente. O lado DÉBITO (caução) é o dono.
+  - nome: liberacao_caucao
+    categoria: transferencia
+    operacao: debito
+    tipos_conta: [caucao, vinculada]
+    historico: '\bTEG\b|TRANSF\.? ?EXCEDENTE|LIBERACAO DE (CONTA )?VINCULADA|SALDO VINCULADO LIBERADO|TRANSFERENCIA ENTRE C/?C|^TRANSF\b'
+    destino_tipo: corrente
+
+  # Mesmo movimento visto pela conta corrente (crédito): não lança, só confere o par.
+  - nome: contrapartida_liberacao
+    categoria: contrapartida
+    operacao: credito
+    tipos_conta: [corrente]
+    historico: '\bTEG\b|TRANSF\.? ?EXCEDENTE|LIBERACAO DE (CONTA )?VINCULADA|TRANSF VALORES MESMA TITULARI|TRANSFERENCIA ENTRE C/?C'
+    origem_tipo: [caucao, vinculada]
+
+  # --- Aplicações financeiras (CC <-> conta aplicação)
+  - nome: resgate_aplicacao
+    categoria: transferencia
+    operacao: credito
+    tipos_conta: [corrente]
+    historico: '\bRESGATE\b|^RES APLIC\b'
+    origem_tipo: aplicacao
+    historico_protheus: "TRANSF {so} RESGATE APLIC P/ {sd} CC"
+
+  - nome: aplicacao
+    categoria: transferencia
+    operacao: debito
+    tipos_conta: [corrente]
+    historico: '^APLICACAO\b|^APLIC AUT\b|\bAPLIC(ACAO)? (CDB|FINANCEIRA|CONTAMAX)'
+    destino_tipo: aplicacao
+    historico_protheus: "TRANSF {so} CC P/ {sd} APLIC"
+
+  # --- Rendimento (sempre crédito em conta corrente)
+  - nome: rendimento
+    categoria: rendimento
+    operacao: credito
+    tipos_conta: [corrente]
+    historico: '\bREND(E|IMENTO|IMENTOS)?\b'
+
+  # --- Tarifas agrupadas: o valor NÃO é lançado; usa o extrato de tarifas detalhado.
+  - nome: tarifa_agrupada_bb
+    categoria: tarifa_agrupada
+    bancos: ["001"]
+    operacao: debito
+    historico: 'TAR\.? AGRUPADAS'
+  # Itaú: confirmar com a cliente se TAR/CUSTAS é agrupada (Pontos em aberto #2). Se for, descomente:
+  # - nome: tarifa_agrupada_itau
+  #   categoria: tarifa_agrupada
+  #   bancos: ["341"]
+  #   operacao: debito
+  #   historico: '^TAR/CUSTAS'
+
+  # --- Tarifas individuais
+  - nome: tarifa
+    categoria: tarifa
+    operacao: debito
+    historico: '\bTAR\b|\bTARIFA|\bCOB (LOTERI|AGENC|COMPE|ALT|BX|MAN|INTERN)\b|\bCOBPROT\b|DESPESAS? DE CARTORIO|DEBITO SERVICO COBRANCA|DEB\.? CUSTAS CARTOR'
+
+  # --- Fora do escopo do RPA (recebimentos, pagamentos, CNAB, impostos...). Só informativo.
+  - nome: fora_do_escopo
+    categoria: fora_do_escopo
+    historico:   # lista = qualquer uma das expressões
+      - '^COBRANCA$'
+      - 'LIQUIDACAO DE COBRANCA|LIQUIDO DE COBRANCA|CR COB COMPENSACAO|RECEBIMENTO DE COBRANCA|CREDITO COBRANCA'
+      - 'BOLETO RECEBIDO|^RECEBIMENTOS$'
+      - '\bPIX (RECEBIDO|ENVIADO|QR CODE)|PIX RECEBIDO|^PIX - ENVIADO|PAGAMENTO PIX'
+      - '^PAGAMENTOS\b|^SISPAG\b|^TED\b|TED ENVIADA|^PAGFOR\b'
+      - '^IMPOSTOS\b|^CONTR IMP\b|PRESTACAO CONSORCIO|DEBITO AUT\.'
