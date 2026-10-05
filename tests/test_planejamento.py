@@ -106,14 +106,32 @@ def test_daycoval_liberacao_de_caucao(cadastro):
 def test_daycoval_amortizacao_vira_pendencia(cadastro):
     plano = planejar(ler_resposta_api(_daycoval(), cadastro), cadastro, date(2026, 9, 1))
     assert [t.valor for t in plano.tarifas] == [Decimal("43.79")]
-    assert [p.historico[:18] for p in _pendencias(plano, "não reconhecido")] == ["AMORT. DE CONTRATO"]
+    amortizacao = _pendencias(plano, "Amortização de contrato")
+    assert [p.valor for p in amortizacao] == [Decimal("85563.46")] and "baixa manual" in amortizacao[0].acao
+    assert not _pendencias(plano, "não reconhecido")
 
 
 def test_tarifa_agrupada_sem_detalhe_vira_pendencia(extratos, cadastro):
     plano = planejar(extratos, cadastro, DIA)
     pendencias = _pendencias(plano, "Tarifa agrupada")
-    assert [p.valor for p in pendencias] == [Decimal("14.34")]
-    assert Decimal("14.34") not in [t.valor for t in plano.tarifas]
+    assert sorted((p.conta.chave, p.valor) for p in pendencias) == [
+        ("bb_cc", Decimal("14.34")), ("itau_cc", Decimal("132.12")), ("itau_cc", Decimal("342.76"))]
+    assert not {Decimal("14.34"), Decimal("132.12"), Decimal("342.76")} & {t.valor for t in plano.tarifas}
+
+
+def test_tar_custas_itau_abre_pelo_relatorio_de_tarifas(resposta_api, cadastro):
+    """Cliente (05/10/2026): TAR/CUSTAS do Itaú não é lançado direto; abre pelo relatório de tarifas, como o BB."""
+    resposta_api["banco_0341"].append({
+        "arquivo": "TARIFAS ITAU 09-09.pdf", "metodo": "ia", "aviso": None, "conta": None,
+        "lancamentos": [{"data": "09/09/2026", "historico": h, "operacao": "debito", "valor": v}
+                        for h, v in (("TARIFA DE COBRANCA", 400.00), ("TARIFA MANUTENCAO TITULO VENCIDO", 74.88))],
+        "conferencia": {"saldo_anterior": None, "saldo_final": None, "ok": None},
+    })
+    plano = planejar(ler_resposta_api(resposta_api, cadastro), cadastro, DIA)
+    detalhadas = [t for t in plano.tarifas if t.origem_extrato.startswith("TARIFAS ITAU")]
+    assert [t.valor for t in detalhadas] == [Decimal("400.00"), Decimal("74.88")]  # soma = 132,12 + 342,76
+    assert all(t.conta.chave == "itau_cc" for t in detalhadas)
+    assert not [p for p in _pendencias(plano, "Tarifa agrupada") if p.conta.chave == "itau_cc"]
 
 
 def _com_detalhe_bb(resposta_api, valores):
@@ -132,7 +150,7 @@ def test_tarifa_agrupada_com_detalhe_que_bate(resposta_api, cadastro):
     individuais = [t for t in plano.tarifas if t.origem_extrato.startswith("TARIFAS BB")]
     assert [t.valor for t in individuais] == [Decimal("10.00"), Decimal("4.34")]
     assert all(t.conta.chave == "bb_cc" for t in individuais)
-    assert not _pendencias(plano, "Tarifa agrupada")
+    assert not [p for p in _pendencias(plano, "Tarifa agrupada") if p.conta.chave == "bb_cc"]
 
 
 def test_tarifa_agrupada_com_detalhe_que_nao_bate(resposta_api, cadastro):

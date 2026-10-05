@@ -58,8 +58,7 @@ contas:
   - {chave: caixa_vinculada, banco: "104", agencia: "4266", numero: "57845528",   tipo: vinculada, arquivo: '^(BANCO )?CAIXA 0*57845528'}
   - {chave: caixa_aplic,     banco: "104", agencia: "4266", numero: "9999999999", tipo: aplicacao}
 
-  # --- Daycoval (dados da cliente em 05/10/2026: CC 0001 / 001500926-4; caução 0001 / 000866622-0).
-  # ⚠ Formato da conta no Protheus (SA6) ainda NÃO conferido na lupa: usado o número com dígito em 10 posições,
-  #   como aparece no histórico do próprio extrato ("0015009264"). Conferir antes de lançar.
-  - {chave: daycoval_cc,     banco: "707", agencia: "0001", numero: "0015009264", tipo: corrente, arquivo: '^DAYCOVAL 0*1500926-?4\b'}
-  - {chave: daycoval_caucao, banco: "707", agencia: "0001", numero: "0008666220", tipo: caucao,   arquivo: '^DAYCOVAL 0*866622-?0\b'}
+  # --- Daycoval: números como estão no Cadastro de Bancos do Protheus (print da cliente, 05/10/2026).
+  #   O cadastro tem também 0001/000610660 "BANCO DAYCOVAL LIMITE" (sem extrato no processo; não usada).
+  - {chave: daycoval_cc,     banco: "707", agencia: "0001", numero: "1500926",   tipo: corrente, arquivo: '^DAYCOVAL 0*1500926-?4\b'}
+  - {chave: daycoval_caucao, banco: "707", agencia: "0001", numero: "000866622", tipo: caucao,   arquivo: '^DAYCOVAL 0*866622-?0\b'}

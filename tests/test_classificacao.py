@@ -41,7 +41,7 @@ def _lancamento(cadastro, conta, historico, operacao):
     # Tarifas
     ("abc_cc", "TARIFA MANUTENCAO TIT.VENCIDO", "debito", "tarifa", "tarifa"),
     ("abc_cc", "PAGTO. DESPESAS DE CARTORIO", "debito", "tarifa", "tarifa"),
-    ("itau_cc", "TAR/CUSTAS COBRANCA", "debito", "tarifa", "tarifa"),
+    ("itau_cc", "TAR/CUSTAS COBRANCA", "debito", "tarifa_agrupada", "tarifa_agrupada_itau"),  # cliente 05/10
     ("itau_cc", "TAR NEGAT EXC 468506896", "debito", "tarifa", "tarifa"),
     ("caixa_cc", "COB LOTERI 090926", "debito", "tarifa", "tarifa"),
     ("caixa_cc", "COB COMPE 090926", "debito", "tarifa", "tarifa"),
@@ -63,7 +63,7 @@ def _lancamento(cadastro, conta, historico, operacao):
     ("daycoval_cc", "TRANSF.MESMA TITULARIDADE", "credito", "contrapartida", "contrapartida_liberacao"),
     ("daycoval_cc", "TARIFA DE MANUTENCAO DE C/C", "debito", "tarifa", "tarifa"),
     # Não reconhecido: vira pendência
-    ("daycoval_cc", "AMORT. DE CONTRATO", "debito", "nao_reconhecido", None),
+    ("daycoval_cc", "AMORT. DE CONTRATO 99EJDSR", "debito", "acao_manual", "amortizacao_contrato_daycoval"),
 ])
 def test_classificacao(cadastro, conta, historico, operacao, categoria, regra):
     resultado = classificar(_lancamento(cadastro, conta, historico, operacao), cadastro.regras)

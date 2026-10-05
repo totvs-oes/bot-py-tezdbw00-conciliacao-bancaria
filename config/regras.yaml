@@ -67,6 +67,15 @@ regras:
     origem_tipo: [caucao, vinculada]
 
   # --- Itaú "KG": pagamento ligado ao Contas a Pagar; a baixa é manual (cliente, 05/10/2026). Não lançar.
+  # --- Daycoval "AMORT. DE CONTRATO": amortização de empréstimo do Contas a Pagar; baixa manual (cliente, 05/10/2026)
+  - nome: amortizacao_contrato_daycoval
+    categoria: acao_manual
+    bancos: ["707"]
+    operacao: debito
+    historico: '^AMORT\.? DE CONTRATO\b'
+    motivo: "Amortização de contrato (empréstimo) do Contas a Pagar (não é lançada pelo robô)."
+    acao: "Fazer a baixa manual do título no Contas a Pagar; sem ela o saldo da conta não fecha na conciliação."
+
   - nome: kg_contas_a_pagar
     categoria: acao_manual
     bancos: ["341"]
@@ -105,8 +114,14 @@ regras:
     bancos: ["001"]
     operacao: debito
     historico: 'TAR\.? AGRUPADAS'
-  # Itaú "TAR/CUSTAS COBRANCA" agrupa tarifas de cobrança, mas a cliente confirmou (05/10/2026) lançar a linha
-  # como está, na 2009028 -> cai na regra "tarifa" abaixo.
+  # Itaú "TAR/CUSTAS COBRANCA": agrupamento das tarifas de cobrança. A cliente confirmou (05/10/2026, 2ª resposta)
+  # abrir pelo relatório de tarifas do Itaú ("TARIFAS ITAU", Movimentação de Títulos), como no BB. Sem detalhe que
+  # some exatamente o valor da linha -> pendência (nunca lança o agrupado).
+  - nome: tarifa_agrupada_itau
+    categoria: tarifa_agrupada
+    bancos: ["341"]
+    operacao: debito
+    historico: '^TAR/CUSTAS\b'
 
   # --- Tarifas individuais
   - nome: tarifa
