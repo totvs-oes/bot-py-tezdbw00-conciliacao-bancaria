@@ -119,11 +119,20 @@ def _cancelar_formulario_em_branco(tela: Tela, rotulo_historico: str, cancelar: 
 
 
 def _fechar_em_branco(tela: Tela, rotulo_historico: str, cancelar: str) -> None:
+    """Cancela o formulário (nada é gravado). O AdvPL valida o campo com foco ao sair dele, inclusive pelo
+    Cancelar: um Help de validação (ex.: 100DOCEXIS no Número Doc.) aparece por cima e bloqueia o clique.
+    Receita calibrada em 05/10/2026: fecha o Help, apaga o campo com foco e cancela de novo."""
     for _ in range(3):
-        tela.confirmar(cancelar)
-        tela.page.wait_for_timeout(1000)
-        if tela.valor_do_campo(rotulo_historico) is None:
-            return
+        if tela.fechar_help():
+            tela.limpar_campo_com_foco()
+        tela.botao(cancelar, f"botao_{cancelar}").click()
+        for _ in range(6):
+            tela.page.wait_for_timeout(500)
+            if tela.help_aberto():
+                break  # validação reclamou de novo: fecha, limpa e tenta outra vez
+            if tela.valor_do_campo(rotulo_historico) is None:
+                tela.esperar_ocioso()
+                return
     caminho = tela.diagnostico("formulario_em_branco_nao_fechou")
     raise ErroDeTela(f"Formulário em branco não fechou com '{cancelar}'. Diagnóstico: {caminho}")
 

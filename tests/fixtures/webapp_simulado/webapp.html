@@ -3,11 +3,22 @@
      1) login PO-UI num iframe criado depois, dentro do shadow DOM de um wa-webview;
      2) tela 2 com botão "Entrar";
      3) cabeçalho com a data base num botão; clicar abre o diálogo AdvPL (rótulo wa-text-view caption="Data base*"
-        e, ABAIXO dele, um wa-text-input com o <input> no shadow DOM) com "Confirmar". -->
+        e, ABAIXO dele, um wa-text-input com o <input> no shadow DOM) com "Confirmar".
+     Com ?aviso=1: depois do "Entrar" aparece o aviso visto na homologação em 05/10/2026 (wa-dialog com "Fechar")
+     e o menu só aparece depois de fechá-lo. O menu tem um "Fechar" FORA de wa-dialog, que não pode ser clicado. -->
 <div id="t2" style="display:none"><button id="entrar">Entrar</button></div>
+<!-- Como no real: a janela principal também é um wa-dialog (dict-twindow) e contém o menu -->
+<wa-dialog id="COMP3000" class="dict-twindow" title="TOTVS Manufatura (TOTVS) 02.9.0099" style="display:block">
 <div id="menu" style="display:none">
   <wa-button id="COMP3079" caption="02/10/2026"></wa-button>
+  <wa-button id="COMP3090" caption="Fechar"></wa-button>
 </div>
+</wa-dialog>
+<wa-dialog id="aviso" class="dict-msdialog" title="" style="display:none">
+  <wa-text-view id="COMP5001" caption="&lt;b&gt;TOTVS&lt;/b&gt;"></wa-text-view>
+  <wa-text-view id="COMP5002" caption="Este ambiente utiliza base de Desenvolvimento. Seu uso como ambiente de Produção não é recomendado e autorizado"></wa-text-view>
+  <wa-button id="COMP5003" caption="Fechar"></wa-button>
+</wa-dialog>
 <div id="dlg" style="display:none; position:absolute; top:200px; left:300px">
   <wa-text-view id="COMP4506" caption="Data base*" style="position:absolute; top:0; left:10px; width:80px; height:16px"></wa-text-view>
   <wa-text-view id="COMP4511" caption="Filial*" style="position:absolute; top:60px; left:10px; width:80px; height:16px"></wa-text-view>
@@ -35,7 +46,15 @@ window.addEventListener("message", function (ev) {
   window.u = ev.data.u; window.s = ev.data.s;
   setTimeout(function () { document.getElementById("COMP3010").remove(); t2.style.display = "block"; }, 1500);
 });
-document.getElementById("entrar").onclick = function () { t2.style.display = "none"; menu.style.display = "block"; };
+document.getElementById("entrar").onclick = function () {
+  t2.style.display = "none";
+  if (location.search.indexOf("aviso=1") < 0) { menu.style.display = "block"; return; }
+  setTimeout(function () { aviso.style.display = "block"; }, 800);
+};
+document.getElementById("COMP5003").shadowRoot.querySelector("button").onclick = function () {
+  aviso.style.display = "none"; menu.style.display = "block";
+};
+document.getElementById("COMP3090").shadowRoot.querySelector("button").onclick = function () { window.fechouErrado = true; };
 var botaoData = document.getElementById("COMP3079").shadowRoot.querySelector("button");
 botaoData.onclick = function () { dataBase.value = botaoData.textContent; dlg.style.display = "block"; };
 document.getElementById("COMP4522").shadowRoot.querySelector("button").onclick = function () {

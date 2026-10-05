@@ -39,6 +39,19 @@ _JS_HELP_ADVPL = r"""() => {
   return '';
 }"""
 
+# Texto do wa-dialog que contém o botão; null se o botão não estiver num diálogo de aviso.
+# Sobe atravessando o shadow DOM (o <button> fica dentro do wa-button). A janela principal do Protheus também
+# é um wa-dialog (classe dict-twindow) e contém menu e abas: botão dentro dela NÃO é de aviso.
+# O texto dos avisos AdvPL fica no caption (HTML) dos wa-text-view.
+_JS_TEXTO_DO_DIALOGO = r"""(botao, classeJanelaPrincipal) => {
+  let n = botao;
+  while (n && n.tagName !== 'WA-DIALOG') n = n.parentNode || n.host;
+  if (!n || n.classList.contains(classeJanelaPrincipal)) return null;
+  const legendas = Array.from(n.querySelectorAll('wa-text-view')).map((v) => v.getAttribute('caption') || '');
+  const d = document.createElement('div'); d.innerHTML = legendas.join(' ').replace(/<br\s*\/?>/gi, ' ');
+  return (d.textContent || n.innerText || '').replace(/\s+/g, ' ').trim() || '(sem texto)';
+}"""
+
 _JS_CAMPOS_ADVPL = r"""(rotulo) => {
   const limpo = (t) => (t || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().replace(/\s*\*$/, '');
   const visivel = (el) => el.checkVisibility() && el.getBoundingClientRect().width > 0;
@@ -343,9 +356,17 @@ class Tela:
                     self.verificar_mensagem()
                     return
             log.info("Popup de '%s' não abriu (tentativa %d); clicando de novo", botao, tentativa)
-            self.page.keyboard.press("Escape")
+            # Esc só com um popup aberto (sem o nosso item): sem popup, o Esc FECHA a rotina inteira no
+            # Protheus (visto em 05/10/2026: a rotina sumiu e o "Outras Ações" com ela)
+            if self._popup_aberto():
+                self.page.keyboard.press("Escape")
+                self.page.wait_for_timeout(ESPERA_VALIDACAO)
         caminho = self.diagnostico(f"popup_sem_{item}")
         raise ErroDeTela(f"Item '{item}' do popup '{botao}' não apareceu. Diagnóstico: {caminho}")
+
+    def _popup_aberto(self) -> bool:
+        return self.page.evaluate(
+            "() => Array.from(document.querySelectorAll('wa-menu-popup-item')).some((e) => e.checkVisibility())")
 
     def selecionar_filial(self, codigo: str) -> None:
         """Diálogo "Filiais" antes do formulário. Na homologação ele NÃO aparece (a rotina já abre na
@@ -355,19 +376,84 @@ class Tela:
         self.page.get_by_text(codigo, exact=True).first.click()
         self.confirmar(s.BOTAO_OK)
 
+    def fechar_avisos(self, espera_ms: int = 15_000, quieto_ms: int = 3_000, maximo: int = 5) -> list[str]:
+        """Fecha avisos informativos do Protheus: wa-dialog com botão "Fechar". Ex. (homologação, logo após o
+        "Entrar"): "Este ambiente utiliza base de Desenvolvimento. Seu uso como ambiente de Produção não é
+        recomendado e autorizado". Pode não existir em produção: nenhum aviso = segue normalmente.
+
+        Só clica em "Fechar" que esteja DENTRO de um wa-dialog (nunca em aba/menu). Observa até `espera_ms` e
+        termina antes se passar `quieto_ms` sem aviso novo. Devolve os textos fechados (ficam no log e em print).
+        """
+        textos: list[str] = []
+        limite = time.monotonic() + espera_ms / 1000
+        ultimo = time.monotonic()
+        while time.monotonic() < limite and time.monotonic() - ultimo < quieto_ms / 1000 and len(textos) < maximo:
+            achado = self._fechar_de_dialogo()
+            if achado is None:
+                self.page.wait_for_timeout(500)
+                continue
+            texto, botao = achado
+            self.print(f"aviso_protheus_{len(textos) + 1}")
+            log.warning("Aviso do Protheus fechado: %s", texto)
+            botao.click()
+            self.esperar_ocioso()
+            self.page.wait_for_timeout(ESPERA_VALIDACAO)
+            textos.append(texto)
+            ultimo = time.monotonic()
+        return textos
+
+    def _fechar_de_dialogo(self) -> Optional[tuple[str, Locator]]:
+        botoes = self.page.get_by_role("button", name=re.compile(r"^\s*" + re.escape(s.AVISO_FECHAR) + r"\s*$"))
+        for i in range(botoes.count()):
+            botao = botoes.nth(i)
+            try:
+                if (botao.is_visible()
+                        and (texto := botao.evaluate(_JS_TEXTO_DO_DIALOGO, s.JANELA_PRINCIPAL_CLASSE)) is not None):
+                    return texto, botao
+            except PlaywrightError:
+                continue  # componente sumiu entre a contagem e a leitura
+        return None
+
+    def help_aberto(self) -> bool:
+        return bool(self.page.evaluate(_JS_HELP_ADVPL))
+
+    def fechar_help(self) -> Optional[str]:
+        """Fecha o Help AdvPL aberto (ex.: "Help: FA100BCO / Problema: Banco/Agencia/Conta não cadastrado") e
+        devolve o texto; None se não há Help. É um wa-dialog sem role=dialog; o texto fica no caption (HTML) de
+        um wa-text-view; fecha com o "Fechar" DESSE diálogo. Calibrado 02/10/2026."""
+        texto_help = self.page.evaluate(_JS_HELP_ADVPL)
+        if not texto_help:
+            return None
+        self.print("mensagem_protheus")
+        botoes = self.page.get_by_role("button", name=re.compile(r"^\s*" + re.escape(s.HELP_FECHAR) + r"\s*$"))
+        for i in range(botoes.count()):
+            botao = botoes.nth(i)
+            try:
+                texto = botao.evaluate(_JS_TEXTO_DO_DIALOGO, s.JANELA_PRINCIPAL_CLASSE) if botao.is_visible() else None
+            except PlaywrightError:
+                continue
+            if texto and ("Help:" in texto or "Problema:" in texto):
+                botao.click()
+                self.page.wait_for_timeout(ESPERA_VALIDACAO)
+                break
+        return texto_help
+
+    def limpar_campo_com_foco(self) -> None:
+        """Apaga o campo que está com o foco (o input fica no shadow DOM do wa-text-input). Usado só para
+        DESCARTAR um formulário: o AdvPL valida o campo de novo ao sair dele (inclusive pelo Cancelar) e o Help
+        de validação voltaria (visto em 05/10/2026 com 100DOCEXIS no Número Doc.)."""
+        if self.page.evaluate("""() => {
+              let a = document.activeElement;
+              while (a && a.shadowRoot && a.shadowRoot.activeElement) a = a.shadowRoot.activeElement;
+              if (!a || !['INPUT', 'TEXTAREA'].includes(a.tagName)) return false;
+              a.select(); return true;
+            }"""):
+            self.page.keyboard.press("Delete")
+            self.page.wait_for_timeout(ESPERA_VALIDACAO)
+
     def verificar_mensagem(self) -> None:
         """Se o Protheus abriu um diálogo de erro/help, lê o texto, tira print, fecha e levanta MensagemProtheus."""
-        # Help AdvPL (ex.: "Help: FA100BCO / Problema: Banco/Agencia/Conta não cadastrado"): é um wa-dialog sem
-        # role=dialog; o texto fica no caption (HTML) de um wa-text-view; fecha com "Fechar". Calibrado 02/10/2026.
-        texto_help = self.page.evaluate(_JS_HELP_ADVPL)
-        if texto_help:
-            self.print("mensagem_protheus")
-            fechar = self.page.get_by_role("button", name=s.HELP_FECHAR, exact=False)
-            for i in range(fechar.count()):
-                if fechar.nth(i).is_visible():
-                    fechar.nth(i).click()
-                    self.page.wait_for_timeout(ESPERA_VALIDACAO)
-                    break
+        if texto_help := self.fechar_help():
             raise MensagemProtheus(texto_help[:500])
         dialogos = self.page.get_by_role("dialog")
         for i in range(dialogos.count()):

@@ -136,24 +136,46 @@ def _preparar(tela: Tela, f: Frame, conciliacao: Conciliacao) -> None:
         combo.click()
         _esperar(tela, f.get_by_text(s.CONC_CONFIGURACAO_0024, exact=True), "opcao_0024").click()
 
-    _esperar(tela, f.get_by_role("button", name=s.CONC_VER_FILTROS), "ver_filtros").click()
+    banco = f.get_by_label(s.CONC_FILTRO_BANCO, exact=True)
+    if not any(banco.nth(i).is_visible() for i in range(banco.count())):  # painel já aberto: clicar fecharia
+        _esperar(tela, f.get_by_role("button", name=s.CONC_VER_FILTROS), "ver_filtros").click()
+    _aguardar_ocioso(tela)
     data = conciliacao.data.strftime("%d/%m/%Y")
     conta = conciliacao.conta
-    for rotulo, valor in ((s.CONC_FILTRO_DATA_DE, data), (s.CONC_FILTRO_DATA_ATE, data),
-                          (s.CONC_FILTRO_BANCO, conta.banco), (s.CONC_FILTRO_AGENCIA, conta.agencia),
-                          (s.CONC_FILTRO_CONTA, conta.numero)):
-        campo = _esperar(tela, f.get_by_label(rotulo, exact=True), f"filtro_{rotulo}")
-        campo.click()
-        campo.fill("")
-        campo.type(valor, delay=30)
-        campo.press("Tab")
-        tela.page.wait_for_timeout(300)
-        if campo.input_value().strip() != valor:
-            raise ErroDeTela(f"Conciliador: filtro '{rotulo}' ficou {campo.input_value()!r}, esperado {valor!r}")
+    filtros = ((s.CONC_FILTRO_DATA_DE, data), (s.CONC_FILTRO_DATA_ATE, data),
+               (s.CONC_FILTRO_BANCO, conta.banco), (s.CONC_FILTRO_AGENCIA, conta.agencia),
+               (s.CONC_FILTRO_CONTA, conta.numero))
+    _preencher_filtros(tela, f, filtros)
     _esperar(tela, f.get_by_role("button", name=s.CONC_APLICAR_FILTRO), "aplicar_filtro").click()
     _esperar(tela, f.get_by_role("button", name=s.CONC_SALDOS), "saldos_bancarios")
     tela.page.wait_for_timeout(2000)
     tela.print(f"conciliador_{conta.chave}_filtrado")
+
+
+def _preencher_filtros(tela: Tela, f: Frame, filtros, tentativas: int = 3) -> None:
+    """Preenche os filtros e CONFERE TODOS de novo logo antes do Aplicar. Ao abrir, o painel recarrega
+    sozinho os filtros da última vez, com atraso: em 05/10/2026 o Banco mostrou "237" logo após digitar e
+    depois voltou para "001" (conta anterior) — o saldo lido seria de outra conta."""
+    for tentativa in range(1, tentativas + 1):
+        for rotulo, valor in filtros:
+            campo = _esperar(tela, f.get_by_label(rotulo, exact=True), f"filtro_{rotulo}")
+            if campo.input_value().strip() == valor:
+                continue
+            campo.click()
+            campo.fill("")
+            campo.type(valor, delay=30)
+            campo.press("Tab")
+            tela.page.wait_for_timeout(300)
+        tela.page.wait_for_timeout(1500)  # tempo para o recarregamento atrasado aparecer, se vier
+        _aguardar_ocioso(tela)
+        errados = [(rotulo, valor, lido) for rotulo, valor in filtros
+                   if (lido := _esperar(tela, f.get_by_label(rotulo, exact=True), f"filtro_{rotulo}")
+                       .input_value().strip()) != valor]
+        if not errados:
+            return
+        log.info("Filtros do Conciliador mudaram depois de preenchidos (tentativa %d): %s", tentativa, errados)
+    caminho = tela.diagnostico("conciliador_filtros_divergentes")
+    raise ErroDeTela(f"Conciliador: filtros não ficaram como esperado: {errados}. Diagnóstico: {caminho}")
 
 
 def ler_saldo(tela: Tela, f: Frame, conciliacao: Conciliacao) -> Decimal:

@@ -117,7 +117,11 @@ class Executor:
             except MensagemProtheus as mensagem:
                 # Regra de negócio recusada pelo Protheus (ex.: conta não cadastrada): segue para o próximo item.
                 # Formulário ainda aberto com o nosso lançamento = recusado antes de gravar -> erro, não incerto.
-                recusado = movimento_bancario.descartar_formulario(sessao.tela, item.historico)
+                # Antes do gravar (EXECUTANDO) o formulário é nosso mesmo sem histórico: o Help pode vir num campo
+                # anterior (ex.: 100DOCEXIS no Número Doc.). Depois do gravar, só se o histórico for o nosso.
+                antes_de_gravar = self.registro.status(item.chave) == EXECUTANDO
+                recusado = movimento_bancario.descartar_formulario(
+                    sessao.tela, None if antes_de_gravar else item.historico)
                 self._falhou(item, f"Protheus recusou: {mensagem}", recusado)
                 return
             except FALHAS_TECNICAS as erro:
@@ -145,9 +149,12 @@ class Executor:
         log.error("%s %s: %s", item.rotina.value, item.chave, detalhe)
 
     def _contas_com_problema(self) -> set[str]:
+        # No ensaio nada é gravado: lançamento ensaiado conta como concluído só para LER o saldo no Conciliador
+        # (o ensaio nunca aplica a conciliação)
+        concluidos = (CONCLUIDO, ENSAIADO) if self.ensaio else (CONCLUIDO,)
         problemas = set()
         for item in self.plano.itens():
-            if self.registro.status(item.chave) != CONCLUIDO:
+            if self.registro.status(item.chave) not in concluidos:
                 problemas.update(item.contas().split(">"))
         return problemas
 

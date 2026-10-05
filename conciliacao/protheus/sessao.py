@@ -6,6 +6,7 @@ import re
 import time
 from datetime import date
 from pathlib import Path
+from typing import Optional
 
 from playwright.sync_api import Browser, Error as PlaywrightError, Locator, Page, Playwright, sync_playwright
 
@@ -82,6 +83,7 @@ class SessaoProtheus:
             raise ErroDeTela(f"Nenhuma aba do Protheus no Chrome em {self.cdp_url} (abas: {[p.url for p in paginas]})")
         self.tela = Tela(protheus[0], self.pasta_prints)
         log.info("Conectado na aba já logada: %s", protheus[0].url)
+        self.tela.fechar_avisos(espera_ms=3_000, quieto_ms=1_000)  # aviso pós-login que a pessoa não fechou
         self.definir_data_base()
         return self
 
@@ -114,6 +116,8 @@ class SessaoProtheus:
         tela.diagnostico("02_tela_pos_login")
         tela.clicar(s.LOGIN_ENTRAR, timeout=TIMEOUT_CARGA_INICIAL)
         tela.esperar_ocioso()
+        # Aviso(s) com "Fechar" logo após o Entrar (homologação: "base de Desenvolvimento"); sem aviso, segue
+        tela.fechar_avisos()
         tela.print("03_login_ok")
         self.definir_data_base()
 
@@ -162,11 +166,30 @@ class SessaoProtheus:
             proximo = caminho[i + 1] if i + 1 < len(caminho) else None
             if proximo and tela.item_de_menu_visivel(proximo):
                 continue  # submenu já expandido: clicar de novo recolheria
-            tela.clicar_menu(passo)
+            self._clicar_grupo(passo, proximo)
         self._confirmar_ambiente()
         self._conferir_rotina_ativa(nome)
         log.info("Rotina '%s' aberta", nome)
         return tela
+
+    def _clicar_grupo(self, passo: str, proximo: Optional[str], tentativas: int = 3) -> None:
+        """Clica no item do menu e, se for um grupo, confere que ele expandiu (o próximo passo apareceu).
+        Logo após o login a tela inicial ainda carrega e o Protheus ignora o clique: o grupo fica destacado
+        mas não abre (visto em 05/10/2026). Só clica de novo se o próximo item NÃO apareceu — clicar num
+        grupo aberto o recolheria."""
+        tela = self.tela
+        for tentativa in range(1, tentativas + 1):
+            tela.clicar_menu(passo)
+            if proximo is None:
+                return
+            limite = time.monotonic() + 5
+            while time.monotonic() < limite:
+                if tela.item_de_menu_visivel(proximo):
+                    return
+                tela.page.wait_for_timeout(500)
+            log.info("Menu '%s' não expandiu (tentativa %d); clicando de novo", passo, tentativa)
+        caminho = tela.diagnostico(f"menu_nao_expandiu_{passo}")
+        raise ErroDeTela(f"O menu '{passo}' não expandiu depois de {tentativas} cliques. Diagnóstico: {caminho}")
 
     def _rotina_ativa(self) -> str:
         """Nome da rotina da aba ativa ("Movimento Bancario - 01/010101 [...]" -> "Movimento Bancario")."""

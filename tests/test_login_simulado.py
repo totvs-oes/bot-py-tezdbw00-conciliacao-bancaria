@@ -60,6 +60,19 @@ def test_login_completo(ambiente, tmp_path):
         sessao.__exit__()
 
 
+def test_login_fecha_aviso_depois_do_entrar(ambiente, tmp_path):
+    """Homologação (05/10/2026): "Este ambiente utiliza base de Desenvolvimento..." com "Fechar" após o Entrar."""
+    ambiente.protheus_url += "?aviso=1"
+    sessao = _sessao(ambiente, tmp_path)
+    try:
+        assert sessao.tela.page.title() == "ENTROU 09/09/2026 sp01\\robo senha:7"
+        # O "Fechar" fora de wa-dialog (menu) não pode ser clicado
+        assert sessao.tela.page.evaluate("window.fechouErrado") is None
+        assert (tmp_path / "prints" / "aviso_protheus_1.png").exists()
+    finally:
+        sessao.__exit__()
+
+
 def test_login_falha_com_diagnostico(ambiente, tmp_path, servidor, monkeypatch):
     monkeypatch.setattr("conciliacao.protheus.sessao.TIMEOUT_CARGA_INICIAL", 3_000)
     ambiente.protheus_url = f"{servidor}/nao-existe.html"

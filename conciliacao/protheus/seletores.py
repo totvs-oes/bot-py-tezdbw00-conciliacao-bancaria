@@ -116,4 +116,10 @@ CONC_SAIR_PERGUNTA = "Deseja mesmo sair desta conciliação?"
 
 # --- Mensagens de erro/alerta do Protheus (diálogos modais)
 HELP_FECHAR = "Fechar"  # botão do diálogo de Help AdvPL
+# Avisos informativos (wa-dialog com "Fechar"), ex. após o "Entrar" na homologação (05/10/2026):
+# "Este ambiente utiliza base de Desenvolvimento. Seu uso como ambiente de Produção não é recomendado..."
+AVISO_FECHAR = "Fechar"
+# A janela principal do Protheus também é um wa-dialog (class="dict-twindow") e contém menu e abas; os avisos
+# são wa-dialog class="dict-msdialog", irmãos dela no <body>. Calibrado na homologação em 05/10/2026.
+JANELA_PRINCIPAL_CLASSE = "dict-twindow"
 DIALOGOS_DE_ERRO = ("Help", "Atenção", "Erro", "Problema", "Aviso")
