@@ -1,8 +1,10 @@
+import json
+from datetime import date
 from decimal import Decimal
 
 from conciliacao.extratos.leitura import ler_resposta_api
 from conciliacao.planejamento import documento, planejar
-from tests.conftest import DIA
+from tests.conftest import DIA, FIXTURES
 
 
 def _transferencias(plano, origem, destino):
@@ -73,8 +75,38 @@ def test_somente_lancamentos_da_data_do_movimento(extratos, cadastro):
 def test_nao_reconhecido_vira_pendencia_e_nao_lancamento(extratos, cadastro):
     plano = planejar(extratos, cadastro, DIA)
     nao_reconhecidos = _pendencias(plano, "não reconhecido")
-    assert {p.historico for p in nao_reconhecidos} >= {"KG 3361823", "DOC/TED INTERNET TED INTERNET 1704220"}
+    assert {p.historico for p in nao_reconhecidos} == {"DOC/TED INTERNET TED INTERNET 1704220"}
+
+
+def test_kg_vira_pendencia_de_baixa_manual_e_dev_pag_bol_e_ignorado(extratos, cadastro):
+    """Respostas da cliente em 05/10/2026."""
+    plano = planejar(extratos, cadastro, DIA)
+    kg = [p for p in plano.pendencias if p.historico == "KG 3361823"]
+    assert len(kg) == 1 and "Contas a Pagar" in kg[0].motivo and "baixa manual" in kg[0].acao
     assert Decimal("546127.35") not in [i.valor for i in plano.itens()]
+    assert not [p for p in plano.pendencias if (p.historico or "").startswith("DEV PAG BOL")]
+    assert any(l.historico.startswith("DEV PAG BOL") for l in plano.fora_do_escopo)
+
+
+def _daycoval():
+    """Saída real da API (layout Daycoval) para os extratos de exemplo enviados pela cliente em 05/10/2026."""
+    return json.loads((FIXTURES / "extratos_daycoval.json").read_text(encoding="utf-8"))
+
+
+def test_daycoval_liberacao_de_caucao(cadastro):
+    plano = planejar(ler_resposta_api(_daycoval(), cadastro), cadastro, date(2026, 9, 3))
+    transf = _transferencias(plano, "daycoval_caucao", "daycoval_cc")
+    assert [t.valor for t in transf] == [Decimal("100691.20")]
+    assert transf[0].aviso is None and transf[0].historico == "TRANSF DAYC CAU P/ DAYC C/C"
+    assert len(plano.itens()) == 1 and not plano.pendencias
+    saldos = {c.conta.chave: c.saldo_extrato for c in plano.conciliacoes}
+    assert saldos == {"daycoval_cc": Decimal("320049.70"), "daycoval_caucao": Decimal("0.00")}
+
+
+def test_daycoval_amortizacao_vira_pendencia(cadastro):
+    plano = planejar(ler_resposta_api(_daycoval(), cadastro), cadastro, date(2026, 9, 1))
+    assert [t.valor for t in plano.tarifas] == [Decimal("43.79")]
+    assert [p.historico[:18] for p in _pendencias(plano, "não reconhecido")] == ["AMORT. DE CONTRATO"]
 
 
 def test_tarifa_agrupada_sem_detalhe_vira_pendencia(extratos, cadastro):

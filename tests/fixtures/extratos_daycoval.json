@@ -1,0 +1,62 @@
+{
+ "banco_0707": [
+  {
+   "arquivo": "DAYCOVAL 1500926-4 04-09.pdf",
+   "metodo": "layout Daycoval",
+   "aviso": null,
+   "conta": "001500926-4",
+   "lancamentos": [
+    {
+     "data": "01/09/2026",
+     "historico": "AMORT. DE CONTRATO 99EJDSR - p/ AEROFLEX INDUSTRIA DE AEROSOL LTDA",
+     "operacao": "debito",
+     "valor": 85563.46
+    },
+    {
+     "data": "01/09/2026",
+     "historico": "TARIFA DE MANUTENCAO DE C/C 9232818",
+     "operacao": "debito",
+     "valor": 43.79
+    },
+    {
+     "data": "03/09/2026",
+     "historico": "TRANSF.MESMA TITULARIDADE 8666220 - 00019 0008666220 AEROFLEX INDUSTRIA DE AEROSOL LTD",
+     "operacao": "credito",
+     "valor": 100691.2
+    }
+   ],
+   "conferencia": {
+    "saldo_anterior": 304965.75,
+    "saldo_final": 320049.7,
+    "total_creditos": 100691.2,
+    "total_debitos": 85607.25,
+    "movimentacoes_nao_listadas": [],
+    "diferenca": 0.0,
+    "ok": true
+   }
+  },
+  {
+   "arquivo": "DAYCOVAL 866622-0 04-09.pdf",
+   "metodo": "layout Daycoval",
+   "aviso": null,
+   "conta": "000866622-0",
+   "lancamentos": [
+    {
+     "data": "03/09/2026",
+     "historico": "TRANSF.MESMA TITULARIDADE 5009264 - 00019 0015009264 AEROFLEX INDUSTRIA DE AEROSOL LTD",
+     "operacao": "debito",
+     "valor": 100691.2
+    }
+   ],
+   "conferencia": {
+    "saldo_anterior": 100691.2,
+    "saldo_final": 0.0,
+    "total_creditos": 0.0,
+    "total_debitos": 100691.2,
+    "movimentacoes_nao_listadas": [],
+    "diferenca": 0.0,
+    "ok": true
+   }
+  }
+ ]
+}

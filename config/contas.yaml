@@ -15,6 +15,7 @@ bancos:
   "246": {nome: ABC, sigla: ABC, arquivo_tarifas: '^(EXTRATO DE )?TARIFAS ABC\b'}
   "341": {nome: ITAU, sigla: ITAU, arquivo_tarifas: '^(EXTRATO DE )?TARIFAS ITAU\b'}
   "422": {nome: SAFRA, sigla: SAFRA, arquivo_tarifas: '^(EXTRATO DE )?TARIFAS SAFRA\b'}
+  "707": {nome: DAYCOVAL, sigla: DAYC, arquivo_tarifas: '^(EXTRATO DE )?TARIFAS DAYCOVAL\b'}
 
 contas:
   # --- Banco do Brasil
@@ -56,3 +57,9 @@ contas:
   - {chave: caixa_cc,        banco: "104", agencia: "4266", numero: "0005769805", tipo: corrente,  arquivo: '^(BANCO )?CAIXA( 0*5769805-?\d+)? \d{2}-\d{2}\b'}
   - {chave: caixa_vinculada, banco: "104", agencia: "4266", numero: "57845528",   tipo: vinculada, arquivo: '^(BANCO )?CAIXA 0*57845528'}
   - {chave: caixa_aplic,     banco: "104", agencia: "4266", numero: "9999999999", tipo: aplicacao}
+
+  # --- Daycoval (dados da cliente em 05/10/2026: CC 0001 / 001500926-4; caução 0001 / 000866622-0).
+  # ⚠ Formato da conta no Protheus (SA6) ainda NÃO conferido na lupa: usado o número com dígito em 10 posições,
+  #   como aparece no histórico do próprio extrato ("0015009264"). Conferir antes de lançar.
+  - {chave: daycoval_cc,     banco: "707", agencia: "0001", numero: "0015009264", tipo: corrente, arquivo: '^DAYCOVAL 0*1500926-?4\b'}
+  - {chave: daycoval_caucao, banco: "707", agencia: "0001", numero: "0008666220", tipo: caucao,   arquivo: '^DAYCOVAL 0*866622-?0\b'}

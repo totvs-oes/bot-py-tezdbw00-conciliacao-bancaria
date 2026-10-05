@@ -1,0 +1,25 @@
+# Ambiente local e segredos
+.venv/
+venv/
+.env
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.git/
+.gitignore
+
+# Dados de execução (ficam no volume, não na imagem)
+saida/
+dados/
+*.sqlite
+
+# Testes e documentação local
+tests/
+.claude/
+CLAUDE.md
+
+# Arquivos do próprio Docker
+Dockerfile
+.dockerignore
+docker-compose.yml

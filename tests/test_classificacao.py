@@ -53,9 +53,17 @@ def _lancamento(cadastro, conta, historico, operacao):
     ("itau_cc", "SISPAG TRIBUTOS GNRE/MG", "debito", "fora_do_escopo", "fora_do_escopo"),
     ("bb_cc", "Cobrança", "credito", "fora_do_escopo", "fora_do_escopo"),
     ("itau_caucao", "BOLETO RECEBIDO 09/09L", "credito", "fora_do_escopo", "fora_do_escopo"),
+    # Respostas da cliente (05/10/2026)
+    ("safra_cc", "PACOTE PJ SIMPLES 5802757", "debito", "tarifa", "tarifa"),
+    ("bradesco_cc", "TARIFA BANCARIA TRANSF PGTO PIX 30926", "debito", "tarifa", "tarifa"),
+    ("itau_cc", "KG 3361823", "debito", "acao_manual", "kg_contas_a_pagar"),
+    ("itau_cc", "DEV PAG BOL JADIMO TRANSPORTES RODOVIARI", "credito", "fora_do_escopo", "fora_do_escopo"),
+    # Daycoval: caução -> CC ("TRANSF.MESMA TITULARIDADE" nos dois extratos)
+    ("daycoval_caucao", "TRANSF.MESMA TITULARIDADE", "debito", "transferencia", "liberacao_caucao"),
+    ("daycoval_cc", "TRANSF.MESMA TITULARIDADE", "credito", "contrapartida", "contrapartida_liberacao"),
+    ("daycoval_cc", "TARIFA DE MANUTENCAO DE C/C", "debito", "tarifa", "tarifa"),
     # Não reconhecido: vira pendência
-    ("safra_cc", "PACOTE PJ SIMPLES 5802757", "debito", "nao_reconhecido", None),
-    ("itau_cc", "KG 3361823", "debito", "nao_reconhecido", None),
+    ("daycoval_cc", "AMORT. DE CONTRATO", "debito", "nao_reconhecido", None),
 ])
 def test_classificacao(cadastro, conta, historico, operacao, categoria, regra):
     resultado = classificar(_lancamento(cadastro, conta, historico, operacao), cadastro.regras)

@@ -27,5 +27,7 @@ def classificar(lancamento: LancamentoExtrato, regras: list[Regra]) -> Classific
                 origem_tipo=regra.origem_tipo,
                 origem_conta=regra.origem_conta,
                 historico_protheus=regra.historico_protheus,
+                motivo=regra.motivo,
+                acao=regra.acao,
             )
     return Classificacao(categoria=Categoria.NAO_RECONHECIDO, regra=None)

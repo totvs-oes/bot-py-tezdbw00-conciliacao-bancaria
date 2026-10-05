@@ -29,6 +29,8 @@ class Regra:
     origem_tipo: Optional[tuple[str, ...]] = None
     origem_conta: Optional[str] = None
     historico_protheus: Optional[str] = None
+    motivo: Optional[str] = None   # (acao_manual) texto da pendência
+    acao: Optional[str] = None
 
 
 @dataclass
@@ -72,6 +74,8 @@ class Ambiente:
     email_remetente: str = ""
     email_operacao: list[str] = field(default_factory=list)
     email_ti: list[str] = field(default_factory=list)
+    # "local": PDFs em PASTA_EXTRATOS | "sftp": a API de extratos busca no servidor do cliente
+    fonte_extratos: str = "local"
 
 
 def _tupla(valor) -> Optional[tuple[str, ...]]:
@@ -112,6 +116,8 @@ def carregar_cadastro(pasta: Path = PASTA_CONFIG) -> Cadastro:
             origem_tipo=_tupla(r.get("origem_tipo")),
             origem_conta=r.get("origem_conta"),
             historico_protheus=r.get("historico_protheus"),
+            motivo=r.get("motivo"),
+            acao=r.get("acao"),
         )
         for r in dados_regras["regras"]
     ]
@@ -130,10 +136,17 @@ def _lista(valor: str) -> list[str]:
     return [v.strip() for v in valor.split(",") if v.strip()]
 
 
+FONTES_EXTRATOS = ("local", "sftp")
+
+
 def carregar_ambiente() -> Ambiente:
     load_dotenv(RAIZ / ".env")
     env = os.environ.get
+    fonte_extratos = env("FONTE_EXTRATOS", "local").strip().lower()
+    if fonte_extratos not in FONTES_EXTRATOS:
+        raise ValueError(f"FONTE_EXTRATOS inválida: '{fonte_extratos}'. Use: {', '.join(FONTES_EXTRATOS)}")
     return Ambiente(
+        fonte_extratos=fonte_extratos,
         pasta_extratos=Path(env("PASTA_EXTRATOS", r"Z:\A PAGAR\AEROFLEX")),
         api_url=env("API_EXTRATOS_URL", "http://localhost:5000/extratos"),
         api_token=env("API_EXTRATOS_TOKEN", ""),

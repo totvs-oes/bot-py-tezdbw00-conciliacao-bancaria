@@ -112,6 +112,9 @@ class _Planejador:
             ))
         elif categoria == Categoria.FORA_DO_ESCOPO:
             self.plano.fora_do_escopo.append(lancamento)
+        elif categoria == Categoria.ACAO_MANUAL:
+            self._pendencia(lancamento.arquivo, classificacao.motivo or f"Regra {classificacao.regra}.",
+                            classificacao.acao or "Tratar manualmente.", lancamento)
         else:
             self._pendencia(lancamento.arquivo, "Lançamento não reconhecido por nenhuma regra.",
                             "Lançar manualmente ou criar regra em config/regras.yaml.", lancamento)

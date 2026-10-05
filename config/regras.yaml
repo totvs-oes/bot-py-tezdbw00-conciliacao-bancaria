@@ -7,6 +7,7 @@
 # Campos de cada regra:
 #   nome          identificador (aparece no relatório)
 #   categoria     transferencia | contrapartida | consolidacao | tarifa | tarifa_agrupada | rendimento | fora_do_escopo
+#                 | acao_manual (não lança; vira pendência com o motivo/acao da regra)
 #   historico     regex (re.search) sobre o histórico normalizado, ou lista de regex (qualquer uma)
 #   operacao      debito | credito (opcional = qualquer)
 #   tipos_conta   tipos da conta do extrato (opcional = qualquer)
@@ -14,6 +15,7 @@
 #   destino_tipo  (transferencia) tipo da conta destino no MESMO banco; a conta do extrato é a origem
 #   origem_tipo   (transferencia) tipo da conta origem no MESMO banco; a conta do extrato é o destino
 #   origem_conta  (consolidacao) chave da conta de origem
+#   motivo/acao   (acao_manual) textos da pendência no relatório
 #   historico_protheus  modelo do histórico gravado no Protheus (máx. 40 caracteres)
 #                       {so}/{sd} = sigla do banco origem/destino, {to}/{td} = tipo abreviado
 
@@ -61,8 +63,17 @@ regras:
     categoria: contrapartida
     operacao: credito
     tipos_conta: [corrente]
-    historico: '\bTEG\b|TRANSF\.? ?EXCEDENTE|LIBERACAO DE (CONTA )?VINCULADA|TRANSF VALORES MESMA TITULARI|TRANSFERENCIA ENTRE C/?C'
+    historico: '\bTEG\b|TRANSF\.? ?EXCEDENTE|LIBERACAO DE (CONTA )?VINCULADA|MESMA TITULARI|TRANSFERENCIA ENTRE C/?C'
     origem_tipo: [caucao, vinculada]
+
+  # --- Itaú "KG": pagamento ligado ao Contas a Pagar; a baixa é manual (cliente, 05/10/2026). Não lançar.
+  - nome: kg_contas_a_pagar
+    categoria: acao_manual
+    bancos: ["341"]
+    operacao: debito
+    historico: '^KG\b'
+    motivo: "Pagamento KG do Contas a Pagar (não é lançado pelo robô)."
+    acao: "Fazer a baixa manual do título no Contas a Pagar; sem ela o saldo da conta não fecha na conciliação."
 
   # --- Aplicações financeiras (CC <-> conta aplicação)
   - nome: resgate_aplicacao
@@ -94,18 +105,14 @@ regras:
     bancos: ["001"]
     operacao: debito
     historico: 'TAR\.? AGRUPADAS'
-  # Itaú: confirmar com a cliente se TAR/CUSTAS é agrupada (Pontos em aberto #2). Se for, descomente:
-  # - nome: tarifa_agrupada_itau
-  #   categoria: tarifa_agrupada
-  #   bancos: ["341"]
-  #   operacao: debito
-  #   historico: '^TAR/CUSTAS'
+  # Itaú "TAR/CUSTAS COBRANCA" agrupa tarifas de cobrança, mas a cliente confirmou (05/10/2026) lançar a linha
+  # como está, na 2009028 -> cai na regra "tarifa" abaixo.
 
   # --- Tarifas individuais
   - nome: tarifa
     categoria: tarifa
     operacao: debito
-    historico: '\bTAR\b|\bTARIFA|\bCOB (LOTERI|AGENC|COMPE|ALT|BX|MAN|INTERN)\b|\bCOBPROT\b|DESPESAS? DE CARTORIO|DEBITO SERVICO COBRANCA|DEB\.? CUSTAS CARTOR'
+    historico: '\bTAR\b|\bTARIFA|\bCOB (LOTERI|AGENC|COMPE|ALT|BX|MAN|INTERN)\b|\bCOBPROT\b|DESPESAS? DE CARTORIO|DEBITO SERVICO COBRANCA|DEB\.? CUSTAS CARTOR|\bPACOTE PJ\b'
 
   # --- Fora do escopo do RPA (recebimentos, pagamentos, CNAB, impostos...). Só informativo.
   - nome: fora_do_escopo
@@ -116,4 +123,5 @@ regras:
       - 'BOLETO RECEBIDO|^RECEBIMENTOS$'
       - '\bPIX (RECEBIDO|ENVIADO|QR CODE)|PIX RECEBIDO|^PIX - ENVIADO|PAGAMENTO PIX'
       - '^PAGAMENTOS\b|^SISPAG\b|^TED\b|TED ENVIADA|^PAGFOR\b'
+      - '^DEV PAG BOL\b'   # Itaú: estorno de pagamento recusado pelo banco; sem ação (cliente, 05/10/2026)
       - '^IMPOSTOS\b|^CONTR IMP\b|PRESTACAO CONSORCIO|DEBITO AUT\.'

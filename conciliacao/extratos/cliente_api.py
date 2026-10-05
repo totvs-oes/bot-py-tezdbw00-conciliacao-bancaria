@@ -1,8 +1,9 @@
-"""Cliente da API de extratos (repo aeroflex-conciliacao-bancaria-api)."""
+"""Cliente da API de extratos (repo svc-py-tezdbw00-leitura-extratos)."""
 from __future__ import annotations
 
 import logging
-from pathlib import Path
+from pathlib import Path, PurePath
+from typing import Optional
 
 import httpx
 
@@ -52,3 +53,90 @@ def _rejeitado(nome: str, resposta: httpx.Response) -> dict:
         "aviso": f"Rejeitado pela API (HTTP {resposta.status_code}): {resposta.text[:300]}",
         "conferencia": {"saldo_anterior": None, "saldo_final": None, "ok": None},
     }
+
+
+# ---------------------------------------------------------------------------
+# SFTP: a API de extratos busca os PDFs no servidor do cliente (FONTE_EXTRATOS=sftp)
+# ---------------------------------------------------------------------------
+
+def url_base(url_extratos: str) -> str:
+    """API_EXTRATOS_URL aponta para POST /extratos; as rotas de SFTP ficam na mesma API."""
+    url = url_extratos.rstrip("/")
+    return url[: -len("/extratos")] if url.endswith("/extratos") else url
+
+
+def _cliente(url: str, token: str, transporte: Optional[httpx.BaseTransport]) -> httpx.Client:
+    if not token:
+        raise ErroApiExtratos("API_EXTRATOS_TOKEN não configurado no .env")
+    return httpx.Client(base_url=url_base(url), timeout=TIMEOUT, transport=transporte,
+                        headers={"Authorization": f"Bearer {token}"})
+
+
+def _caminho(pasta: PurePath) -> str:
+    return pasta.as_posix().replace("\\", "/")
+
+
+class FonteSftp:
+    """Fonte de extratos (ver pastas.Fonte) que lista as pastas do SFTP do cliente pela API de extratos.
+
+    Caminhos são relativos à SFTP_PASTA_BASE configurada na API. Cada pasta é listada uma vez só (cache).
+    """
+
+    def __init__(self, url: str, token: str, transporte: Optional[httpx.BaseTransport] = None):
+        self._http = _cliente(url, token, transporte)
+        self._cache: dict[str, Optional[dict]] = {}
+
+    def __enter__(self) -> "FonteSftp":
+        return self
+
+    def __exit__(self, *_) -> None:
+        self.close()
+
+    def close(self) -> None:
+        self._http.close()
+
+    def _listar(self, pasta: PurePath) -> Optional[dict]:
+        caminho = _caminho(pasta)
+        if caminho not in self._cache:
+            try:
+                resposta = self._http.get("/sftp/listar", params={"caminho": caminho})
+            except httpx.HTTPError as erro:
+                raise ErroApiExtratos(f"Sem conexão com a API de extratos ({erro})") from erro
+            if resposta.status_code == 404:
+                self._cache[caminho] = None
+            elif resposta.status_code >= 300:
+                raise ErroApiExtratos(f"Listagem SFTP de '{caminho}': HTTP {resposta.status_code} {resposta.text[:300]}")
+            else:
+                self._cache[caminho] = resposta.json()
+        return self._cache[caminho]
+
+    def subpastas(self, pasta: PurePath) -> Optional[list[str]]:
+        listagem = self._listar(pasta)
+        return None if listagem is None else listagem["pastas"]
+
+    def pdfs(self, pasta: PurePath) -> list[str]:
+        listagem = self._listar(pasta)
+        return [] if listagem is None else listagem["arquivos"]
+
+
+def transcrever_sftp(arquivos: list[PurePath], url: str, token: str,
+                     transporte: Optional[httpx.BaseTransport] = None) -> dict[str, list[dict]]:
+    """Pede à API que baixe do SFTP e leia cada PDF (um por chamada, como no envio local).
+
+    Arquivo com problema volta da API como extrato com metodo "nenhum" e aviso.
+    Falha do SFTP (502), API sem SFTP configurado (503) ou sem conexão levantam ErroApiExtratos.
+    """
+    resultado: dict[str, list[dict]] = {}
+    with _cliente(url, token, transporte) as cliente:
+        for arquivo in arquivos:
+            caminho = _caminho(arquivo)
+            log.info("Lendo %s do SFTP pela API de extratos", caminho)
+            try:
+                resposta = cliente.post("/extratos/sftp", json={"arquivos": [caminho]})
+            except httpx.HTTPError as erro:
+                raise ErroApiExtratos(f"Sem conexão com a API de extratos ({erro})") from erro
+            if resposta.status_code >= 300:
+                raise ErroApiExtratos(f"{caminho}: HTTP {resposta.status_code} {resposta.text[:300]}")
+            for chave, extratos in resposta.json().items():
+                resultado.setdefault(chave, []).extend(extratos)
+    return resultado

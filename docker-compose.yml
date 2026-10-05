@@ -1,0 +1,55 @@
+# Robô de conciliação bancária
+#
+# Pré-requisitos no servidor:
+#   - Serviço de leitura de extratos já rodando (repo svc-py-tezdbw00-leitura-extratos):
+#     é ele que cria a rede "tezdbw00" usada aqui e que busca os PDFs no SFTP do cliente
+#     (FONTE_EXTRATOS=sftp). O robô não acessa o servidor do cliente diretamente.
+#   - Acesso de rede ao Protheus (VPN no host, se for IP interno).
+#
+# Subir:
+#   docker compose up -d --build          API em http://servidor:5001 (POST /execucoes, docs em /docs)
+#   docker compose logs -f
+#
+# Comandos avulsos (mesma imagem, mesmos volumes):
+#   docker compose run --rm robo planejar --data-movimento 2026-09-09
+#   docker compose run --rm robo executar --data-movimento 2026-09-09 --dry-run
+#
+# Saída (relatórios, prints, controle.sqlite) no volume "saida":
+#   docker compose cp robo:/app/saida ./saida-copia
+
+name: bot-py-tezdbw00-conciliacao-bancaria
+
+services:
+  robo:
+    build: .
+    image: bot-py-tezdbw00-conciliacao-bancaria:latest
+    container_name: conciliacao-robo
+    # format: raw = valores lidos ao pé da letra (senha com "$" não vira variável do Compose)
+    env_file:
+      - path: .env
+        format: raw
+    # Valores que no container são sempre estes, independentemente do .env de desenvolvimento
+    environment:
+      FONTE_EXTRATOS: sftp          # PDFs vêm do SFTP do cliente, pela API de extratos
+      PASTA_SAIDA: saida
+      API_EXTRATOS_URL: http://leitura-extratos:5000/extratos
+      PROTHEUS_NAVEGADOR: chrome
+      PROTHEUS_VISIVEL: "false"     # sem tela no servidor: navegador headless
+      PROTHEUS_CDP_URL: ""          # homologação assistida (Chrome aberto por uma pessoa) não se aplica
+    ports:
+      - "5001:5001"
+    volumes:
+      - saida:/app/saida
+      # Regras e contas editáveis sem gerar imagem nova (reinicie o container após alterar)
+      - ./config:/app/config:ro
+    shm_size: 1gb                   # o Chrome usa /dev/shm; o padrão do Docker (64 MB) faz abas travarem
+    restart: unless-stopped
+    networks:
+      - tezdbw00
+
+networks:
+  tezdbw00:
+    external: true
+
+volumes:
+  saida:

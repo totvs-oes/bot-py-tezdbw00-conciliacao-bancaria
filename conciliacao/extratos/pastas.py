@@ -3,13 +3,17 @@
 Estrutura (confirmada pela cliente em 13/08/2026):
     Z:\\A PAGAR\\AEROFLEX\\<ANO> AEROFLEX\\<MM - MÊS>\\<DD-MM>\\<BANCO> <CONTA> <DD-MM>.pdf
 A pasta é a do dia em que o extrato foi GERADO; ela traz a movimentação do dia anterior.
+
+A mesma estrutura vale para as duas fontes (FONTE_EXTRATOS no .env):
+    local  pasta local/de rede (PASTA_EXTRATOS)
+    sftp   servidor do cliente, acessado pela API de extratos (caminhos relativos à SFTP_PASTA_BASE dela)
 """
 from __future__ import annotations
 
 import re
 from datetime import date, timedelta
-from pathlib import Path
-from typing import Iterable, Optional
+from pathlib import Path, PurePath
+from typing import Iterable, Optional, Protocol
 
 from conciliacao.configuracao import Cadastro
 from conciliacao.modelos import Conta
@@ -37,22 +41,48 @@ def dia_util_seguinte(dia: date, feriados: Iterable[date] = ()) -> date:
     return dia
 
 
-def _subpasta(pai: Path, esperado: str) -> Path:
+class Fonte(Protocol):
+    """De onde vêm os PDFs: pasta local/rede (FonteLocal) ou SFTP do cliente via API de extratos (FonteSftp)."""
+
+    def subpastas(self, pasta: PurePath) -> Optional[list[str]]:
+        """Nomes das subpastas; None se a pasta não existe."""
+
+    def pdfs(self, pasta: PurePath) -> list[str]:
+        """Nomes dos PDFs da pasta; vazio se ela não existe."""
+
+
+class FonteLocal:
+    def subpastas(self, pasta: PurePath) -> Optional[list[str]]:
+        pasta = Path(pasta)
+        return sorted(p.name for p in pasta.iterdir() if p.is_dir()) if pasta.is_dir() else None
+
+    def pdfs(self, pasta: PurePath) -> list[str]:
+        pasta = Path(pasta)
+        if not pasta.is_dir():
+            return []
+        return sorted(p.name for p in pasta.iterdir() if p.is_file() and p.suffix.lower() == ".pdf")
+
+
+LOCAL = FonteLocal()
+
+
+def _subpasta(pai: PurePath, esperado: str, fonte: Fonte) -> PurePath:
     """Encontra a subpasta comparando sem acento/caixa (ex.: "03 - MARÇO" x "03 - MARCO")."""
     candidato = pai / esperado
-    if candidato.is_dir() or not pai.is_dir():
+    existentes = fonte.subpastas(pai)
+    if existentes is None or esperado in existentes:
         return candidato
     alvo = normalizar(esperado).replace(" ", "")
-    for item in pai.iterdir():
-        if item.is_dir() and normalizar(item.name).replace(" ", "") == alvo:
-            return item
+    for nome in existentes:
+        if normalizar(nome).replace(" ", "") == alvo:
+            return pai / nome
     return candidato
 
 
-def pasta_do_dia(raiz: Path, dia: date) -> Path:
-    pasta = _subpasta(raiz, f"{dia.year} AEROFLEX")
-    pasta = _subpasta(pasta, f"{dia.month:02d} - {MESES[dia.month - 1]}")
-    return _subpasta(pasta, f"{dia.day:02d}-{dia.month:02d}")
+def pasta_do_dia(raiz: PurePath, dia: date, fonte: Fonte = LOCAL) -> PurePath:
+    pasta = _subpasta(raiz, f"{dia.year} AEROFLEX", fonte)
+    pasta = _subpasta(pasta, f"{dia.month:02d} - {MESES[dia.month - 1]}", fonte)
+    return _subpasta(pasta, f"{dia.day:02d}-{dia.month:02d}", fonte)
 
 
 def nome_normalizado(arquivo: str) -> str:
@@ -80,14 +110,15 @@ def conta_do_arquivo(arquivo: str, cadastro: Cadastro) -> Optional[Conta]:
     return encontradas[0] if encontradas else None
 
 
-def listar_extratos(pasta_dia: Path, pasta_movimento: Optional[Path], cadastro: Cadastro) -> list[Path]:
+def listar_extratos(pasta_dia: PurePath, pasta_movimento: Optional[PurePath], cadastro: Cadastro,
+                    fonte: Fonte = LOCAL) -> list[PurePath]:
     """PDFs a processar: os da pasta do dia + os ATUALIZADO da pasta da data do movimento (Safra retroativo).
 
     Um arquivo ATUALIZADO substitui o original da mesma conta.
     """
-    arquivos = sorted(pasta_dia.glob("*.pdf")) if pasta_dia.is_dir() else []
-    if pasta_movimento and pasta_movimento.is_dir() and pasta_movimento != pasta_dia:
-        arquivos += [p for p in sorted(pasta_movimento.glob("*.pdf")) if eh_atualizado(p.name)]
+    arquivos = [pasta_dia / nome for nome in fonte.pdfs(pasta_dia)]
+    if pasta_movimento and pasta_movimento != pasta_dia:
+        arquivos += [pasta_movimento / nome for nome in fonte.pdfs(pasta_movimento) if eh_atualizado(nome)]
 
     atualizados = {}
     for arquivo in arquivos:

@@ -37,6 +37,7 @@ class Categoria(str, Enum):
     TARIFA_AGRUPADA = "tarifa_agrupada"
     RENDIMENTO = "rendimento"
     FORA_DO_ESCOPO = "fora_do_escopo"
+    ACAO_MANUAL = "acao_manual"   # conhecido, mas quem trata é uma pessoa (motivo/ação vêm da regra)
     NAO_RECONHECIDO = "nao_reconhecido"
 
 
@@ -104,6 +105,8 @@ class Classificacao:
     origem_tipo: Optional[tuple[str, ...]] = None
     origem_conta: Optional[str] = None
     historico_protheus: Optional[str] = None
+    motivo: Optional[str] = None
+    acao: Optional[str] = None
 
 
 # ---------------------------------------------------------------------------
