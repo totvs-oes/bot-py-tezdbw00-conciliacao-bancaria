@@ -1,0 +1,2265 @@
+{
+ "banco_0341": [
+  {
+   "arquivo": "TARIFAS ITAU 09-09.pdf",
+   "metodo": "layout Tarifas Itaú",
+   "aviso": null,
+   "conta": "4685/08311-7",
+   "lancamentos": [
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00118299-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00129495-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00129014-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00129496-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50000707-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130714-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004955-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003713-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002392-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002412-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002319-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002417-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001342-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130383-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001262-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001119-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50000626-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001159-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002068-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001715-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004229-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002774-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002419-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002275-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002427-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002169-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001055-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002474-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002413-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001103-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001457-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001419-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002884-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003299-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001309-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130689-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001670-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003466-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003785-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001629-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003880-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001153-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001280-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002343-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002847-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001644-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002183-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003500-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002758-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001090-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130724-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001303-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003949-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002763-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002797-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003756-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003758-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004103-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002855-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003332-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003450-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003059-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003820-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002816-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004039-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001144-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003518-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004016-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003261-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003753-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003410-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002833-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001247-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003388-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130851-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004128-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002205-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002876-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003734-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130681-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003973-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001655-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003491-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002839-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004001-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004123-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130537-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001423-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002254-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003961-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003234-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130706-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002157-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002270-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002192-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004195-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001691-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002783-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002811-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003799-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002100-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001480-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002099-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002802-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003775-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003781-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002130-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002287-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001041-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004190-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003740-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001271-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004149-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003320-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003699-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001582-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004238-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002433-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001323-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002818-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001427-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001600-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002359-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130755-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003878-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004185-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002186-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004200-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001633-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001133-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004032-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003912-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004227-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50000863-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001638-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002147-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004066-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002337-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003811-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002889-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001589-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003732-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003689-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004141-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002282-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002072-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004012-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002284-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003855-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003795-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001079-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004079-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002768-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003874-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00129659-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001350-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002291-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004076-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002318-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002243-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002426-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002389-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003728-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002253-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002906-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001704-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002771-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00128041-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001311-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003684-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002925-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003736-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002914-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002087-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001440-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003709-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003988-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004043-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002163-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001231-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002829-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130816-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004072-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001622-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004094-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005480-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002289-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005398-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003065-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005167-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001724-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003929-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003913-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003835-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004082-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004143-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004126-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002765-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002821-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002182-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003921-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001173-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003760-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003971-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001284-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003902-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004221-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003804-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004069-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130656-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003704-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004046-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003724-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001123-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003693-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004037-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002919-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130429-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002164-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002361-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003924-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004193-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002098-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003823-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005506-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002775-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003697-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002158-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002464-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001675-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130622-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001359-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002268-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130499-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001749-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001425-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001588-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001214-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002414-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004234-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005503-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002376-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004207-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002794-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005304-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00128105-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005520-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005329-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001049-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003907-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130739-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001410-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130735-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002454-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002787-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001336-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005493-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001676-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130447-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130770-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002812-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001321-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130855-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001687-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50000978-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002305-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004102-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004209-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50000365-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002370-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004907-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002859-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002148-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002267-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002101-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002321-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005385-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130403-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005502-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001221-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002278-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004019-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004015-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003896-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002929-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006255-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001703-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130710-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003892-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00129522-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130651-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005271-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005372-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130822-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002447-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001662-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002879-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003901-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002367-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004767-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002585-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50000556-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00129162-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005371-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001592-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50000359-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002053-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005527-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006259-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00129742-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006254-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002084-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50000615-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004697-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005478-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001452-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005518-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004764-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005538-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005157-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005529-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001368-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003916-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00130035-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005434-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006261-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003679-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00129428-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006260-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50001530-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00129745-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006256-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005466-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006541-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002285-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006252-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00129453-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006250-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005772-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006247-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006253-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006258-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004557-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006246-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006248-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006249-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50005827-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006251-8",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006257-5",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006244-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006245-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50002977-2",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 00128339-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004304-7",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004419-3",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50004268-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003001-0",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003201-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50003227-1",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50000330-6",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006199-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006161-9",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR COBRANCA 50006149-4",
+     "operacao": "debito",
+     "valor": 0.89
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR MANUT TIT VENCIDO 00077345-7",
+     "operacao": "debito",
+     "valor": 1.79
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR MANUT TIT VENCIDO 00076653-5",
+     "operacao": "debito",
+     "valor": 1.79
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR MANUT TIT VENCIDO 00078298-7",
+     "operacao": "debito",
+     "valor": 1.79
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR MANUT TIT VENCIDO 00077206-1",
+     "operacao": "debito",
+     "valor": 1.79
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR MANUT TIT VENCIDO 00076652-7",
+     "operacao": "debito",
+     "valor": 1.79
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR MANUT TIT VENCIDO 00080900-4",
+     "operacao": "debito",
+     "valor": 1.79
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR MANUT TIT VENCIDO 00076651-9",
+     "operacao": "debito",
+     "valor": 1.79
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR MANUT TIT VENCIDO 00082742-8",
+     "operacao": "debito",
+     "valor": 1.79
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR MANUT TIT VENCIDO 00074912-7",
+     "operacao": "debito",
+     "valor": 1.79
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR MANUT TIT VENCIDO 00121454-3",
+     "operacao": "debito",
+     "valor": 1.79
+    },
+    {
+     "data": "09/09/2026",
+     "historico": "TAR MANUT TIT VENCIDO 00124933-3",
+     "operacao": "debito",
+     "valor": 1.79
+    }
+   ],
+   "conferencia": {
+    "saldo_anterior": 342.76,
+    "saldo_final": 0.0,
+    "total_creditos": 0.0,
+    "total_debitos": 342.76,
+    "movimentacoes_nao_listadas": [],
+    "diferenca": 0.0,
+    "ok": true
+   }
+  }
+ ]
+}

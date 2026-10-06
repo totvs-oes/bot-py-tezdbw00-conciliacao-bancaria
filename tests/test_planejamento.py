@@ -134,6 +134,20 @@ def test_tar_custas_itau_abre_pelo_relatorio_de_tarifas(resposta_api, cadastro):
     assert not [p for p in _pendencias(plano, "Tarifa agrupada") if p.conta.chave == "itau_cc"]
 
 
+def test_relatorio_real_do_itau_lanca_tarifa_por_boleto_da_linha_que_ele_explica(resposta_api, cadastro):
+    """Leitura real da API (layout "Tarifas Itaú") do relatório de 09/09: explica só a linha de R$ 342,76.
+    Cliente (06/10/2026): uma tarifa por boleto. A linha de R$ 132,12, sem relatório, continua pendência."""
+    resposta_api["banco_0341"] += json.loads((FIXTURES / "tarifas_itau_09-09.json").read_text(encoding="utf-8"))["banco_0341"]
+    plano = planejar(ler_resposta_api(resposta_api, cadastro), cadastro, DIA)
+
+    detalhadas = [t for t in plano.tarifas if t.origem_extrato.startswith("TARIFAS ITAU")]
+    assert len(detalhadas) == 374 and sum(t.valor for t in detalhadas) == Decimal("342.76")
+    assert all(t.conta.chave == "itau_cc" for t in detalhadas)
+    assert detalhadas[0].historico == "TAR COBRANCA 00118299-7"
+    pendentes_itau = [p.valor for p in _pendencias(plano, "Tarifa agrupada") if p.conta.chave == "itau_cc"]
+    assert pendentes_itau == [Decimal("132.12")]
+
+
 def _com_detalhe_bb(resposta_api, valores):
     resposta_api["banco_0001"].append({
         "arquivo": "TARIFAS BB 09-09 I.pdf", "metodo": "ia", "aviso": None, "conta": None,

@@ -206,26 +206,44 @@ class _Planejador:
 
         detalhes = [e for e in self.plano.extratos if e.eh_detalhe_tarifas]
         for (banco, ocorrencia), agrupadas in por_ocorrencia.items():
-            individuais = [l for e in detalhes if e.banco == banco for l in e.lancamentos
-                           if l.data == ocorrencia and l.operacao == "debito"]
+            relatorios = [(e.arquivo, [l for l in e.lancamentos if l.data == ocorrencia and l.operacao == "debito"])
+                          for e in detalhes if e.banco == banco]
+            relatorios = [(arquivo, itens) for arquivo, itens in relatorios if itens]
             total_agrupado = sum((l.valor for l in agrupadas), Decimal("0"))
-            total_detalhe = sum((l.valor for l in individuais), Decimal("0"))
+            total_detalhe = sum((l.valor for _, itens in relatorios for l in itens), Decimal("0"))
 
-            if individuais and total_detalhe == total_agrupado:
-                conta_debito = agrupadas[0].conta
-                for item in individuais:
-                    tarifa = self._tarifa(item, item.historico, f"{item.arquivo}#{item.indice}")
-                    tarifa.conta = conta_debito
-                    self.plano.tarifas.append(tarifa)
+            # Todos os relatórios do dia somam todas as linhas agrupadas (BB: "I" + "II" = uma linha)
+            if relatorios and total_detalhe == total_agrupado:
+                for _, itens in relatorios:
+                    self._lancar_detalhe(itens, agrupadas[0].conta)
                 continue
 
-            motivo = ("Extrato de tarifas detalhado não encontrado para a ocorrência."
-                      if not individuais else
-                      f"Soma do detalhamento (R$ {formatar_brl(total_detalhe)}) diferente do agrupado "
-                      f"(R$ {formatar_brl(total_agrupado)}).")
-            for lancamento in agrupadas:
+            # Senão, cada relatório que soma exatamente UMA linha agrupada lança só ela (Itaú: um relatório
+            # "Movimentação de Títulos" por carteira, uma linha TAR/CUSTAS por relatório). O resto vira pendência.
+            restantes = list(agrupadas)
+            sobras: list[tuple[str, list[LancamentoExtrato]]] = []
+            for arquivo, itens in relatorios:
+                soma = sum((l.valor for l in itens), Decimal("0"))
+                if (linha := next((a for a in restantes if a.valor == soma), None)) is not None:
+                    restantes.remove(linha)
+                    self._lancar_detalhe(itens, linha.conta)
+                else:
+                    sobras.append((arquivo, itens))
+
+            total_sobras = sum((l.valor for _, itens in sobras for l in itens), Decimal("0"))
+            for lancamento in restantes:
+                motivo = ("Extrato de tarifas detalhado não encontrado para a ocorrência."
+                          if not sobras else
+                          f"Soma do detalhamento (R$ {formatar_brl(total_sobras)}) diferente do agrupado "
+                          f"(R$ {formatar_brl(lancamento.valor)}).")
                 self._pendencia(lancamento.arquivo, f"Tarifa agrupada de {ocorrencia:%d/%m/%Y}: {motivo}",
                                 "Lançar as tarifas individualmente a partir do extrato de tarifas.", lancamento)
+
+    def _lancar_detalhe(self, itens: list[LancamentoExtrato], conta_debito: Conta) -> None:
+        for item in itens:
+            tarifa = self._tarifa(item, item.historico, f"{item.arquivo}#{item.indice}")
+            tarifa.conta = conta_debito
+            self.plano.tarifas.append(tarifa)
 
     # ------------------------------------------------------------------
     def _planejar_conciliacao(self, extrato: ExtratoLido) -> None:
