@@ -26,7 +26,9 @@ def enviar(ambiente: Ambiente, destinatarios: list[str], assunto: str, corpo: st
         mensagem.add_attachment(anexo.read_bytes(), maintype="text", subtype="markdown", filename=anexo.name)
     try:
         with smtplib.SMTP(ambiente.smtp_host, ambiente.smtp_porta, timeout=60) as smtp:
+            smtp.ehlo()
             smtp.starttls()
+            smtp.ehlo()
             if ambiente.smtp_usuario:
                 smtp.login(ambiente.smtp_usuario, ambiente.smtp_senha)
             smtp.send_message(mensagem)
