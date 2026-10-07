@@ -6,6 +6,7 @@ Precisa do Chrome instalado; é pulado se não houver.
 """
 import functools
 import threading
+import time
 from datetime import date
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -69,6 +70,19 @@ def test_login_fecha_aviso_depois_do_entrar(ambiente, tmp_path):
         # O "Fechar" fora de wa-dialog (menu) não pode ser clicado
         assert sessao.tela.page.evaluate("window.fechouErrado") is None
         assert (tmp_path / "prints" / "aviso_protheus_1.png").exists()
+    finally:
+        sessao.__exit__()
+
+
+def test_login_nao_espera_a_rede_ficar_ociosa(ambiente, tmp_path):
+    """VM, 07/10/2026: o WebApp nunca fica com a rede ociosa logo após o login, e cada espera por "networkidle"
+    custava 30 s (antes de clicar em Entrar e antes/depois do Fechar). Cada passo espera o próximo elemento."""
+    ambiente.protheus_url += "?aviso=1&ocupado=1"
+    inicio = time.monotonic()
+    sessao = _sessao(ambiente, tmp_path)
+    try:
+        assert sessao.tela.page.title() == "ENTROU 09/09/2026 sp01\\robo senha:7"
+        assert time.monotonic() - inicio < 25   # simulador: ~5 s de telas + 3 s observando avisos novos
     finally:
         sessao.__exit__()
 

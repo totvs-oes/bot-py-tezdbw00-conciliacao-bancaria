@@ -5,7 +5,9 @@
      3) cabeçalho com a data base num botão; clicar abre o diálogo AdvPL (rótulo wa-text-view caption="Data base*"
         e, ABAIXO dele, um wa-text-input com o <input> no shadow DOM) com "Confirmar".
      Com ?aviso=1: depois do "Entrar" aparece o aviso visto na homologação em 05/10/2026 (wa-dialog com "Fechar")
-     e o menu só aparece depois de fechá-lo. O menu tem um "Fechar" FORA de wa-dialog, que não pode ser clicado. -->
+     e o menu só aparece depois de fechá-lo. O menu tem um "Fechar" FORA de wa-dialog, que não pode ser clicado.
+     Com ?ocupado=1: requisições a cada 300 ms até a tela inicial aparecer: durante o login a rede nunca fica
+     ociosa (login lento na VM em 07/10/2026). -->
 <div id="t2" style="display:none"><button id="entrar">Entrar</button></div>
 <!-- Como no real: a janela principal também é um wa-dialog (dict-twindow) e contém o menu -->
 <wa-dialog id="COMP3000" class="dict-twindow" title="TOTVS Manufatura (TOTVS) 02.9.0099" style="display:block">
@@ -37,6 +39,12 @@ document.querySelectorAll("wa-text-view, wa-text-input, wa-button").forEach(comp
 var dataBase = document.getElementById("COMP4507").shadowRoot.querySelector("input");
 document.getElementById("COMP4512").shadowRoot.querySelector("input").value = "010101";
 
+if (location.search.indexOf("ocupado=1") >= 0) {
+  var ping = setInterval(function () {
+    if (menu.style.display === "block") { clearInterval(ping); return; }
+    fetch("webapp.html?ping=" + Date.now());
+  }, 300);
+}
 setTimeout(function () {
   var host = document.createElement("wa-webview"); host.id = "COMP3010"; document.body.appendChild(host);
   var sr = host.attachShadow({mode: "open"});

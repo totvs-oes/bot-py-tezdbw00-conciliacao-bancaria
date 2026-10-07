@@ -134,9 +134,9 @@ class Tela:
             log.warning("Não foi possível salvar o print %s: %s", caminho.name, erro)
         return caminho
 
-    def esperar_ocioso(self) -> None:
+    def esperar_ocioso(self, timeout: int = TIMEOUT_PADRAO) -> None:
         try:
-            self.page.wait_for_load_state("networkidle", timeout=TIMEOUT_PADRAO)
+            self.page.wait_for_load_state("networkidle", timeout=timeout)
         except PlaywrightTimeout:
             pass  # o WebApp mantém websocket aberto; networkidle pode não acontecer
 
@@ -174,13 +174,16 @@ class Tela:
             self.page.wait_for_timeout(500)
 
     def clicar(self, texto: str, exato: bool = False, dentro: Optional[Locator] = None,
-               timeout: int = TIMEOUT_PADRAO) -> None:
+               timeout: int = TIMEOUT_PADRAO, esperar_rede: bool = True) -> None:
+        """esperar_rede=False: não espera a rede ficar ociosa depois do clique (no login o WebApp ainda está
+        baixando e o "networkidle" pode levar os 30 s inteiros); quem chama espera o próximo elemento."""
         alvo = self._procurar(f"botao_{texto}", lambda raiz: [
             raiz.get_by_role("button", name=texto, exact=exato),
             raiz.get_by_text(texto, exact=exato),
         ], 0, timeout, dentro)
         alvo.click()
-        self.esperar_ocioso()
+        if esperar_rede:
+            self.esperar_ocioso()
         self.verificar_mensagem()
 
     def botao(self, nome: str | re.Pattern, descricao: str, timeout: int = TIMEOUT_PADRAO) -> Locator:
@@ -396,11 +399,14 @@ class Tela:
             self.print(f"aviso_protheus_{len(textos) + 1}")
             log.warning("Aviso do Protheus fechado: %s", texto)
             botao.click()
-            self.esperar_ocioso()
+            # Sem esperar a rede ociosa (chegava a 30 s logo após o login): o laço já observa por `quieto_ms`
             self.page.wait_for_timeout(ESPERA_VALIDACAO)
             textos.append(texto)
             ultimo = time.monotonic()
         return textos
+
+    def aviso_aberto(self) -> bool:
+        return self._fechar_de_dialogo() is not None
 
     def _fechar_de_dialogo(self) -> Optional[tuple[str, Locator]]:
         botoes = self.page.get_by_role("button", name=re.compile(r"^\s*" + re.escape(s.AVISO_FECHAR) + r"\s*$"))

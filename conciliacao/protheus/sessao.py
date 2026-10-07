@@ -97,9 +97,7 @@ class SessaoProtheus:
     def _login(self) -> None:
         tela, page = self.tela, self.tela.page
         log.info("Login no Protheus (data base %s)", self.data_base.strftime("%d/%m/%Y"))
-        # O WebApp demora para baixar e iniciar; espera o carregamento completo com folga
         page.goto(self.ambiente.protheus_url, wait_until="load", timeout=TIMEOUT_CARGA_INICIAL)
-        tela.esperar_ocioso()
         # Tela 1 (PO-UI): usuário e senha, confirma com Enter
         usuario = tela.elemento_css(s.LOGIN_USUARIO_CSS, "campo_usuario", timeout=TIMEOUT_CARGA_INICIAL)
         tela.diagnostico("01_tela_login")  # registro para calibração; barato e ajuda quando a tela muda
@@ -112,14 +110,30 @@ class SessaoProtheus:
         if not _sumiu(page, senha, TIMEOUT_CARGA_INICIAL):
             tela.diagnostico("02_login_nao_avancou")
             raise ErroDeTela("Login não avançou após o Enter (usuário/senha inválidos?)")
-        tela.esperar_ocioso()
-        tela.diagnostico("02_tela_pos_login")
-        tela.clicar(s.LOGIN_ENTRAR, timeout=TIMEOUT_CARGA_INICIAL)
-        tela.esperar_ocioso()
+        tela.clicar(s.LOGIN_ENTRAR, timeout=TIMEOUT_CARGA_INICIAL, esperar_rede=False)
+        tela.print("02_tela_pos_login")
+        self._esperar_tela_inicial()
         # Aviso(s) com "Fechar" logo após o Entrar (homologação: "base de Desenvolvimento"); sem aviso, segue
         tela.fechar_avisos()
         tela.print("03_login_ok")
+        log.info("Login concluído")
         self.definir_data_base()
+
+    def _esperar_tela_inicial(self) -> None:
+        """Depois do "Entrar": espera o aviso pós-login OU o botão de data base do cabeçalho (tela inicial).
+        O aviso pode cobrir a tela inicial, por isso qualquer um dos dois serve."""
+        tela = self.tela
+        limite = time.monotonic() + TIMEOUT_CARGA_INICIAL / 1000
+        while time.monotonic() < limite:
+            try:
+                if tela.aviso_aberto() or any(
+                        f.get_by_role("button", name=s.CABECALHO_DATA_BASE).first.is_visible() for f in tela.page.frames):
+                    return
+            except PlaywrightError:
+                pass  # tela sendo redesenhada / iframe destruído
+            tela.page.wait_for_timeout(500)
+        caminho = tela.diagnostico("tela_inicial_nao_carregou")
+        raise ErroDeTela(f"A tela inicial não carregou depois do Entrar. Diagnóstico: {caminho}")
 
     def definir_data_base(self) -> None:
         """Data base da sessão = data do movimento (a operadora trabalha com a data do extrato processado).
