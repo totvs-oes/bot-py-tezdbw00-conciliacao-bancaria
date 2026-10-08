@@ -203,3 +203,25 @@ def test_chaves_unicas_e_estaveis(extratos, cadastro):
 def test_documento():
     assert documento(DIA, 0) == "090926"
     assert documento(DIA, 3) == "0909263"
+
+
+def test_chave_nao_depende_do_texto_do_historico(extratos, cadastro):
+    """Ocorrência 0002 (MIT045): a leitura do PDF mudou o histórico (nome do pagador a mais; nosso número corrigido no
+    boleto BAZAR) e o mesmo lançamento ganhava chave nova -> era gravado de novo."""
+    from conciliacao.planejamento import _atribuir_chaves
+    plano = planejar(extratos, cadastro, DIA)
+    antes = [i.chave for i in plano.itens()]
+    for item in plano.itens():
+        item.historico = item.historico + " TEXTO DIFERENTE"
+    _atribuir_chaves(plano)
+    assert [i.chave for i in plano.itens()] == antes
+
+
+def test_itens_iguais_continuam_com_chaves_distintas(resposta_api, cadastro):
+    """Tarifas de mesmo valor na mesma conta e dia (R$ 0,89 por boleto do Itaú) são contadas uma a uma."""
+    from collections import Counter
+    resposta_api["banco_0341"] += json.loads((FIXTURES / "tarifas_itau_09-09.json").read_text(encoding="utf-8"))["banco_0341"]
+    plano = planejar(ler_resposta_api(resposta_api, cadastro), cadastro, DIA)
+    iguais = Counter((t.contas(), t.valor) for t in plano.tarifas)
+    assert max(iguais.values()) > 300
+    assert len({i.chave for i in plano.itens()}) == len(plano.itens())

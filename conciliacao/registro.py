@@ -101,6 +101,13 @@ class Registro:
         """Grava os itens novos e preenche documento/status de todos os itens do plano."""
         for item in plano.itens():
             linha = self.conexao.execute("SELECT documento FROM lancamentos WHERE chave = ?", (item.chave,)).fetchone()
+            if not linha and item.chave_legada:
+                # Registro gravado com a chave antiga (com o histórico): passa a usar a chave nova
+                linha = self.conexao.execute("SELECT documento FROM lancamentos WHERE chave = ?",
+                                             (item.chave_legada,)).fetchone()
+                if linha:
+                    self.conexao.execute("UPDATE lancamentos SET chave = ?, atualizado_em = ? WHERE chave = ?",
+                                         (item.chave, _agora(), item.chave_legada))
             if linha:
                 item.documento = linha["documento"]
                 continue

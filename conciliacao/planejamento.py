@@ -276,15 +276,24 @@ class _Planejador:
 
 # ----------------------------------------------------------------------
 def _atribuir_chaves(plano: Plano) -> None:
-    """Chave estável de idempotência: não depende do nome do arquivo (o ATUALIZADO substitui o original).
+    """Chave estável de idempotência: rotina + data + contas + valor + ordem de ocorrência.
 
-    Itens idênticos no mesmo dia (ex.: duas tarifas de R$ 4,85) são diferenciados pela ordem de ocorrência.
+    Não depende do nome do arquivo (o ATUALIZADO substitui o original) NEM do texto do histórico: uma mudança na
+    leitura do PDF (nome do pagador a mais, nº do documento tirado do histórico, nosso número corrigido) gerava chave
+    nova e o lançamento era feito de novo (ocorrência 0002 do MIT045, 06-08/10/2026). Itens com a mesma base (ex.:
+    300 tarifas de R$ 0,89 na mesma conta) são equivalentes no Protheus: o robô conta quantos já lançou.
+
+    `chave_legada` (formato antigo, com o histórico) deixa o registro migrar o que já foi gravado.
     """
     ocorrencias: Counter[str] = Counter()
+    ocorrencias_legado: Counter[str] = Counter()
     for item in plano.itens():
-        base = f"{item.rotina.value}|{item.data.isoformat()}|{item.contas()}|{item.valor}|{item.historico}"
+        base = f"{item.rotina.value}|{item.data.isoformat()}|{item.contas()}|{item.valor}"
         ocorrencias[base] += 1
-        item.chave = hashlib.sha1(f"{base}|{ocorrencias[base]}".encode()).hexdigest()[:16]
+        item.chave = hashlib.sha1(f"v2|{base}|{ocorrencias[base]}".encode()).hexdigest()[:16]
+        legado = f"{base}|{item.historico}"
+        ocorrencias_legado[legado] += 1
+        item.chave_legada = hashlib.sha1(f"{legado}|{ocorrencias_legado[legado]}".encode()).hexdigest()[:16]
 
 
 def documento(data: date, sequencia: int) -> str:

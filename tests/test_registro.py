@@ -52,3 +52,22 @@ def test_execucao_interrompida(extratos, cadastro):
     assert registro.status(a.chave) == ERRO        # caiu antes de salvar: pode tentar de novo
     assert registro.status(b.chave) == INCERTO     # caiu depois de clicar em Salvar: conferência humana
     assert registro.status(c.chave) == PLANEJADO
+
+
+def test_controle_com_chave_antiga_e_migrado_sem_lancar_de_novo(extratos, cadastro):
+    """Controle gravado antes de 09/10/2026 (chave com o histórico): o plano novo acha cada item pela chave antiga,
+    migra para a nova e mantém documento e status — nada é lançado de novo."""
+    registro = Registro(":memory:")
+    antigo = _plano(extratos, cadastro)
+    for item in antigo.itens():
+        item.chave = item.chave_legada   # como o robô gravava até então
+    registro.registrar_plano(antigo)
+    for item in antigo.itens():
+        registro.marcar(item.chave, CONCLUIDO)
+    total = registro.conexao.execute("SELECT COUNT(*) FROM lancamentos").fetchone()[0]
+
+    novo = _plano(extratos, cadastro)
+    registro.registrar_plano(novo)
+    assert [i.documento for i in novo.itens()] == [i.documento for i in antigo.itens()]
+    assert all(registro.status(i.chave) == CONCLUIDO for i in novo.itens())
+    assert registro.conexao.execute("SELECT COUNT(*) FROM lancamentos").fetchone()[0] == total

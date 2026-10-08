@@ -121,6 +121,7 @@ class ItemPlano:
     historico: str                   # histórico gravado no Protheus
     origem_extrato: str              # "arquivo#indice" para rastreabilidade
     chave: str = ""                  # identidade estável (idempotência), definida pelo planejamento
+    chave_legada: str = ""           # chave do formato antigo (com o histórico): migra registros já gravados
     documento: Optional[str] = None  # atribuído pelo registro (DDMMAA + sequencial)
     aviso: Optional[str] = None
 
