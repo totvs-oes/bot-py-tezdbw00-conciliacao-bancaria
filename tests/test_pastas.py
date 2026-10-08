@@ -37,6 +37,13 @@ def test_dia_util_anterior():
     ("SANTANDER 130018420 10-09.pdf", "santander_cc"),
     ("SANTANDER 290003762 10-09.pdf", "santander_caucao_376"),
     ("SANTANDER 290004323 10-09.pdf", "santander_caucao_432"),
+    # Variações vistas nas pastas 11-09 a 16-09
+    ("BANCO CAIXA - 14-09.pdf", "caixa_cc"),
+    ("CAIXA VINCULADA.pdf", "caixa_vinculada"),
+    ("BANCO DO BRASIL 41000.4 14-09.pdf", "bb_cc"),
+    ("BANCO DO BRASIL APLIC.pdf", "bb_aplic"),
+    ("ABC 06609345-9 15-09.pdf", "abc_cc"),
+    ("ITAU 6896-9  10-09.pdf", "itau_cc"),
 ])
 def test_conta_do_arquivo(cadastro, arquivo, conta):
     assert conta_do_arquivo(arquivo, cadastro).chave == conta
@@ -67,3 +74,17 @@ def test_atualizado_substitui_original(cadastro, tmp_path):
 
     nomes = [p.name for p in listar_extratos(pasta_dia, pasta_mov, cadastro)]
     assert nomes == ["ITAU 6896-9 12-08.pdf", "SAFRA 580275-7 11-08.pdf ATUALIZADO.pdf"]
+
+
+def test_atualizado_da_pasta_do_dia_e_do_movimento_seguinte(cadastro, tmp_path):
+    """Pasta 11-09 (movimento de 10/09) com "SAFRA 580275-7 11-09.pdf ATUALIZADO.pdf", que só tem o dia 11/09:
+    o movimento de 10/09 usa o original; o ATUALIZADO entra no movimento de 11/09 (pasta 14-09)."""
+    p10, p11, p14 = tmp_path / "10-09", tmp_path / "11-09", tmp_path / "14-09"
+    for pasta in (p10, p11, p14):
+        pasta.mkdir()
+    (p11 / "SAFRA 580275-7 11-09.pdf").write_bytes(b"%PDF-")
+    (p11 / "SAFRA 580275-7 11-09.pdf ATUALIZADO.pdf").write_bytes(b"%PDF-")
+    (p14 / "SAFRA 580275-7 14-09.pdf").write_bytes(b"%PDF-")
+
+    assert [p.name for p in listar_extratos(p11, p10, cadastro)] == ["SAFRA 580275-7 11-09.pdf"]
+    assert [p.name for p in listar_extratos(p14, p11, cadastro)] == ["SAFRA 580275-7 11-09.pdf ATUALIZADO.pdf"]

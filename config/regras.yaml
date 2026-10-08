@@ -63,16 +63,18 @@ regras:
     categoria: contrapartida
     operacao: credito
     tipos_conta: [corrente]
-    historico: '\bTEG\b|TRANSF\.? ?EXCEDENTE|LIBERACAO DE (CONTA )?VINCULADA|MESMA TITULARI|TRANSFERENCIA ENTRE C/?C'
+    # Caixa: a vinculada transfere como "TRANSF RECURSO AGENCIA" e o crédito chega na C/C como "CRED TEV" (10/09/2026)
+    historico: '\bTEG\b|TRANSF\.? ?EXCEDENTE|LIBERACAO DE (CONTA )?VINCULADA|MESMA TITULARI|TRANSFERENCIA ENTRE C/?C|^CRED TEV\b'
     origem_tipo: [caucao, vinculada]
 
   # --- Itaú "KG": pagamento ligado ao Contas a Pagar; a baixa é manual (cliente, 05/10/2026). Não lançar.
   # --- Daycoval "AMORT. DE CONTRATO": amortização de empréstimo do Contas a Pagar; baixa manual (cliente, 05/10/2026)
-  - nome: amortizacao_contrato_daycoval
+  # --- BB "Cap Giro Dig Amortização" (15/09/2026): amortização de capital de giro, mesmo tratamento.
+  - nome: amortizacao_contrato
     categoria: acao_manual
-    bancos: ["707"]
+    bancos: ["707", "001"]
     operacao: debito
-    historico: '^AMORT\.? DE CONTRATO\b'
+    historico: '^AMORT\.? DE CONTRATO\b|^CAP GIRO .*AMORTIZA'
     motivo: "Amortização de contrato (empréstimo) do Contas a Pagar (não é lançada pelo robô)."
     acao: "Fazer a baixa manual do título no Contas a Pagar; sem ela o saldo da conta não fecha na conciliação."
 
@@ -97,7 +99,7 @@ regras:
     categoria: transferencia
     operacao: debito
     tipos_conta: [corrente]
-    historico: '^APLICACAO\b|^APLIC AUT\b|\bAPLIC(ACAO)? (CDB|FINANCEIRA|CONTAMAX)'
+    historico: '^APLICACAO\b|^APLIC AUT\b|^APL APLIC AUT\b|\bAPLIC(ACAO)? (CDB|FINANCEIRA|CONTAMAX)'   # Itaú "APL APLIC AUT MAIS" (10/09)
     destino_tipo: aplicacao
     historico_protheus: "TRANSF {so} CC P/ {sd} APLIC"
 
@@ -127,7 +129,17 @@ regras:
   - nome: tarifa
     categoria: tarifa
     operacao: debito
-    historico: '\bTAR\b|\bTARIFA|\bCOB (LOTERI|AGENC|COMPE|ALT|BX|MAN|INTERN)\b|\bCOBPROT\b|DESPESAS? DE CARTORIO|DEBITO SERVICO COBRANCA|DEB\.? CUSTAS CARTOR|\bPACOTE PJ\b'
+    # Caixa: o código vem grudado ("COB ALT055", "COBPROT066"), por isso sem \b no fim desses dois
+    historico: '\bTAR\b|\bTARIFA|\bCOB (LOTERI|AGENC|COMPE|ALT|BX|MAN|INTERN)|\bCOBPROT|DESPESAS? DE CARTORIO|DEBITO SERVICO COBRANCA|DEB\.? CUSTAS CARTOR|\bPACOTE PJ\b'
+
+  # --- BB câmbio de exportação (10 e 15/09/2026): contrato, IOF e serviço de câmbio. Não lançar; tratamento a
+  # confirmar com o Financeiro. Depois da regra de tarifa: "Tar Liquid Orpag Exterior" continua tarifa.
+  - nome: cambio_bb
+    categoria: acao_manual
+    bancos: ["001"]
+    historico: '\bCAMBIO\b'
+    motivo: "Operação de câmbio (contrato de exportação, IOF ou serviço de câmbio): não é lançada pelo robô."
+    acao: "Tratar manualmente conforme o processo de câmbio do Financeiro."
 
   # --- Fora do escopo do RPA (recebimentos, pagamentos, CNAB, impostos...). Só informativo.
   - nome: fora_do_escopo
@@ -139,4 +151,6 @@ regras:
       - '\bPIX (RECEBIDO|ENVIADO|QR CODE)|PIX RECEBIDO|^PIX - ENVIADO|PAGAMENTO PIX'
       - '^PAGAMENTOS\b|^SISPAG\b|^TED\b|TED ENVIADA|^PAGFOR\b'
       - '^DEV PAG BOL\b'   # Itaú: estorno de pagamento recusado pelo banco; sem ação (cliente, 05/10/2026)
-      - '^IMPOSTOS\b|^CONTR IMP\b|PRESTACAO CONSORCIO|DEBITO AUT\.'
+      - '^IMPOSTOS\b|^CONTR IMP\b|PRESTACAO CONSORCIO|DEBITO AUT(\.|OMATICO\b)'
+      - '^PAGAMENTO DE BOLETO\b|PAGAMENTO DE SALARIO|^ENVIO TED\b'   # pagamentos (10/09/2026)
+      - '^COB (INTERN|COMPE|LOT|AGENC)'   # Caixa vinculada: créditos de cobrança (os débitos já caíram em tarifa)

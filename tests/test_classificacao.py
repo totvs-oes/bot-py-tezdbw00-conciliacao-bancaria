@@ -33,6 +33,25 @@ def _lancamento(cadastro, conta, historico, operacao):
     ("santander_cc", "APLICACAO CONTAMAX 000000", "debito", "transferencia", "aplicacao"),
     ("safra_cc", "APLICACAO CDB AUTOMATICO 5802749", "debito", "transferencia", "aplicacao"),
     ("abc_cc", "APLICACAO FINANCEIRA", "debito", "transferencia", "aplicacao"),
+    ("itau_cc", "APL APLIC AUT MAIS AP", "debito", "transferencia", "aplicacao"),
+    # Caixa vinculada -> C/C (10/09/2026)
+    ("caixa_vinculada", "TRANSF RECURSO AGENCIA 07872967000102 AEROFLEX INDUSTRIA DE A. LTDA 101111 11:11:45",
+     "debito", "transferencia", "liberacao_caucao"),
+    ("caixa_cc", "CRED TEV 101111", "credito", "contrapartida", "contrapartida_liberacao"),
+    ("caixa_vinculada", "COB COMPE 90926 02:15:43", "credito", "fora_do_escopo", "fora_do_escopo"),
+    # Caixa: tarifas com código grudado
+    ("caixa_cc", "COB ALT055 100926", "debito", "tarifa", "tarifa"),
+    ("caixa_cc", "COBPROT066 100926", "debito", "tarifa", "tarifa"),
+    ("caixa_cc", "COB BX 063 100926", "debito", "tarifa", "tarifa"),
+    # Pagamentos (fora do escopo) e câmbio/amortização (ação manual)
+    ("bb_cc", "Pagamento de Boleto COMERCIAL MARTINS LTDA", "debito", "fora_do_escopo", "fora_do_escopo"),
+    ("santander_cc", "DEBITO PAGAMENTO DE SALARIO P AGSAL: 6 PAGTOS 010910", "debito", "fora_do_escopo", "fora_do_escopo"),
+    ("caixa_cc", "ENVIO TED 000324", "debito", "fora_do_escopo", "fora_do_escopo"),
+    ("bradesco_cc", "DEBITO AUTOMATICO CGMP-SEM PARAR/SP*- 309724", "debito", "fora_do_escopo", "fora_do_escopo"),
+    ("bb_cc", "Liquid Contr Câmbio Exp", "credito", "acao_manual", "cambio_bb"),
+    ("bb_cc", "Débito Serv.Cambio", "debito", "acao_manual", "cambio_bb"),
+    ("bb_cc", "Tar Liquid Orpag Exterior", "debito", "tarifa", "tarifa"),
+    ("bb_cc", "Cap Giro Dig Amortização", "debito", "acao_manual", "amortizacao_contrato"),
     # Santander: créditos de cobrança na caução
     ("santander_caucao_432", "COBRANCA GARANTIA 000000", "credito", "consolidacao", "consolidacao_santander"),
     # Rendimento
@@ -63,7 +82,7 @@ def _lancamento(cadastro, conta, historico, operacao):
     ("daycoval_cc", "TRANSF.MESMA TITULARIDADE", "credito", "contrapartida", "contrapartida_liberacao"),
     ("daycoval_cc", "TARIFA DE MANUTENCAO DE C/C", "debito", "tarifa", "tarifa"),
     # Não reconhecido: vira pendência
-    ("daycoval_cc", "AMORT. DE CONTRATO 99EJDSR", "debito", "acao_manual", "amortizacao_contrato_daycoval"),
+    ("daycoval_cc", "AMORT. DE CONTRATO 99EJDSR", "debito", "acao_manual", "amortizacao_contrato"),
 ])
 def test_classificacao(cadastro, conta, historico, operacao, categoria, regra):
     resultado = classificar(_lancamento(cadastro, conta, historico, operacao), cadastro.regras)

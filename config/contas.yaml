@@ -19,8 +19,10 @@ bancos:
 
 contas:
   # --- Banco do Brasil
-  - {chave: bb_cc,        banco: "001", agencia: "3404",  numero: "41000",      tipo: corrente,  arquivo: '^BANCO DO BRASIL 41000-?4\b'}
-  - {chave: bb_aplic,     banco: "001", agencia: "3404",  numero: "9999999999", tipo: aplicacao}
+  # Nome do arquivo varia: "41000-4", "410004", "41000.4" (14-09)
+  - {chave: bb_cc,        banco: "001", agencia: "3404",  numero: "41000",      tipo: corrente,  arquivo: '^BANCO DO BRASIL 41000[-.]?4\b'}
+  # "BANCO DO BRASIL APLIC.pdf" (desde 11-09): extrato do fundo RF LP Empresa, só informativo -> não concilia
+  - {chave: bb_aplic,     banco: "001", agencia: "3404",  numero: "9999999999", tipo: aplicacao, conciliar: false, arquivo: '^BANCO DO BRASIL APLIC\b'}
 
   # --- Bradesco
   - {chave: bradesco_cc,     banco: "237", agencia: "06349", numero: "0000050542", tipo: corrente, arquivo: '^BRADESCO 0*50542-?0\b'}
@@ -53,9 +55,10 @@ contas:
   - {chave: itau_cambio, banco: "341", agencia: "4685", numero: "0000000000", tipo: cambio}
   - {chave: itau_aplic,  banco: "341", agencia: "4685", numero: "9999999999", tipo: aplicacao}
 
-  # --- Caixa (o arquivo pode vir sem número de conta: "BANCO CAIXA 10-09.pdf")
-  - {chave: caixa_cc,        banco: "104", agencia: "4266", numero: "0005769805", tipo: corrente,  arquivo: '^(BANCO )?CAIXA( 0*5769805-?\d+)? \d{2}-\d{2}\b'}
-  - {chave: caixa_vinculada, banco: "104", agencia: "4266", numero: "57845528",   tipo: vinculada, arquivo: '^(BANCO )?CAIXA 0*57845528'}
+  # --- Caixa (o arquivo pode vir sem número de conta: "BANCO CAIXA 10-09.pdf", "BANCO CAIXA - 14-09.pdf")
+  - {chave: caixa_cc,        banco: "104", agencia: "4266", numero: "0005769805", tipo: corrente,  arquivo: '^(BANCO )?CAIXA( 0*5769805-?\d+)?( -)? \d{2}-\d{2}\b'}
+  # "CAIXA VINCULADA.pdf" (11-09); no PDF a conta é 4266/1292/000572845528-6 -> conferir o número no Protheus
+  - {chave: caixa_vinculada, banco: "104", agencia: "4266", numero: "57845528",   tipo: vinculada, arquivo: '^(BANCO )?CAIXA (0*57845528|VINCULADA)'}
   - {chave: caixa_aplic,     banco: "104", agencia: "4266", numero: "9999999999", tipo: aplicacao}
 
   # --- Daycoval: números como estão no Cadastro de Bancos do Protheus (print da cliente, 05/10/2026).

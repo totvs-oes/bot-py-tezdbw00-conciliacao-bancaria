@@ -114,10 +114,13 @@ def listar_extratos(pasta_dia: PurePath, pasta_movimento: Optional[PurePath], ca
                     fonte: Fonte = LOCAL) -> list[PurePath]:
     """PDFs a processar: os da pasta do dia + os ATUALIZADO da pasta da data do movimento (Safra retroativo).
 
-    Um arquivo ATUALIZADO substitui o original da mesma conta.
+    Um arquivo ATUALIZADO substitui o original da mesma conta. O ATUALIZADO que está na própria pasta do dia é o
+    do movimento SEGUINTE (a cliente o salva na pasta da data da movimentação): fica de fora. Visto em 11-09:
+    "SAFRA 580275-7 11-09.pdf ATUALIZADO.pdf" só tem o dia 11/09 e tirava do movimento de 10/09 o resgate e a tarifa.
     """
     arquivos = [pasta_dia / nome for nome in fonte.pdfs(pasta_dia)]
     if pasta_movimento and pasta_movimento != pasta_dia:
+        arquivos = [a for a in arquivos if not eh_atualizado(a.name)]
         arquivos += [pasta_movimento / nome for nome in fonte.pdfs(pasta_movimento) if eh_atualizado(nome)]
 
     atualizados = {}
