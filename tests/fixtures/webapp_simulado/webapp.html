@@ -6,9 +6,16 @@
         e, ABAIXO dele, um wa-text-input com o <input> no shadow DOM) com "Confirmar".
      Com ?aviso=1: depois do "Entrar" aparece o aviso visto na homologação em 05/10/2026 (wa-dialog com "Fechar")
      e o menu só aparece depois de fechá-lo. O menu tem um "Fechar" FORA de wa-dialog, que não pode ser clicado.
+     Com ?ambiente_lento=1: Grupo/Filial/Ambiente da tela 2 só são preenchidos 3 s depois; Entrar antes disso é
+     "formulário inválido" (fica na tela, conta em window.formularioInvalido) - visto na homologação em 08/10/2026.
      Com ?ocupado=1: requisições a cada 300 ms até a tela inicial aparecer: durante o login a rede nunca fica
      ociosa (login lento na VM em 07/10/2026). -->
-<div id="t2" style="display:none"><button id="entrar">Entrar</button></div>
+<div id="t2" style="display:none">
+  <!-- Como no PO-UI "session-settings": códigos preenchidos pelo servidor depois que a tela aparece -->
+  <po-lookup name="company_code"><input></po-lookup><po-lookup name="branch_code"><input></po-lookup>
+  <po-lookup name="environment_code"><input></po-lookup>
+  <button id="entrar">Entrar</button>
+</div>
 <!-- Como no real: a janela principal também é um wa-dialog (dict-twindow) e contém o menu -->
 <wa-dialog id="COMP3000" class="dict-twindow" title="TOTVS Manufatura (TOTVS) 02.9.0099" style="display:block">
 <div id="menu" style="display:none">
@@ -52,9 +59,18 @@ setTimeout(function () {
 }, 3000);
 window.addEventListener("message", function (ev) {
   window.u = ev.data.u; window.s = ev.data.s;
-  setTimeout(function () { document.getElementById("COMP3010").remove(); t2.style.display = "block"; }, 1500);
+  setTimeout(function () {
+    document.getElementById("COMP3010").remove(); t2.style.display = "block";
+    var atraso = location.search.indexOf("ambiente_lento=1") >= 0 ? 3000 : 0;
+    setTimeout(function () {
+      var valores = ["01", "010101", "06"];
+      t2.querySelectorAll("po-lookup input").forEach(function (campo, i) { campo.value = valores[i]; });
+    }, atraso);
+  }, 1500);
 });
 document.getElementById("entrar").onclick = function () {
+  var vazios = Array.prototype.filter.call(t2.querySelectorAll("po-lookup input"), function (c) { return !c.value; });
+  if (vazios.length) { window.formularioInvalido = (window.formularioInvalido || 0) + 1; return; }
   t2.style.display = "none";
   if (location.search.indexOf("aviso=1") < 0) { menu.style.display = "block"; return; }
   setTimeout(function () { aviso.style.display = "block"; }, 800);

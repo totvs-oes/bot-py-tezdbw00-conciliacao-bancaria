@@ -123,3 +123,7 @@ AVISO_FECHAR = "Fechar"
 # são wa-dialog class="dict-msdialog", irmãos dela no <body>. Calibrado na homologação em 05/10/2026.
 JANELA_PRINCIPAL_CLASSE = "dict-twindow"
 DIALOGOS_DE_ERRO = ("Help", "Atenção", "Erro", "Problema", "Aviso")
+
+# Diálogo de cotações que o Protheus abre com a rotina quando a data base não tem moeda cadastrada (14/09/2026)
+DIALOGO_MOEDAS = "Moedas"
+DIALOGO_MOEDAS_CANCELAR = "Cancelar"

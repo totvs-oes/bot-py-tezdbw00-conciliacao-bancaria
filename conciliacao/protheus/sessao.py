@@ -17,6 +17,15 @@ from conciliacao.protheus.tela import ErroDeTela, Tela
 log = logging.getLogger(__name__)
 
 TIMEOUT_CARGA_INICIAL = 120_000  # ms
+ESPERA_ENTRAR_S = 45             # depois do Entrar, quanto esperar a tela 2 sumir antes de tentar de novo
+
+# Tela 2 do login (PO-UI): códigos de Grupo/Filial/Ambiente; null = tela não está neste frame
+_JS_CAMPOS_DE_AMBIENTE = """() => {
+    const campos = ['company_code', 'branch_code', 'environment_code']
+        .map((nome) => document.querySelector(`po-lookup[name="${nome}"] input`));
+    if (campos.every((c) => !c)) return null;
+    return campos.map((c) => (c ? c.value.trim() : ''));
+}"""
 
 
 def _sumiu(page: Page, elemento: Locator, timeout: int) -> bool:
@@ -110,8 +119,7 @@ class SessaoProtheus:
         if not _sumiu(page, senha, TIMEOUT_CARGA_INICIAL):
             tela.diagnostico("02_login_nao_avancou")
             raise ErroDeTela("Login não avançou após o Enter (usuário/senha inválidos?)")
-        tela.clicar(s.LOGIN_ENTRAR, timeout=TIMEOUT_CARGA_INICIAL, esperar_rede=False)
-        tela.print("02_tela_pos_login")
+        self._entrar()
         self._esperar_tela_inicial()
         # Aviso(s) com "Fechar" logo após o Entrar (homologação: "base de Desenvolvimento"); sem aviso, segue
         tela.fechar_avisos()
@@ -119,18 +127,70 @@ class SessaoProtheus:
         log.info("Login concluído")
         self.definir_data_base()
 
+    def _entrar(self, tentativas: int = 3) -> None:
+        """Tela 2 (PO-UI "session-settings"): Grupo/Filial/Ambiente são preenchidos pelo servidor alguns segundos depois
+        de a tela aparecer. Clicar em Entrar antes disso dá "formulário inválido" e a tela não sai do lugar (visto em
+        08/10/2026, depois que o login deixou de esperar a rede ociosa). Espera os códigos preenchidos antes do clique;
+        se a tela continuar mesmo assim, espera de novo e repete."""
+        tela = self.tela
+        for tentativa in range(1, tentativas + 1):
+            self._esperar_ambiente_preenchido()
+            tela.print("02_tela_pos_login")
+            tela.clicar(s.LOGIN_ENTRAR, timeout=TIMEOUT_CARGA_INICIAL, esperar_rede=False)
+            if self._saiu_da_tela_de_ambiente(ESPERA_ENTRAR_S):
+                return
+            log.info("Entrar não saiu da tela de Grupo/Filial/Ambiente (tentativa %d); esperando e clicando de novo",
+                     tentativa)
+        caminho = tela.diagnostico("login_entrar_nao_avancou")
+        raise ErroDeTela(f"A tela de Grupo/Filial/Ambiente não avançou depois de {tentativas} cliques em Entrar. "
+                         f"Diagnóstico: {caminho}")
+
+    def _campos_de_ambiente(self) -> Optional[list[str]]:
+        """Valores dos códigos de Grupo/Filial/Ambiente da tela 2, ou None se a tela não está aberta."""
+        for frame in self.tela.page.frames:
+            try:
+                valores = frame.evaluate(_JS_CAMPOS_DE_AMBIENTE)
+            except PlaywrightError:
+                continue  # iframe sendo trocado
+            if valores is not None:
+                return valores
+        return None
+
+    def _esperar_ambiente_preenchido(self) -> None:
+        limite = time.monotonic() + TIMEOUT_CARGA_INICIAL / 1000
+        while time.monotonic() < limite:
+            valores = self._campos_de_ambiente()
+            if valores is None or all(valores):  # sem os campos (outra versão da tela) ou todos preenchidos
+                self.tela.page.wait_for_timeout(1000)  # o PO-UI ainda valida o formulário logo depois
+                return
+            self.tela.page.wait_for_timeout(500)
+        caminho = self.tela.diagnostico("ambiente_nao_preenchido")
+        raise ErroDeTela(f"Grupo/Filial/Ambiente não foram preenchidos na tela de login. Diagnóstico: {caminho}")
+
+    def _saiu_da_tela_de_ambiente(self, segundos: float) -> bool:
+        limite = time.monotonic() + segundos
+        while time.monotonic() < limite:
+            if self._campos_de_ambiente() is None or self._tela_inicial_ou_aviso():
+                return True
+            self.tela.page.wait_for_timeout(500)
+        return False
+
+    def _tela_inicial_ou_aviso(self) -> bool:
+        tela = self.tela
+        try:
+            return tela.aviso_aberto() or any(
+                f.get_by_role("button", name=s.CABECALHO_DATA_BASE).first.is_visible() for f in tela.page.frames)
+        except PlaywrightError:
+            return False  # tela sendo redesenhada / iframe destruído
+
     def _esperar_tela_inicial(self) -> None:
         """Depois do "Entrar": espera o aviso pós-login OU o botão de data base do cabeçalho (tela inicial).
         O aviso pode cobrir a tela inicial, por isso qualquer um dos dois serve."""
         tela = self.tela
         limite = time.monotonic() + TIMEOUT_CARGA_INICIAL / 1000
         while time.monotonic() < limite:
-            try:
-                if tela.aviso_aberto() or any(
-                        f.get_by_role("button", name=s.CABECALHO_DATA_BASE).first.is_visible() for f in tela.page.frames):
-                    return
-            except PlaywrightError:
-                pass  # tela sendo redesenhada / iframe destruído
+            if self._tela_inicial_ou_aviso():
+                return
             tela.page.wait_for_timeout(500)
         caminho = tela.diagnostico("tela_inicial_nao_carregou")
         raise ErroDeTela(f"A tela inicial não carregou depois do Entrar. Diagnóstico: {caminho}")
@@ -183,8 +243,29 @@ class SessaoProtheus:
             self._clicar_grupo(passo, proximo)
         self._confirmar_ambiente()
         self._conferir_rotina_ativa(nome)
+        self._cancelar_dialogo_moedas()
         log.info("Rotina '%s' aberta", nome)
         return tela
+
+    def _cancelar_dialogo_moedas(self, espera_ms: int = 5_000) -> None:
+        """Diálogo "Moedas" (cotações Dólar/UFIR/Euro/Iene/taxa de juros) que o Protheus abre junto com a rotina quando a
+        data base não tem cotação cadastrada (homologação, 14/09/2026). Cancelar: não grava nada; Confirmar gravaria
+        cotação zero na tabela de moedas. Em produção a cliente cadastra as cotações; sem o diálogo, segue."""
+        tela = self.tela
+        dialogo = tela.page.locator("wa-dialog.dict-msdialog").filter(
+            has=tela.page.locator(f'wa-text-view[caption="{s.DIALOGO_MOEDAS}"]'))
+        limite = time.monotonic() + espera_ms / 1000
+        while time.monotonic() < limite:
+            try:
+                if dialogo.count() and dialogo.first.is_visible():
+                    tela.print("dialogo_moedas")
+                    dialogo.first.locator(f'wa-button[title="{s.DIALOGO_MOEDAS_CANCELAR}"] button').click()
+                    tela.page.wait_for_timeout(1500)
+                    log.warning("Diálogo '%s' (cotações da data base não cadastradas) cancelado", s.DIALOGO_MOEDAS)
+                    return
+            except PlaywrightError:
+                pass  # tela sendo redesenhada
+            tela.page.wait_for_timeout(500)
 
     def _clicar_grupo(self, passo: str, proximo: Optional[str], tentativas: int = 3) -> None:
         """Clica no item do menu e, se for um grupo, confere que ele expandiu (o próximo passo apareceu).

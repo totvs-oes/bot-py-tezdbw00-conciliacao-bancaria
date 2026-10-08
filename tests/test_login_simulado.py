@@ -87,6 +87,18 @@ def test_login_nao_espera_a_rede_ficar_ociosa(ambiente, tmp_path):
         sessao.__exit__()
 
 
+def test_login_espera_grupo_filial_ambiente_antes_do_entrar(ambiente, tmp_path):
+    """Homologação, 08/10/2026: Entrar clicado antes de o servidor preencher Grupo/Filial/Ambiente -> "formulário
+    inválido" e o login não saía da tela 2."""
+    ambiente.protheus_url += "?ambiente_lento=1&aviso=1"
+    sessao = _sessao(ambiente, tmp_path)
+    try:
+        assert sessao.tela.page.title() == "ENTROU 09/09/2026 sp01\\robo senha:7"
+        assert sessao.tela.page.evaluate("window.formularioInvalido") is None
+    finally:
+        sessao.__exit__()
+
+
 def test_login_falha_com_diagnostico(ambiente, tmp_path, servidor, monkeypatch):
     monkeypatch.setattr("conciliacao.protheus.sessao.TIMEOUT_CARGA_INICIAL", 3_000)
     ambiente.protheus_url = f"{servidor}/nao-existe.html"
