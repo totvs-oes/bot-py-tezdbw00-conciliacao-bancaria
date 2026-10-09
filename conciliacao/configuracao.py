@@ -11,6 +11,7 @@ from typing import Optional
 import yaml
 from dotenv import load_dotenv
 
+from conciliacao import credenciais
 from conciliacao.modelos import Banco, Conta, TipoConta
 
 RAIZ = Path(__file__).resolve().parent.parent
@@ -149,11 +150,11 @@ def carregar_ambiente() -> Ambiente:
         fonte_extratos=fonte_extratos,
         pasta_extratos=Path(env("PASTA_EXTRATOS", r"Z:\A PAGAR\AEROFLEX")),
         api_url=env("API_EXTRATOS_URL", "http://localhost:5000/extratos"),
-        api_token=env("API_EXTRATOS_TOKEN", ""),
+        api_token=credenciais.obter("API_EXTRATOS_TOKEN"),
         protheus_url=_url(env("PROTHEUS_URL", "")),
         protheus_ambiente=env("PROTHEUS_AMBIENTE", ""),
-        protheus_usuario=env("PROTHEUS_USUARIO", ""),
-        protheus_senha=env("PROTHEUS_SENHA", ""),
+        protheus_usuario=credenciais.obter("PROTHEUS_USUARIO"),
+        protheus_senha=credenciais.obter("PROTHEUS_SENHA"),
         protheus_visivel=env("PROTHEUS_VISIVEL", "true").lower() == "true",
         protheus_ignorar_certificado=env("PROTHEUS_IGNORAR_CERTIFICADO", "false").lower() == "true",
         protheus_navegador=env("PROTHEUS_NAVEGADOR", "chrome"),
@@ -162,8 +163,8 @@ def carregar_ambiente() -> Ambiente:
         pasta_saida=RAIZ / env("PASTA_SAIDA", "saida"),
         smtp_host=env("SMTP_HOST", ""),
         smtp_porta=int(env("SMTP_PORTA", "587")),
-        smtp_usuario=env("SMTP_USUARIO", ""),
-        smtp_senha=env("SMTP_SENHA", ""),
+        smtp_usuario=credenciais.obter("SMTP_USUARIO"),
+        smtp_senha=credenciais.obter("SMTP_SENHA"),
         email_remetente=env("EMAIL_REMETENTE", ""),
         email_operacao=_lista(env("EMAIL_DESTINO_OPERACAO", "")),
         email_ti=_lista(env("EMAIL_DESTINO_TI", "")),

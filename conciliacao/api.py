@@ -14,7 +14,6 @@ Subir: python -m conciliacao api [--port 5001]
 from __future__ import annotations
 
 import logging
-import os
 import threading
 import uuid
 from datetime import date, datetime
@@ -27,6 +26,7 @@ from fastapi.responses import PlainTextResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel, Field
 
+from conciliacao import credenciais as cofre
 from conciliacao.configuracao import Ambiente, Cadastro, carregar_ambiente, carregar_cadastro
 from conciliacao.modelos import Rotina
 from conciliacao.servico import Desfecho, Modo, Pedido, ResultadoDia, data_do_movimento, executar_dia
@@ -148,7 +148,7 @@ def criar_app(ambiente: Optional[Ambiente] = None, cadastro: Optional[Cadastro] 
     seguranca = HTTPBearer(auto_error=False)
 
     def verificar_token(credenciais: Optional[HTTPAuthorizationCredentials] = Depends(seguranca)) -> None:
-        esperado = os.getenv("RPA_API_TOKEN")
+        esperado = cofre.obter("RPA_API_TOKEN")
         if not esperado:
             raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, "RPA_API_TOKEN não configurado no .env.")
         if not credenciais or not compare_digest(credenciais.credentials, esperado):

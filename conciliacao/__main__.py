@@ -13,7 +13,7 @@ import sys
 from datetime import date
 
 from conciliacao.configuracao import Ambiente, Cadastro, carregar_ambiente, carregar_cadastro
-from conciliacao.extratos.pastas import dia_util_anterior
+from conciliacao.extratos.pastas import dia_util_anterior, eh_dia_util
 from conciliacao.modelos import Rotina
 from conciliacao.servico import Modo, Pedido, executar_dia
 
@@ -36,7 +36,15 @@ def comando_planejar(args, ambiente: Ambiente, cadastro: Cadastro) -> int:
     return 0
 
 
+def _hoje() -> date:
+    return date.today()
+
+
 def comando_executar(args, ambiente: Ambiente, cadastro: Cadastro) -> int:
+    # Sem data (execução agendada): em fim de semana/feriado a pasta do dia não existe -> nada a fazer
+    if args.data_movimento is None and not eh_dia_util(_hoje(), ambiente.feriados):
+        logging.getLogger("conciliacao").info("Hoje (%s) não é dia útil: nada a fazer.", _hoje().strftime("%d/%m/%Y"))
+        return 0
     modo = Modo.PLANEJAR if args.dry_run else Modo.ENSAIO if args.ensaio else Modo.EXECUTAR
     return executar_dia(_pedido(args, modo), ambiente, cadastro).codigo_saida
 
