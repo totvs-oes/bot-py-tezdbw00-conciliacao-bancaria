@@ -44,6 +44,7 @@ def test_dia_util_anterior():
     ("BANCO DO BRASIL APLIC.pdf", "bb_aplic"),
     ("ABC 06609345-9 15-09.pdf", "abc_cc"),
     ("ITAU 6896-9  10-09.pdf", "itau_cc"),
+    ("TRIBANCO 11-09.pdf", "tribanco_cc"),
 ])
 def test_conta_do_arquivo(cadastro, arquivo, conta):
     assert conta_do_arquivo(arquivo, cadastro).chave == conta

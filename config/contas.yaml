@@ -16,6 +16,7 @@ bancos:
   "341": {nome: ITAU, sigla: ITAU, arquivo_tarifas: '^(EXTRATO DE )?TARIFAS ITAU\b'}
   "422": {nome: SAFRA, sigla: SAFRA, arquivo_tarifas: '^(EXTRATO DE )?TARIFAS SAFRA\b'}
   "707": {nome: DAYCOVAL, sigla: DAYC, arquivo_tarifas: '^(EXTRATO DE )?TARIFAS DAYCOVAL\b'}
+  "634": {nome: TRIBANCO, sigla: TRIB, arquivo_tarifas: '^(EXTRATO DE )?TARIFAS TRIBANCO\b'}
 
 contas:
   # --- Banco do Brasil
@@ -28,7 +29,9 @@ contas:
   - {chave: bradesco_cc,     banco: "237", agencia: "06349", numero: "0000050542", tipo: corrente, arquivo: '^BRADESCO 0*50542-?0\b'}
   - {chave: bradesco_caucao, banco: "237", agencia: "6349",  numero: "3179",       tipo: caucao,   arquivo: '^BRADESCO 0*3179-?8\b'}
   - {chave: bradesco_trianon, banco: "237", agencia: "0895", numero: "140419",     tipo: auxiliar}
-  - {chave: bradesco_aplic,  banco: "237", agencia: "06349", numero: "9999999999", tipo: aplicacao}
+  # Agência 6349 (sem o zero), como no Protheus: "BANCO BRADESCO - APLICACAO" (cliente, 09/10/2026). Com 06349 o
+  # Protheus recusava as transferências com FA100BCO (ocorrência 0004 do MIT045).
+  - {chave: bradesco_aplic,  banco: "237", agencia: "6349",  numero: "9999999999", tipo: aplicacao}
 
   # --- Santander
   - {chave: santander_cc,             banco: "033", agencia: "04296", numero: "0013001842", tipo: corrente, arquivo: '^SANTANDER 0*13001842-?0\b'}
@@ -65,3 +68,7 @@ contas:
   #   O cadastro tem também 0001/000610660 "BANCO DAYCOVAL LIMITE" (sem extrato no processo; não usada).
   - {chave: daycoval_cc,     banco: "707", agencia: "0001", numero: "1500926",   tipo: corrente, arquivo: '^DAYCOVAL 0*1500926-?4\b'}
   - {chave: daycoval_caucao, banco: "707", agencia: "0001", numero: "000866622", tipo: caucao,   arquivo: '^DAYCOVAL 0*866622-?0\b'}
+
+  # --- Tribanco (Banco Triângulo): extrato "TRIBANCO DD-MM.pdf" desde 11-09; no PDF a conta é 0230032-0.
+  #   Cadastro no Protheus: banco 634, agência 0001, conta 230032 (cliente, 09/10/2026).
+  - {chave: tribanco_cc, banco: "634", agencia: "0001", numero: "230032", tipo: corrente, arquivo: '^TRIBANCO\b'}

@@ -144,6 +144,6 @@ def test_servico_modo_planejar_com_extratos_salvos(ambiente, cadastro):
     """O mesmo caminho do CLI 'planejar' e do POST com modo=planejar, sem abrir o Protheus."""
     pedido = Pedido(data_movimento=DIA, modo=Modo.PLANEJAR, extratos_json=FIXTURES / "extratos_exemplo.json")
     resultado = executar_dia(pedido, ambiente, cadastro)
-    assert resultado.desfecho == Desfecho.COM_PENDENCIAS and resultado.itens == 40
+    assert resultado.desfecho == Desfecho.COM_PENDENCIAS and resultado.itens == 41
     assert resultado.relatorio == ambiente.pasta_saida / "2026-09-09" / "relatorio.md"
     assert resultado.relatorio.exists() and (resultado.relatorio.parent / "execucao.log").exists()

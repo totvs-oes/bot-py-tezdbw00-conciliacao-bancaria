@@ -59,7 +59,7 @@ def test_resgate_usa_conta_aplicacao_do_mesmo_banco(extratos, cadastro):
 def test_tarifas_e_rendimentos(extratos, cadastro):
     plano = planejar(extratos, cadastro, DIA)
     tarifas_bradesco = [t.valor for t in plano.tarifas if t.conta.chave == "bradesco_cc"]
-    assert tarifas_bradesco == [Decimal(v) for v in ("90.00", "4.85", "9.70", "2.06", "84.20")]
+    assert tarifas_bradesco == [Decimal(v) for v in ("90.00", "4.85", "9.70", "2.06", "84.20", "6.93")]
     assert all(len(t.historico) <= 40 for t in plano.tarifas)
     assert [r.valor for r in plano.rendimentos] == [Decimal("0.04"), Decimal("3.55")]
     assert all(r.conta.chave == "itau_cc" and r.historico == "REND APLIC" for r in plano.rendimentos)
@@ -72,10 +72,24 @@ def test_somente_lancamentos_da_data_do_movimento(extratos, cadastro):
     assert Decimal("109.47") not in [t.valor for t in plano.tarifas]
 
 
-def test_nao_reconhecido_vira_pendencia_e_nao_lancamento(extratos, cadastro):
-    plano = planejar(extratos, cadastro, DIA)
+def test_nao_reconhecido_vira_pendencia_e_nao_lancamento(resposta_api, cadastro):
+    """Histórico sem regra: pendência, nunca lançamento. (Até 09/10/2026 o exemplo real era o "DOC/TED INTERNET" do
+    Bradesco, que a cliente definiu como tarifa de TED.)"""
+    for extrato in resposta_api["banco_0237"]:
+        for lancamento in extrato["lancamentos"]:
+            if lancamento["historico"].startswith("DOC/TED INTERNET"):
+                lancamento["historico"] = "LANCAMENTO SEM REGRA 1704220"
+    plano = planejar(ler_resposta_api(resposta_api, cadastro), cadastro, DIA)
     nao_reconhecidos = _pendencias(plano, "não reconhecido")
-    assert {p.historico for p in nao_reconhecidos} == {"DOC/TED INTERNET TED INTERNET 1704220"}
+    assert {p.historico for p in nao_reconhecidos} == {"LANCAMENTO SEM REGRA 1704220"}
+    assert not [t for t in plano.tarifas if t.historico.startswith("LANCAMENTO SEM REGRA")]
+
+
+def test_doc_ted_internet_do_bradesco_e_tarifa(extratos, cadastro):
+    """Cliente, 09/10/2026: "DOC/TED INTERNET" no Bradesco = tarifa de TED."""
+    plano = planejar(extratos, cadastro, DIA)
+    assert not _pendencias(plano, "não reconhecido")
+    assert [t.valor for t in plano.tarifas if t.historico.startswith("DOC/TED INTERNET")] == [Decimal("6.93")]
 
 
 def test_kg_vira_pendencia_de_baixa_manual_e_dev_pag_bol_e_ignorado(extratos, cadastro):

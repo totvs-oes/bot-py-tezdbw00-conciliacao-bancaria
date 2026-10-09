@@ -13,7 +13,7 @@ def test_documentos_sequenciais_por_rotina_e_banco(extratos, cadastro):
     registro.registrar_plano(plano)
 
     bradesco = [t.documento for t in plano.tarifas if t.conta.banco == "237"]
-    assert bradesco == ["090926", "0909261", "0909262", "0909263", "0909264"]
+    assert bradesco == ["090926", "0909261", "0909262", "0909263", "0909264", "0909265"]
     # Sequência é por rotina: a primeira transferência do Bradesco também é 090926
     assert next(t.documento for t in plano.transferencias if t.origem.banco == "237") == "090926"
 

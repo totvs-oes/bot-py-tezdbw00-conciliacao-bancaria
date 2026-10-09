@@ -86,12 +86,21 @@ regras:
     motivo: "Pagamento KG do Contas a Pagar (não é lançado pelo robô)."
     acao: "Fazer a baixa manual do título no Contas a Pagar; sem ela o saldo da conta não fecha na conciliação."
 
+  # --- Contas de consumo e seguros debitados no banco: baixa manual no Contas a Pagar (cliente, 09/10/2026).
+  - nome: contas_a_pagar_manual
+    categoria: acao_manual
+    operacao: debito
+    historico: '\bCONTA DE LUZ\b|\bMENSALIDADE DE SEGURO\b'   # Bradesco "CONTA DE LUZ CELESC"; Santander seguro de vida
+    motivo: "Pagamento do Contas a Pagar debitado no banco (conta de consumo / seguro): não é lançado pelo robô."
+    acao: "Fazer a baixa manual do título no Contas a Pagar; sem ela o saldo da conta não fecha na conciliação."
+
   # --- Aplicações financeiras (CC <-> conta aplicação)
   - nome: resgate_aplicacao
     categoria: transferencia
     operacao: credito
     tipos_conta: [corrente]
-    historico: '\bRESGATE\b|^RES APLIC\b'
+    # ABC "EST. LCTO. OP. RENDA FIXA": saída da aplicação para a conta corrente (cliente, 09/10/2026)
+    historico: '\bRESGATE\b|^RES APLIC\b|^EST\.? LCTO\.? OP\.? RENDA FIXA\b'
     origem_tipo: aplicacao
     historico_protheus: "TRANSF {so} RESGATE APLIC P/ {sd} CC"
 
@@ -125,21 +134,30 @@ regras:
     operacao: debito
     historico: '^TAR/CUSTAS\b'
 
+  # --- Bradesco "DOC/TED INTERNET": tarifa de TED (cliente, 09/10/2026). Só no Bradesco: em outro banco o mesmo
+  # texto pode ser a própria transferência.
+  - nome: tarifa_ted_bradesco
+    categoria: tarifa
+    bancos: ["237"]
+    operacao: debito
+    historico: '^DOC/TED INTERNET\b'
+
   # --- Tarifas individuais
   - nome: tarifa
     categoria: tarifa
     operacao: debito
-    # Caixa: o código vem grudado ("COB ALT055", "COBPROT066"), por isso sem \b no fim desses dois
-    historico: '\bTAR\b|\bTARIFA|\bCOB (LOTERI|AGENC|COMPE|ALT|BX|MAN|INTERN)|\bCOBPROT|DESPESAS? DE CARTORIO|DEBITO SERVICO COBRANCA|DEB\.? CUSTAS CARTOR|\bPACOTE PJ\b'
+    # Caixa: o código vem grudado ("COB ALT055", "COBPROT066"), por isso sem \b no fim desses dois.
+    # Cliente, 09/10/2026: ABC "DESPESA REGISTRO RECEBIVEIS" e Itaú "SISDEB REDECARD" são tarifas.
+    historico: '\bTAR\b|\bTARIFA|\bCOB (LOTERI|AGENC|COMPE|ALT|BX|MAN|INTERN)|\bCOBPROT|DESPESAS? DE CARTORIO|DEBITO SERVICO COBRANCA|DEB\.? CUSTAS CARTOR|\bPACOTE PJ\b|\bDESPESA REGISTRO RECEBIVEIS\b|^SISDEB REDECARD\b'
 
-  # --- BB câmbio de exportação (10 e 15/09/2026): contrato, IOF e serviço de câmbio. Não lançar; tratamento a
-  # confirmar com o Financeiro. Depois da regra de tarifa: "Tar Liquid Orpag Exterior" continua tarifa.
+  # --- BB câmbio de exportação (contrato, câmbio, serviço de câmbio, IOF): baixa manual no Contas a Pagar (cliente,
+  # 09/10/2026). Depois da regra de tarifa: "Tar Liquid Orpag Exterior" continua tarifa.
   - nome: cambio_bb
     categoria: acao_manual
     bancos: ["001"]
     historico: '\bCAMBIO\b'
     motivo: "Operação de câmbio (contrato de exportação, IOF ou serviço de câmbio): não é lançada pelo robô."
-    acao: "Tratar manualmente conforme o processo de câmbio do Financeiro."
+    acao: "Fazer a baixa manual no Contas a Pagar."
 
   # --- Fora do escopo do RPA (recebimentos, pagamentos, CNAB, impostos...). Só informativo.
   - nome: fora_do_escopo
@@ -151,6 +169,7 @@ regras:
       - '\bPIX (RECEBIDO|ENVIADO|QR CODE)|PIX RECEBIDO|^PIX - ENVIADO|PAGAMENTO PIX'
       - '^PAGAMENTOS\b|^SISPAG\b|^TED\b|TED ENVIADA|^PAGFOR\b'
       - '^DEV PAG BOL\b'   # Itaú: estorno de pagamento recusado pelo banco; sem ação (cliente, 05/10/2026)
+      - '^DEVOLUCAO DE TED\b'   # Safra: pagamento estornado pelo banco; sem ação (cliente, 09/10/2026)
       - '^IMPOSTOS\b|^CONTR IMP\b|PRESTACAO CONSORCIO|DEBITO AUT(\.|OMATICO\b)'
       - '^PAGAMENTO DE BOLETO\b|PAGAMENTO DE SALARIO|^ENVIO TED\b'   # pagamentos (10/09/2026)
       - '^COB (INTERN|COMPE|LOT|AGENC)'   # Caixa vinculada: créditos de cobrança (os débitos já caíram em tarifa)
