@@ -28,7 +28,7 @@ def cofre(monkeypatch):
     anterior = keyring.get_keyring()
     falso = CofreEmMemoria()
     keyring.set_keyring(falso)
-    for nome in credenciais.SEGREDOS:
+    for nome in credenciais.NOMES:
         monkeypatch.delenv(nome, raising=False)
     yield falso
     keyring.set_keyring(anterior)
@@ -51,14 +51,28 @@ def test_sem_credencial_devolve_o_padrao(cofre):
 
 def test_importar_env_grava_no_gerenciador_e_apaga_do_env(cofre, tmp_path):
     env = tmp_path / ".env"
-    env.write_text("PROTHEUS_URL=https://protheus\nPROTHEUS_SENHA=s3nh@$x\nSMTP_SENHA=\nRPA_API_TOKEN=abc\n",
-                   encoding="utf-8")
-    assert credenciais.importar_env(env) == ["PROTHEUS_SENHA", "RPA_API_TOKEN"]
+    env.write_text("PROTHEUS_URL=https://protheus\nOUTRA_VARIAVEL=1\nPROTHEUS_SENHA=s3nh@$x\nSMTP_SENHA=\n"
+                   "RPA_API_TOKEN=abc\n", encoding="utf-8")
+    assert credenciais.importar_env(env) == ["PROTHEUS_SENHA", "PROTHEUS_URL", "RPA_API_TOKEN"]
     assert credenciais.do_gerenciador("PROTHEUS_SENHA") == "s3nh@$x" and credenciais.do_gerenciador("RPA_API_TOKEN") == "abc"
     texto = env.read_text(encoding="utf-8")
     assert "s3nh@" not in texto and "abc" not in texto
-    assert "PROTHEUS_URL=https://protheus" in texto                       # configuração continua no .env
+    assert credenciais.do_gerenciador("PROTHEUS_URL") == "https://protheus"   # configuração da lista também vai
+    assert "OUTRA_VARIAVEL=1" in texto                                    # o que não está na lista fica no .env
     assert "PROTHEUS_SENHA=   # no Gerenciador de Credenciais (AEROFLEX RPA/PROTHEUS_SENHA)" in texto
+
+
+def test_configuracao_no_gerenciador_chega_ao_ambiente(cofre, monkeypatch):
+    """Configuração vazia no .env (PROTHEUS_URL=, SMTP_PORTA=) vem do Gerenciador; sem nenhum dos dois, vale o padrão."""
+    from conciliacao.configuracao import carregar_ambiente
+    for nome in credenciais.CONFIGURACOES:
+        monkeypatch.setenv(nome, "")
+    credenciais.definir("PROTHEUS_URL", "https://protheus.cliente:8800/webapp/")
+    credenciais.definir("SMTP_PORTA", "25")
+    ambiente = carregar_ambiente()
+    assert ambiente.protheus_url.startswith("https://protheus.cliente:8800/webapp")
+    assert ambiente.smtp_porta == 25
+    assert ambiente.api_url == "http://localhost:5000/extratos"
 
 
 def test_importar_env_nao_mexe_no_env_se_o_gerenciador_falhar(cofre, tmp_path, monkeypatch):

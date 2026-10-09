@@ -24,6 +24,11 @@ from typing import Optional
 
 SERVICO = "AEROFLEX RPA"
 SEGREDOS = ("PROTHEUS_USUARIO", "PROTHEUS_SENHA", "SMTP_USUARIO", "SMTP_SENHA", "API_EXTRATOS_TOKEN", "RPA_API_TOKEN")
+# Não são segredos, mas também ficam no Gerenciador: no servidor da cliente o .env fica vazio
+CONFIGURACOES = ("FONTE_EXTRATOS", "PASTA_EXTRATOS", "API_EXTRATOS_URL", "PROTHEUS_URL", "PROTHEUS_AMBIENTE",
+                 "PROTHEUS_VISIVEL", "PROTHEUS_IGNORAR_CERTIFICADO", "PROTHEUS_NAVEGADOR", "PROTHEUS_CDP_URL", "FERIADOS",
+                 "PASTA_SAIDA", "SMTP_HOST", "SMTP_PORTA", "EMAIL_REMETENTE", "EMAIL_DESTINO_OPERACAO", "EMAIL_DESTINO_TI")
+NOMES = SEGREDOS + CONFIGURACOES
 ARQUIVO_ENV = Path(__file__).resolve().parent.parent / ".env"
 
 
@@ -56,7 +61,7 @@ def remover(nome: str) -> None:
 
 def _valores_do_env(arquivo: Path) -> dict[str, str]:
     from dotenv import dotenv_values
-    return {k: v for k, v in dotenv_values(arquivo).items() if k in SEGREDOS and v}
+    return {k: v for k, v in dotenv_values(arquivo).items() if k in NOMES and v}
 
 
 def importar_env(arquivo: Path = ARQUIVO_ENV, limpar: bool = True) -> list[str]:
@@ -83,7 +88,9 @@ def _origem(nome: str) -> str:
         return ".env (migrar: importar-env)"
     if os.environ.get(nome):
         return "variável de ambiente"
-    return "Gerenciador de Credenciais" if do_gerenciador(nome) else "NÃO CONFIGURADO"
+    if do_gerenciador(nome):
+        return "Gerenciador de Credenciais"
+    return "padrão do código" if nome in CONFIGURACOES else "NÃO CONFIGURADO"
 
 
 def main(argv: Optional[list[str]] = None) -> int:
@@ -91,19 +98,20 @@ def main(argv: Optional[list[str]] = None) -> int:
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = p.add_subparsers(dest="comando", required=True)
     sub.add_parser("listar", help="Onde está cada segredo (sem mostrar o valor)")
-    p_def = sub.add_parser("definir", help="Grava um segredo (digitado sem eco)")
-    p_def.add_argument("nome", choices=SEGREDOS)
+    p_def = sub.add_parser("definir", help="Grava um valor (segredo digitado sem eco)")
+    p_def.add_argument("nome", choices=NOMES)
     p_rem = sub.add_parser("remover", help="Apaga um segredo do Gerenciador")
-    p_rem.add_argument("nome", choices=SEGREDOS)
-    p_imp = sub.add_parser("importar-env", help="Copia os segredos do .env para o Gerenciador e apaga do .env")
+    p_rem.add_argument("nome", choices=NOMES)
+    p_imp = sub.add_parser("importar-env", help="Copia segredos e configurações do .env para o Gerenciador e apaga do .env")
     p_imp.add_argument("--manter-env", action="store_true", help="Não apaga os valores do .env")
     args = p.parse_args(argv)
 
     if args.comando == "listar":
-        for nome in SEGREDOS:
-            print(f"  {nome:20} {_origem(nome)}")
+        for nome in NOMES:
+            print(f"  {nome:30} {_origem(nome)}")
     elif args.comando == "definir":
-        valor = getpass.getpass(f"{args.nome}: ")
+        ler = getpass.getpass if args.nome in SEGREDOS else input
+        valor = ler(f"{args.nome}: ").strip()
         if not valor:
             print("Valor vazio: nada gravado.")
             return 1

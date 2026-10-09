@@ -12,8 +12,8 @@ Tudo abaixo é feito **logado como o usuário do robô** (`rpa.aeroflex`): as cr
 
 ## 1. Credenciais no Gerenciador de Credenciais do Windows
 
-Os segredos saem do `.env` e vão para o Gerenciador de Credenciais (credencial genérica `AEROFLEX RPA/<NOME>`).
-O `.env` fica só com configurações (URLs, pastas, e-mails, feriados).
+Os valores saem do `.env` e vão para o Gerenciador de Credenciais (credencial genérica `AEROFLEX RPA/<NOME>`).
+No robô vai **tudo** (segredos e configurações: URLs, pastas, e-mails, feriados); na API, os segredos e o proxy/modelo de IA.
 
 ```
 cd C:\RPA\bot-py-tezdbw00-conciliacao-bancaria
@@ -27,10 +27,11 @@ venv\Scripts\python -m services.credenciais listar
 
 | Projeto | Segredos |
 |---|---|
-| Robô | `PROTHEUS_USUARIO`, `PROTHEUS_SENHA`, `SMTP_USUARIO`, `SMTP_SENHA`, `API_EXTRATOS_TOKEN`, `RPA_API_TOKEN` |
-| API de leitura | `TOKEN`, `TOKEN_API_LLM`, `SFTP_USUARIO`, `SFTP_SENHA` |
+| Robô | segredos: `PROTHEUS_USUARIO`, `PROTHEUS_SENHA`, `SMTP_USUARIO`, `SMTP_SENHA`, `API_EXTRATOS_TOKEN`, `RPA_API_TOKEN`; configurações: todas as demais do `.env.example` (`PASTA_EXTRATOS`, `PROTHEUS_URL`, `FERIADOS`, `EMAIL_*`...) |
+| API de leitura | segredos: `TOKEN`, `TOKEN_API_LLM`, `SFTP_USUARIO`, `SFTP_SENHA`; configurações: `LLM_BASE_API_URL`, `LLM_MODEL` |
 
-Trocar uma senha: `... -m conciliacao.credenciais definir PROTHEUS_SENHA` (digitada sem eco). Também dá para ver e editar
+Trocar um valor: `... -m conciliacao.credenciais definir PROTHEUS_SENHA` (segredo digitado sem eco; configuração,
+ex. `definir FERIADOS`, digitada normalmente). Também dá para ver e editar
 em Painel de Controle > Gerenciador de Credenciais > Credenciais do Windows > "AEROFLEX RPA/...".
 
 Ordem de leitura no código: variável de ambiente / `.env` (se preenchido) e depois o Gerenciador. Por isso Docker e
@@ -52,10 +53,10 @@ Os caminhos das ações são `C:\RPA\...`: ajuste na aba Ações se as pastas fo
 - Habilitar depois da homologação: botão direito na tarefa do robô > **Habilitar**.
 - Testar agora: botão direito > **Executar**.
 - Log do robô: `saida\AAAA-MM-DD\execucao.log`; o histórico de cada execução aparece na aba Histórico da tarefa.
-- Fim de semana e feriados (`FERIADOS` do `.env`): o robô termina em seguida, sem processar nada.
+- Fim de semana e feriados (`FERIADOS`): o robô termina em seguida, sem processar nada.
 - Segunda-feira processa a sexta.
 
-No `.env` do robô: `API_EXTRATOS_URL=http://127.0.0.1:5000/extratos` (no Windows, `localhost` resolve primeiro para o
+`API_EXTRATOS_URL` do robô: `http://127.0.0.1:5000/extratos` (no Windows, `localhost` resolve primeiro para o
 IPv6 `::1`, e a API escuta só no IPv4).
 
 ## Sessão do usuário

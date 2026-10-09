@@ -1,7 +1,6 @@
 """Configuração: variáveis de ambiente (.env) e arquivos YAML de contas e regras."""
 from __future__ import annotations
 
-import os
 import re
 from dataclasses import dataclass, field
 from datetime import date
@@ -142,7 +141,7 @@ FONTES_EXTRATOS = ("local", "sftp")
 
 def carregar_ambiente() -> Ambiente:
     load_dotenv(RAIZ / ".env")
-    env = os.environ.get
+    env = credenciais.obter   # .env/variável de ambiente preenchida; senão o Gerenciador de Credenciais
     fonte_extratos = env("FONTE_EXTRATOS", "local").strip().lower()
     if fonte_extratos not in FONTES_EXTRATOS:
         raise ValueError(f"FONTE_EXTRATOS inválida: '{fonte_extratos}'. Use: {', '.join(FONTES_EXTRATOS)}")
@@ -150,21 +149,21 @@ def carregar_ambiente() -> Ambiente:
         fonte_extratos=fonte_extratos,
         pasta_extratos=Path(env("PASTA_EXTRATOS", r"Z:\A PAGAR\AEROFLEX")),
         api_url=env("API_EXTRATOS_URL", "http://localhost:5000/extratos"),
-        api_token=credenciais.obter("API_EXTRATOS_TOKEN"),
-        protheus_url=_url(env("PROTHEUS_URL", "")),
-        protheus_ambiente=env("PROTHEUS_AMBIENTE", ""),
-        protheus_usuario=credenciais.obter("PROTHEUS_USUARIO"),
-        protheus_senha=credenciais.obter("PROTHEUS_SENHA"),
+        api_token=env("API_EXTRATOS_TOKEN"),
+        protheus_url=_url(env("PROTHEUS_URL")),
+        protheus_ambiente=env("PROTHEUS_AMBIENTE"),
+        protheus_usuario=env("PROTHEUS_USUARIO"),
+        protheus_senha=env("PROTHEUS_SENHA"),
         protheus_visivel=env("PROTHEUS_VISIVEL", "true").lower() == "true",
         protheus_ignorar_certificado=env("PROTHEUS_IGNORAR_CERTIFICADO", "false").lower() == "true",
         protheus_navegador=env("PROTHEUS_NAVEGADOR", "chrome"),
         protheus_cdp_url=env("PROTHEUS_CDP_URL", ""),
         feriados=frozenset(date.fromisoformat(d) for d in _lista(env("FERIADOS", ""))),
         pasta_saida=RAIZ / env("PASTA_SAIDA", "saida"),
-        smtp_host=env("SMTP_HOST", ""),
+        smtp_host=env("SMTP_HOST"),
         smtp_porta=int(env("SMTP_PORTA", "587")),
-        smtp_usuario=credenciais.obter("SMTP_USUARIO"),
-        smtp_senha=credenciais.obter("SMTP_SENHA"),
+        smtp_usuario=env("SMTP_USUARIO"),
+        smtp_senha=env("SMTP_SENHA"),
         email_remetente=env("EMAIL_REMETENTE", ""),
         email_operacao=_lista(env("EMAIL_DESTINO_OPERACAO", "")),
         email_ti=_lista(env("EMAIL_DESTINO_TI", "")),
