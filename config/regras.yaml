@@ -69,12 +69,13 @@ regras:
 
   # --- Itaú "KG": pagamento ligado ao Contas a Pagar; a baixa é manual (cliente, 05/10/2026). Não lançar.
   # --- Daycoval "AMORT. DE CONTRATO": amortização de empréstimo do Contas a Pagar; baixa manual (cliente, 05/10/2026)
-  # --- BB "Cap Giro Dig Amortização" (15/09/2026): amortização de capital de giro, mesmo tratamento.
+  # --- BB "Cap Giro Dig Amortização" (15/09/2026): amortização de capital de giro, mesmo tratamento. Cliente,
+  # 14/10/2026: TODA amortização de capital de giro do BB é manual (qualquer variação do texto).
   - nome: amortizacao_contrato
     categoria: acao_manual
     bancos: ["707", "001"]
     operacao: debito
-    historico: '^AMORT\.? DE CONTRATO\b|^CAP GIRO .*AMORTIZA'
+    historico: '^AMORT\.? DE CONTRATO\b|\bCAP(ITAL)?( DE)? GIRO\b.*\bAMORTIZ|\bAMORT(\.|IZACAO)?( DE)? CAP(ITAL)?( DE)? GIRO\b'
     motivo: "Amortização de contrato (empréstimo) do Contas a Pagar (não é lançada pelo robô)."
     acao: "Fazer a baixa manual do título no Contas a Pagar; sem ela o saldo da conta não fecha na conciliação."
 

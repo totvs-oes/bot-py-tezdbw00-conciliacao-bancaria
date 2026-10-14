@@ -48,8 +48,12 @@ contas:
   - {chave: abc_aplic,  banco: "246", agencia: "0001", numero: "9999999999", tipo: aplicacao}
 
   # --- Safra
-  - {chave: safra_cc,        banco: "422", agencia: "03800", numero: "580275",     tipo: corrente,  arquivo: '^SAFRA 0*580275-?7\b'}
-  - {chave: safra_vinculada, banco: "422", agencia: "03800", numero: "326613",     tipo: vinculada, arquivo: '^SAFRA 0*326613-?1\b'}
+  # O extrato do Safra não tem coluna de saldo (sem conferência). Cliente, 14/10/2026: a vinculada fica SEMPRE zerada
+  # e o saldo da C/C é a linha "SALDO CONTA CORRENTE" do dia (sem a aplicação automática).
+  - {chave: safra_cc,        banco: "422", agencia: "03800", numero: "580275",     tipo: corrente,  arquivo: '^SAFRA 0*580275-?7\b',
+     saldo_conciliacao: '^SALDO CONTA CORRENTE$'}
+  - {chave: safra_vinculada, banco: "422", agencia: "03800", numero: "326613",     tipo: vinculada, arquivo: '^SAFRA 0*326613-?1\b',
+     saldo_conciliacao: zero}
   - {chave: safra_aplic,     banco: "422", agencia: "03800", numero: "9999999999", tipo: aplicacao}
 
   # --- Itaú

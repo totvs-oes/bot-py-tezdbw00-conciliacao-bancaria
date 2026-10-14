@@ -202,8 +202,10 @@ def test_saldo_para_conciliacao(extratos, cadastro):
     assert saldos["bradesco_caucao"] == Decimal("0.00")
     # Caixa: o extrato começa no dia útil seguinte; o saldo anterior é o saldo do dia
     assert "caixa_cc" in saldos
-    # Safra não tem saldo no extrato: sem conciliação automática
-    assert "safra_cc" not in saldos and _pendencias(plano, "sem saldo conferido")
+    # Safra não tem coluna de saldo (fixture da API antiga, sem saldos_informados): a C/C não concilia; a vinculada
+    # concilia zerada porque os lançamentos do dia se anulam
+    assert "safra_cc" not in saldos and _pendencias(plano, "não traz uma linha de saldo")
+    assert saldos["safra_vinculada"] == Decimal("0")
 
 
 def test_chaves_unicas_e_estaveis(extratos, cadastro):
@@ -239,3 +241,54 @@ def test_itens_iguais_continuam_com_chaves_distintas(resposta_api, cadastro):
     iguais = Counter((t.contas(), t.valor) for t in plano.tarifas)
     assert max(iguais.values()) > 300
     assert len({i.chave for i in plano.itens()}) == len(plano.itens())
+
+
+def _safra(saldos_cc, lancamentos_vinculada=None):
+    """Resposta da API no formato do Safra (sem coluna de saldo; saldos impressos como linhas)."""
+    sem_conferencia = {"saldo_anterior": None, "saldo_final": None, "ok": None}
+    vinculada = lancamentos_vinculada if lancamentos_vinculada is not None else [
+        {"data": "09/09/2026", "historico": "LIBERACAO DE VINCULADA 5802757", "operacao": "debito", "valor": 35908.23},
+        {"data": "09/09/2026", "historico": "CREDITO COBRANCA DISPONIVEL RESERVA", "operacao": "credito", "valor": 35908.23}]
+    return {"banco_0422": [
+        {"arquivo": "SAFRA 580275-7 10-09.pdf", "metodo": "layout Safra", "conta": "00580275-7",
+         "conferencia": sem_conferencia, "saldos_informados": saldos_cc, "lancamentos": [
+             {"data": "09/09/2026", "historico": "TAR LIQUIDACAO BOLETO COBRANCA", "operacao": "debito", "valor": 1.5},
+             {"data": "09/09/2026", "historico": "LIBERACAO DE CONTA VINCULADA 3266131", "operacao": "credito",
+              "valor": 35908.23}]},
+        {"arquivo": "SAFRA 326613-1 10-09.pdf", "metodo": "layout Safra", "conta": "000000326613-1",
+         "conferencia": sem_conferencia, "saldos_informados": [], "lancamentos": vinculada}]}
+
+
+SALDOS_SAFRA = [{"data": "09/09/2026", "descricao": "SALDO TOTAL", "valor": 1015457.41},
+                {"data": "09/09/2026", "descricao": "SALDO APLIC AUTOMATICA", "valor": 979100.0},
+                {"data": "09/09/2026", "descricao": "SALDO CONTA CORRENTE", "valor": 36357.41},
+                {"data": "08/09/2026", "descricao": "SALDO CONTA CORRENTE", "valor": 450.68}]
+
+
+def test_safra_concilia_cc_pela_linha_saldo_conta_corrente_e_vinculada_zerada(cadastro):
+    """Cliente, 14/10/2026: C/C pela linha "SALDO CONTA CORRENTE" do dia; vinculada sempre zerada."""
+    plano = planejar(ler_resposta_api(_safra(SALDOS_SAFRA), cadastro), cadastro, DIA)
+    saldos = {c.conta.chave: c.saldo_extrato for c in plano.conciliacoes}
+    assert saldos == {"safra_cc": Decimal("36357.41"), "safra_vinculada": Decimal("0")}
+    assert not _pendencias(plano, "sem saldo conferido")
+
+
+def test_safra_cc_sem_a_linha_do_dia_ou_com_leitura_incompleta_vira_pendencia(cadastro):
+    sem_a_do_dia = [s for s in SALDOS_SAFRA if s["data"] != "09/09/2026"]
+    plano = planejar(ler_resposta_api(_safra(sem_a_do_dia), cadastro), cadastro, DIA)
+    assert "safra_cc" not in {c.conta.chave for c in plano.conciliacoes}
+    assert _pendencias(plano, "não traz uma linha de saldo")
+    # saldo de 08/09 + lançamentos de 09/09 não dá o saldo informado de 09/09: algum lançamento não foi lido
+    divergente = [dict(s, valor=36000.0) if s["descricao"] == "SALDO CONTA CORRENTE" and s["data"] == "09/09/2026"
+                  else s for s in SALDOS_SAFRA]
+    plano = planejar(ler_resposta_api(_safra(divergente), cadastro), cadastro, DIA)
+    assert "safra_cc" not in {c.conta.chave for c in plano.conciliacoes}
+    assert _pendencias(plano, "pode haver lançamento não lido")
+
+
+def test_safra_vinculada_que_nao_zera_no_dia_vira_pendencia(cadastro):
+    so_o_credito = [{"data": "09/09/2026", "historico": "CREDITO COBRANCA DISPONIVEL RESERVA", "operacao": "credito",
+                     "valor": 35908.23}]
+    plano = planejar(ler_resposta_api(_safra(SALDOS_SAFRA, so_o_credito), cadastro), cadastro, DIA)
+    assert "safra_vinculada" not in {c.conta.chave for c in plano.conciliacoes}
+    assert _pendencias(plano, "deve fechar o dia zerada")

@@ -65,6 +65,9 @@ class Conta:
     tipo: TipoConta
     arquivo: Optional[str] = None
     conciliar: bool = True
+    # Extrato sem saldo conferível (Safra): de onde vem o saldo da conciliação. "zero" = conta que sempre fecha o dia
+    # zerada; senão, regex da linha de saldo que o banco imprime (saldos_informados da API) na data do movimento.
+    saldo_conciliacao: Optional[str] = None
 
     def __str__(self) -> str:
         return f"{self.banco}/{self.agencia}/{self.numero}"
@@ -95,6 +98,8 @@ class ExtratoLido:
     lancamentos: list[LancamentoExtrato] = field(default_factory=list)
     # Movimentações deduzidas dos saldos pela API (ex.: aplicação automática): (data, valor com sinal)
     ajustes: list[tuple[date, Decimal]] = field(default_factory=list)
+    # Saldos que o banco imprime como linhas (Safra): (data, descrição, valor com sinal)
+    saldos_informados: list[tuple[date, str, Decimal]] = field(default_factory=list)
 
 
 @dataclass(frozen=True)

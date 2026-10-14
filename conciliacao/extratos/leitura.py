@@ -63,6 +63,9 @@ def _ler_extrato(bruto: dict, chave_banco: str, cadastro: Cadastro) -> ExtratoLi
             sem_data += 1
             continue
         extrato.ajustes.append((data, dinheiro(ajuste["valor"])))
+    for saldo in bruto.get("saldos_informados") or []:
+        if (data := _data(saldo.get("data"))) is not None:
+            extrato.saldos_informados.append((data, " ".join(saldo["descricao"].split()), dinheiro(saldo["valor"])))
 
     if sem_data:
         extrato.aviso = ((extrato.aviso or "") + f" {sem_data} lançamento(s) sem data foram ignorados.").strip()

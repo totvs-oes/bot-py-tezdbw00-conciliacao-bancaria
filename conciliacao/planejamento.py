@@ -250,6 +250,9 @@ class _Planejador:
         conta = extrato.conta
         if not conta.conciliar:
             return
+        if conta.saldo_conciliacao:
+            self._conciliacao_sem_coluna_de_saldo(extrato)
+            return
         if extrato.conferencia_ok is not True or extrato.saldo_anterior is None:
             self._pendencia(extrato.arquivo, "Extrato sem saldo conferido: a conciliação automática não será feita.",
                             "Conciliar manualmente no Conciliador Backoffice.", conta=conta)
@@ -271,6 +274,48 @@ class _Planejador:
         for data_ajuste, valor in extrato.ajustes:
             if data_ajuste <= self.dia:
                 saldo += valor
+        self.plano.conciliacoes.append(Conciliacao(conta=conta, data=self.dia, saldo_extrato=saldo))
+
+    def _conciliacao_sem_coluna_de_saldo(self, extrato: ExtratoLido) -> None:
+        """Extrato sem saldo conferível (Safra), com a regra da cliente (14/10/2026) em `conta.saldo_conciliacao`:
+        "zero" = a conta fecha o dia zerada (os lançamentos do dia se anulam); senão, regex da linha de saldo que o
+        banco imprime na data do movimento ("SALDO CONTA CORRENTE"). Se o extrato também traz essa linha de um dia
+        anterior, ela + os lançamentos até o movimento tem que dar o saldo do dia (prova de que nada ficou sem ler)."""
+        conta = extrato.conta
+
+        def soma(lancamentos: Iterable[LancamentoExtrato]) -> Decimal:
+            return sum((l.valor if l.operacao == "credito" else -l.valor for l in lancamentos), Decimal("0"))
+
+        if conta.saldo_conciliacao == "zero":
+            movimento = soma(l for l in extrato.lancamentos if l.data == self.dia)
+            if movimento != 0:
+                self._pendencia(extrato.arquivo,
+                                f"A conta deve fechar o dia zerada, mas os lançamentos de {self.dia:%d/%m/%Y} somam "
+                                f"R$ {formatar_brl(movimento)}: a conciliação automática não será feita.",
+                                "Conferir o extrato e conciliar manualmente no Conciliador Backoffice.", conta=conta)
+                return
+            saldo = Decimal("0")
+        else:
+            linhas = [(d, v) for d, descricao, v in extrato.saldos_informados
+                      if re.search(conta.saldo_conciliacao, normalizar(descricao))]
+            do_dia = [v for d, v in linhas if d == self.dia]
+            if len(do_dia) != 1:
+                self._pendencia(extrato.arquivo,
+                                f"O extrato não traz uma linha de saldo '{conta.saldo_conciliacao}' de "
+                                f"{self.dia:%d/%m/%Y} ({len(do_dia)} encontradas): a conciliação automática não será feita.",
+                                "Conciliar manualmente no Conciliador Backoffice.", conta=conta)
+                return
+            saldo = do_dia[0]
+            if anteriores := [(d, v) for d, v in linhas if d < self.dia]:
+                data_anterior, saldo_anterior = max(anteriores)
+                corrido = saldo_anterior + soma(l for l in extrato.lancamentos if data_anterior < l.data <= self.dia)
+                if corrido != saldo:
+                    self._pendencia(extrato.arquivo,
+                                    f"Saldo de {data_anterior:%d/%m/%Y} (R$ {formatar_brl(saldo_anterior)}) + lançamentos "
+                                    f"= R$ {formatar_brl(corrido)}, diferente do saldo informado de {self.dia:%d/%m/%Y} "
+                                    f"(R$ {formatar_brl(saldo)}): pode haver lançamento não lido.",
+                                    "Verificar a leitura do PDF na API e conciliar manualmente.", conta=conta)
+                    return
         self.plano.conciliacoes.append(Conciliacao(conta=conta, data=self.dia, saldo_extrato=saldo))
 
 
