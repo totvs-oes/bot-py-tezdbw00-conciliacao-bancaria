@@ -58,6 +58,8 @@ def _lancamento(cadastro, conta, historico, operacao):
      "contas_a_pagar_manual"),
     ("safra_cc", "DEVOLUCAO DE TED E BCO 403 A F NOBRE E CIA LTDA 000/0001-67 30383", "credito", "fora_do_escopo",
      "fora_do_escopo"),
+    # 14/10/2026: despesa de protesto do Bradesco é tarifa
+    ("bradesco_cc", "DESPESAS DE PROTESTO 2003179", "debito", "tarifa", "tarifa"),
     ("tribanco_cc", "TAR MANUTENCAO C/C-REF.09/2026", "debito", "tarifa", "tarifa"),
     ("tribanco_cc", "TED C RECEBIDA-MARTINS COMERCIO E S", "credito", "fora_do_escopo", "fora_do_escopo"),
     ("bb_cc", "Liquid Contr Câmbio Exp", "credito", "acao_manual", "cambio_bb"),

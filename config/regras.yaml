@@ -148,7 +148,8 @@ regras:
     operacao: debito
     # Caixa: o código vem grudado ("COB ALT055", "COBPROT066"), por isso sem \b no fim desses dois.
     # Cliente, 09/10/2026: ABC "DESPESA REGISTRO RECEBIVEIS" e Itaú "SISDEB REDECARD" são tarifas.
-    historico: '\bTAR\b|\bTARIFA|\bCOB (LOTERI|AGENC|COMPE|ALT|BX|MAN|INTERN)|\bCOBPROT|DESPESAS? DE CARTORIO|DEBITO SERVICO COBRANCA|DEB\.? CUSTAS CARTOR|\bPACOTE PJ\b|\bDESPESA REGISTRO RECEBIVEIS\b|^SISDEB REDECARD\b'
+    # 14/10/2026: Bradesco "DESPESAS DE PROTESTO 2003179" é tarifa (era pendência em 13/10).
+    historico: '\bTAR\b|\bTARIFA|\bCOB (LOTERI|AGENC|COMPE|ALT|BX|MAN|INTERN)|\bCOBPROT|DESPESAS? DE CARTORIO|DESPESAS DE PROTESTO|DEBITO SERVICO COBRANCA|DEB\.? CUSTAS CARTOR|\bPACOTE PJ\b|\bDESPESA REGISTRO RECEBIVEIS\b|^SISDEB REDECARD\b'
 
   # --- BB câmbio de exportação (contrato, câmbio, serviço de câmbio, IOF): baixa manual no Contas a Pagar (cliente,
   # 09/10/2026). Depois da regra de tarifa: "Tar Liquid Orpag Exterior" continua tarifa.
