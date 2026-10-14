@@ -313,32 +313,33 @@ class Tela:
     def preencher_valor(self, rotulo: str, valor: Decimal, indice: int = 0, dentro: Optional[Locator] = None) -> None:
         self.preencher(rotulo, formatar_brl(valor).replace(".", ""), indice, dentro)
 
-    def _item_de_menu(self, tag: str, texto: str, comeca_com: bool) -> Optional[Locator]:
-        """Item de menu visível (wa-menu-item / wa-menu-popup-item) pelo caption sem as tags <u>."""
+    def _item_de_menu(self, tag: str, texto: str | tuple[str, ...]) -> Optional[Locator]:
+        """Item de menu visível (wa-menu-item / wa-menu-popup-item) pelo caption sem as tags <u>.
+        `texto` pode ser uma tupla de alternativas (o nome muda entre ambientes): vale a primeira na tela.
+        Comparação exata: "Movimento Bancario" não pode casar com o grupo "Movimento Bancario (5)". Grupos
+        são pedidos terminando em "(" ("Atualizações (") e aí vale "começa com"."""
+        alternativas = [texto] if isinstance(texto, str) else list(texto)
         ids = self.page.evaluate(
-            """([tag, texto, prefixo]) => Array.from(document.querySelectorAll(tag)).filter((el) => {
+            """([tag, alternativas]) => Array.from(document.querySelectorAll(tag)).filter((el) => {
                  const c = (el.getAttribute('caption') || '').replace(/<[^>]*>/g, '').trim();
-                 return el.checkVisibility() && (prefixo ? c.startsWith(texto) : c === texto);
-               }).map((el) => el.id)""", [tag, texto, comeca_com])
+                 return el.checkVisibility()
+                     && alternativas.some((t) => t.endsWith('(') ? c.startsWith(t) : c === t);
+               }).map((el) => el.id)""", [tag, alternativas])
         return self.page.locator(f"#{ids[0]}") if ids else None
 
-    def item_de_menu_visivel(self, texto: str) -> bool:
-        return self._item_de_menu("wa-menu-item", texto, texto.endswith("(")) is not None
+    def item_de_menu_visivel(self, texto: str | tuple[str, ...]) -> bool:
+        return self._item_de_menu("wa-menu-item", texto) is not None
 
-    def clicar_menu(self, texto: str, popup: bool = False, timeout: int = TIMEOUT_PADRAO) -> None:
-        """Clica num item do menu lateral (popup=False, compara "começa com") ou do popup de Outras Ações."""
+    def clicar_menu(self, texto: str | tuple[str, ...], popup: bool = False, timeout: int = TIMEOUT_PADRAO) -> None:
+        """Clica num item do menu lateral (popup=False) ou do popup de Outras Ações."""
         tag = "wa-menu-popup-item" if popup else "wa-menu-item"
         limite = time.monotonic() + timeout / 1000
+        rotulo = texto if isinstance(texto, str) else " / ".join(texto)
 
-        def procurar() -> Optional[Locator]:
-            # Comparação exata: "Movimento Bancario" não pode casar com o grupo "Movimento Bancario (5)".
-            # Grupos do menu são pedidos terminando em "(" ("Atualizações (") e aí vale "começa com".
-            return self._item_de_menu(tag, texto, texto.endswith("("))
-
-        while (item := procurar()) is None:
+        while (item := self._item_de_menu(tag, texto)) is None:
             if time.monotonic() > limite:
-                caminho = self.diagnostico(f"menu_nao_encontrado_{texto}")
-                raise ErroDeTela(f"Item de menu '{texto}' não encontrado. Diagnóstico: {caminho}")
+                caminho = self.diagnostico(f"menu_nao_encontrado_{rotulo.split(' / ')[0]}")
+                raise ErroDeTela(f"Item de menu '{rotulo}' não encontrado. Diagnóstico: {caminho}")
             self.page.wait_for_timeout(500)
         item.click()
         self.esperar_ocioso()
@@ -352,7 +353,7 @@ class Tela:
             self.botao(botao, f"botao_{botao}").click()
             for _ in range(10):
                 self.page.wait_for_timeout(300)
-                if (alvo := self._item_de_menu("wa-menu-popup-item", item, False)) is not None:
+                if (alvo := self._item_de_menu("wa-menu-popup-item", item)) is not None:
                     alvo.click()
                     self.esperar_ocioso()
                     self.page.wait_for_timeout(ESPERA_VALIDACAO)

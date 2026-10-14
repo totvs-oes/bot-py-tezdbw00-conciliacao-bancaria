@@ -29,9 +29,17 @@ ICONE_MENU_INICIAL = (22, 20)
 # Grupos terminam com "(" (o caption real é "Movimento Bancario (5)") e casam por "começa com";
 # os demais itens casam por texto EXATO — senão "Movimento Bancario" casaria com o grupo e o clique erraria.
 # A busca do menu não filtra com texto colado: navegar pela árvore, como na documentação.
+# Um passo pode ser uma tupla de alternativas (o menu muda entre ambientes): vale a que estiver na tela.
+# Produção (14/10/2026): grupo "Movimento Bancario (8)" igual, mas o item é "Movimentos Bancários".
+NOMES_MOVIMENTO_BANCARIO = ("Movimento Bancario", "Movimentos Bancários")
 MENU_CAMINHO = {
-    "Movimento Bancario": ("Atualizações (", "Movimento Bancario (", "Movimento Bancario"),
+    "Movimento Bancario": ("Atualizações (", "Movimento Bancario (", NOMES_MOVIMENTO_BANCARIO),
     "Novo Conciliador Backoffice": ("Atualizações (", "Movimento Bancario (", "Novo Conciliador Backoffice"),
+}
+# Nome da rotina no título da aba ("<nome> - 01/010101 [...]"), por ambiente
+ABAS_DA_ROTINA = {
+    "Movimento Bancario": NOMES_MOVIMENTO_BANCARIO,
+    "Novo Conciliador Backoffice": ("Novo Conciliador Backoffice",),
 }
 ROTINA_MOVIMENTO_BANCARIO = "Movimento Bancario"
 ROTINA_CONCILIADOR = "Novo Conciliador Backoffice"

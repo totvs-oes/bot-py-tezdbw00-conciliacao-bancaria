@@ -18,6 +18,7 @@ log = logging.getLogger(__name__)
 
 TIMEOUT_CARGA_INICIAL = 120_000  # ms
 ESPERA_ENTRAR_S = 45             # depois do Entrar, quanto esperar a tela 2 sumir antes de tentar de novo
+ESPERA_DATA_BASE_S = 20          # depois de confirmar a data base, quanto esperar o cabeçalho mostrar a data nova
 
 # Tela 2 do login (PO-UI): códigos de Grupo/Filial/Ambiente; null = tela não está neste frame
 _JS_CAMPOS_DE_AMBIENTE = """() => {
@@ -40,6 +41,12 @@ def _sumiu(page: Page, elemento: Locator, timeout: int) -> bool:
             return True
         page.wait_for_timeout(500)  # não usar time.sleep: congela os eventos do Playwright
     return False
+
+
+def nome_da_rotina_na_aba(legenda: str) -> str:
+    """Título da aba -> nome da rotina. Homologação: "Movimento Bancario - 01/010101 [02.9.0006]";
+    produção (14/10/2026): "Movimentos Bancários [02.9.0006]", sem a filial."""
+    return re.split(r" - | \[", legenda, maxsplit=1)[0].strip()
 
 
 class SessaoProtheus:
@@ -209,7 +216,14 @@ class SessaoProtheus:
         botao.click()
         tela.preencher_data(s.DATA_BASE_CAMPO, self.data_base)
         tela.confirmar(s.DATA_BASE_CONFIRMAR)
-        if tela.botao(s.CABECALHO_DATA_BASE, "botao_data_base").inner_text().strip() != esperado:
+        # O cabeçalho demora a refletir a data nova (produção, 14/10/2026: lido logo após o Confirmar ainda
+        # mostrava a data de hoje; o print do diagnóstico, um instante depois, já mostrava a data certa).
+        limite = time.monotonic() + ESPERA_DATA_BASE_S
+        while (atual := tela.botao(s.CABECALHO_DATA_BASE, "botao_data_base").inner_text().strip()) != esperado:
+            if time.monotonic() > limite:
+                break
+            tela.page.wait_for_timeout(500)
+        if atual != esperado:
             caminho = tela.diagnostico("data_base_nao_alterada")
             raise ErroDeTela(f"Data base não ficou {esperado}. Diagnóstico: {caminho}")
         log.info("Data base alterada para %s", esperado)
@@ -222,11 +236,12 @@ class SessaoProtheus:
         ambiente (Data base/Grupo/Filial) — a data base é conferida ali também.
         """
         tela = self.tela
-        if self._rotina_ativa() == nome:
+        if self._rotina_ativa() in s.ABAS_DA_ROTINA[nome]:
             return tela
         # Aberta mas em segundo plano: a aba (wa-tab-button) fica na barra do topo em qualquer tela.
         # Nunca abrir de novo pelo menu: isso cria uma SEGUNDA instância da rotina.
-        aba = tela.page.locator("wa-tab-button").filter(has_text=re.compile(r"^\s*" + re.escape(nome) + " - "))
+        nomes_da_aba = "|".join(re.escape(n) for n in s.ABAS_DA_ROTINA[nome])
+        aba = tela.page.locator("wa-tab-button").filter(has_text=re.compile(rf"^\s*({nomes_da_aba})( - | \[)"))
         if aba.count():
             aba.first.click()
             tela.esperar_ocioso()
@@ -267,7 +282,8 @@ class SessaoProtheus:
                 pass  # tela sendo redesenhada
             tela.page.wait_for_timeout(500)
 
-    def _clicar_grupo(self, passo: str, proximo: Optional[str], tentativas: int = 3) -> None:
+    def _clicar_grupo(self, passo: str | tuple[str, ...], proximo: Optional[str | tuple[str, ...]],
+                      tentativas: int = 3) -> None:
         """Clica no item do menu e, se for um grupo, confere que ele expandiu (o próximo passo apareceu).
         Logo após o login a tela inicial ainda carrega e o Protheus ignora o clique: o grupo fica destacado
         mas não abre (visto em 05/10/2026). Só clica de novo se o próximo item NÃO apareceu — clicar num
@@ -287,19 +303,20 @@ class SessaoProtheus:
         raise ErroDeTela(f"O menu '{passo}' não expandiu depois de {tentativas} cliques. Diagnóstico: {caminho}")
 
     def _rotina_ativa(self) -> str:
-        """Nome da rotina da aba ativa ("Movimento Bancario - 01/010101 [...]" -> "Movimento Bancario")."""
+        """Nome da rotina da aba ativa (só abas de rotina, que têm a versão "[...]" no título)."""
         legendas = self.tela.page.evaluate(
             """() => Array.from(document.querySelectorAll('wa-tab-page[active]'))
-                     .map((e) => e.getAttribute('caption') || '').filter((c) => c.includes(' - ') && c.includes('['))""")
-        return legendas[0].split(" - ")[0].strip() if legendas else ""
+                     .map((e) => e.getAttribute('caption') || '').filter((c) => c.includes('['))""")
+        return nome_da_rotina_na_aba(legendas[0]) if legendas else ""
 
     def _conferir_rotina_ativa(self, nome: str) -> None:
         """Trava de segurança: nunca preencher nada numa rotina diferente da pedida.
         Espera a aba ativar (rotinas PO-UI como o Conciliador levam alguns segundos)."""
+        aceitas = s.ABAS_DA_ROTINA[nome]
         limite = time.monotonic() + 60
-        while (ativa := self._rotina_ativa()) != nome and time.monotonic() < limite:
+        while (ativa := self._rotina_ativa()) not in aceitas and time.monotonic() < limite:
             self.tela.page.wait_for_timeout(1000)
-        if ativa != nome:
+        if ativa not in aceitas:
             caminho = self.tela.diagnostico("rotina_errada")
             raise ErroDeTela(f"Esperava a rotina '{nome}' na tela, mas a ativa é '{ativa or 'nenhuma'}'. "
                              f"Diagnóstico: {caminho}")
