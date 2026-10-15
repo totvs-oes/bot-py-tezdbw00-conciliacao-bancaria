@@ -60,6 +60,10 @@ def _lancamento(cadastro, conta, historico, operacao):
      "fora_do_escopo"),
     # 14/10/2026: despesa de protesto do Bradesco é tarifa
     ("bradesco_cc", "DESPESAS DE PROTESTO 2003179", "debito", "tarifa", "tarifa"),
+    # 15/10/2026: débito "COB..." da Caixa é sempre tarifa, inclusive códigos novos
+    ("caixa_cc", "COB EST137 71026 01:34:42", "debito", "tarifa", "tarifa_cobranca_caixa"),
+    ("caixa_cc", "COB MAN061 131026 01:55:41", "debito", "tarifa", "tarifa"),
+    ("caixa_cc", "COB INTERN 131026 02:49:58", "debito", "tarifa", "tarifa"),
     # 14/10/2026: toda amortização de capital de giro do BB é baixa manual
     ("bb_cc", "Cap Giro Dig Amortização", "debito", "acao_manual", "amortizacao_contrato"),
     ("bb_cc", "Capital de Giro Amortização Parcela 3/12", "debito", "acao_manual", "amortizacao_contrato"),

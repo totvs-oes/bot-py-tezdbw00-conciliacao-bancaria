@@ -152,6 +152,15 @@ regras:
     # 14/10/2026: Bradesco "DESPESAS DE PROTESTO 2003179" é tarifa (era pendência em 13/10).
     historico: '\bTAR\b|\bTARIFA|\bCOB (LOTERI|AGENC|COMPE|ALT|BX|MAN|INTERN)|\bCOBPROT|DESPESAS? DE CARTORIO|DESPESAS DE PROTESTO|DEBITO SERVICO COBRANCA|DEB\.? CUSTAS CARTOR|\bPACOTE PJ\b|\bDESPESA REGISTRO RECEBIVEIS\b|^SISDEB REDECARD\b'
 
+  # --- Caixa: todo DÉBITO que começa com "COB" é tarifa de cobrança, qualquer que seja o código grudado
+  # (cliente, 15/10/2026; "COB EST137" de 08/10 não estava na lista acima). Os CRÉDITOS "COB ..." da vinculada
+  # continuam fora do escopo.
+  - nome: tarifa_cobranca_caixa
+    categoria: tarifa
+    bancos: ["104"]
+    operacao: debito
+    historico: '^COB'
+
   # --- BB câmbio de exportação (contrato, câmbio, serviço de câmbio, IOF): baixa manual no Contas a Pagar (cliente,
   # 09/10/2026). Depois da regra de tarifa: "Tar Liquid Orpag Exterior" continua tarifa.
   - nome: cambio_bb
