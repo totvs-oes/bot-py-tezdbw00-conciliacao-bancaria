@@ -56,13 +56,15 @@ def conferir_conciliado(antes: dict[str, Optional[Decimal]], depois: dict[str, O
     return None
 
 
-def observacao_lista_do_dia(quantidade: int, dia, soma: Decimal, anterior: Decimal, atual: Decimal) -> Optional[str]:
+def observacao_lista_do_dia(quantidade: Optional[int], dia, soma: Decimal, anterior: Decimal,
+                            atual: Decimal) -> Optional[str]:
     """Observação para o relatório (não impede a conciliação, regra da cliente de 15/10/2026: saldo do Protheus = extrato
     -> concilia) quando os lançamentos listados no Conciliador não somam a variação do saldo da conta no dia."""
     variacao = atual - anterior
     if soma == variacao:
         return None
-    return (f"Conciliados {quantidade} lançamentos de {dia:%d/%m/%Y} (soma R$ {formatar_brl(soma)}). Observação: o saldo "
+    qtde = f"{quantidade} " if quantidade else ""
+    return (f"Conciliados os {qtde}lançamentos de {dia:%d/%m/%Y} (soma R$ {formatar_brl(soma)}). Observação: o saldo "
             f"da conta variou R$ {formatar_brl(variacao)} no dia (de R$ {formatar_brl(anterior)} para "
             f"R$ {formatar_brl(atual)}); R$ {formatar_brl(variacao - soma)} em lançamentos não apareceram na lista do "
             "dia (data de disponibilidade diferente ou já conciliados).")
@@ -245,53 +247,119 @@ def conciliar(sessao: SessaoProtheus, conciliacao: Conciliacao,
     log.info("Conta %s: saldo Protheus %s x extrato %s", conciliacao.conta, saldo_protheus, conciliacao.saldo_extrato)
     if saldo_protheus != conciliacao.saldo_extrato:
         return False, saldo_protheus, None
-    visiveis, soma, observacao = _movimentos_a_conciliar(tela, f, conciliacao, saldos)
+    tem_linhas, soma, observacao = _movimentos_a_conciliar(tela, f, conciliacao, saldos)
     if ensaio:
         return False, saldo_protheus, observacao
-    _aplicar_conciliacao(tela, f, conciliacao, visiveis, soma, saldos)
+    _aplicar_conciliacao(tela, f, conciliacao, tem_linhas, soma, saldos)
     return True, saldo_protheus, observacao
 
 
-def soma_dos_movimentos(cabecalho: list[str], linhas: list[list[str]]) -> Decimal:
-    """Soma com sinal (R = entrada, P = saída) da coluna "Valor Mov." das linhas da grade do Conciliador."""
-    nomes = [" ".join(c.split()) for c in cabecalho]
-    i_valor = next(i for i, c in enumerate(nomes) if c.startswith(s.CONC_COLUNA_VALOR))
-    i_tipo = next(i for i, c in enumerate(nomes) if c.startswith(s.CONC_COLUNA_REC_PAG))
-    total = Decimal("0")
-    for celulas in linhas:
-        valor, tipo = _valor_brl(celulas[i_valor]), celulas[i_tipo].strip()
-        if valor is None or tipo not in ("R", "P"):
-            raise ValueError(f"Linha do Conciliador sem valor/Rec-Pag legível: {celulas}")
-        total += valor if tipo == "R" else -valor
-    return total
+# Textos visíveis do rodapé da grade: "311 Registro(s) Selecionado(s)", "Total Movimentos 197.889,30" (selecionados),
+# "Total Movimentos-Geral 197.889,30" (todas as linhas do filtro)
+_JS_RODAPE = r"""() => [...document.querySelectorAll('*')].filter(e => e.checkVisibility() && e.children.length === 0
+    && /Total Movimentos|Registro\(s\) Selecionado/.test(e.textContent)).map(e => (e.parentElement || e).innerText.replace(/\s+/g, ' '))"""
+RE_SELECIONADOS = re.compile(r"(\d+)\s+Registro\(s\) Selecionado")
+
+
+def rodape_da_grade(textos: list[str]) -> dict[str, Optional[Decimal | int]]:
+    """Rodapé da grade -> {"selecionados": 311, "total": 197889.30 (selecionados), "geral": 197889.30 (filtro)}."""
+    resultado: dict[str, Optional[Decimal | int]] = {"selecionados": None, "total": None, "geral": None}
+    for texto in textos:
+        if (m := RE_SELECIONADOS.search(texto)) and resultado["selecionados"] is None:
+            resultado["selecionados"] = int(m.group(1))
+        if s.CONC_TOTAL_GERAL in texto and resultado["geral"] is None:
+            resultado["geral"] = _valor_brl(texto.split(s.CONC_TOTAL_GERAL, 1)[1])
+        for trecho in re.findall(r"Total Movimentos(?!-Geral)\s*(-?[\d.]+,\d{2})", texto):
+            if resultado["total"] is None:
+                resultado["total"] = _valor_brl(trecho)
+    return resultado
+
+
+def _rodape(f: Frame) -> dict:
+    return rodape_da_grade(f.evaluate(_JS_RODAPE))
+
+
+def _linhas_visiveis(f: Frame) -> list:
+    # Há outras tabelas escondidas na página: considerar só as linhas VISÍVEIS com caixa de seleção
+    linhas = f.locator("tbody tr").filter(has=f.locator(s.CONC_CHECKBOX_LINHA))
+    return [linhas.nth(i) for i in range(linhas.count()) if linhas.nth(i).is_visible()]
 
 
 def _movimentos_a_conciliar(tela: Tela, f: Frame, conciliacao: Conciliacao,
-                            saldos: dict) -> tuple[list, Decimal, Optional[str]]:
-    """Aba "Dados não Encontrados": confere que cada linha é da conta e do dia e soma as linhas.
-    Devolve (linhas, soma, observação se a soma não for a variação do saldo do dia)."""
+                            saldos: dict) -> tuple[bool, Decimal, Optional[str]]:
+    """Aba "Dados não Encontrados". A grade é virtual (cdk-virtual-scroll, produção 15/10/2026): só ~28 linhas existem
+    no HTML por vez e são recicladas ao rolar (Itaú C/C de 14/10 tinha 311). Por isso nada de linha a linha: as linhas
+    visíveis servem de amostra (conta e dia) e o total vem do rodapé ("Total Movimentos-Geral" = todas as do filtro).
+    Devolve (tem linhas, total do filtro, observação se o total não for a variação do saldo do dia)."""
     chave = conciliacao.conta.chave
     _esperar(tela, f.get_by_text(s.CONC_ABA_NAO_ENCONTRADOS, exact=True), "aba_nao_encontrados").click()
     tela.page.wait_for_timeout(1500)
     _aguardar_ocioso(tela)
-    # Há outras tabelas escondidas na página: considerar só as linhas VISÍVEIS com caixa de seleção
-    linhas = f.locator("tbody tr").filter(has=f.locator(s.CONC_CHECKBOX_LINHA))
-    visiveis = [linhas.nth(i) for i in range(linhas.count()) if linhas.nth(i).is_visible()]
+    visiveis = _linhas_visiveis(f)
     if not visiveis:
-        return visiveis, Decimal("0"), None
-    for linha in visiveis:  # conferência: tudo que vai ser marcado é desta conta e deste dia
+        return False, Decimal("0"), None
+    for linha in visiveis:  # amostra: as linhas são desta conta e deste dia (o filtro garante o resto)
         texto = linha.inner_text()
         if conciliacao.conta.numero not in texto or conciliacao.data.strftime("%d/%m/%Y") not in texto:
             raise ErroDeTela(f"Linha de outra conta/data em 'Dados não Encontrados' ({chave}): {texto[:150]}")
-    cabecalho = visiveis[0].locator("xpath=ancestor::table[1]").locator("thead th").all_inner_texts()
-    soma = soma_dos_movimentos(cabecalho, [l.locator("td").all_inner_texts() for l in visiveis])
+    geral = _rodape(f)["geral"]
+    if geral is None:
+        raise ErroDeTela(f"Não consegui ler o '{s.CONC_TOTAL_GERAL}' do rodapé da grade ({chave})")
     anterior = saldos[s.CONC_SALDO_ANTERIOR_BANCARIO]
     observacao = None
     if anterior is not None:
-        observacao = observacao_lista_do_dia(len(visiveis), conciliacao.data, soma, anterior, saldos[s.CONC_SALDO_ATUAL])
+        observacao = observacao_lista_do_dia(None, conciliacao.data, geral, anterior, saldos[s.CONC_SALDO_ATUAL])
     if observacao:
         log.info("Conta %s: %s", conciliacao.conta, observacao)
-    return visiveis, soma, observacao
+    return True, geral, observacao
+
+
+# Rola a área virtual da grade até o fim; devolve a altura total (cresce enquanto o PO-UI busca mais linhas)
+_JS_ROLAR_ATE_O_FIM = r"""() => {
+  const areas = [...document.querySelectorAll('cdk-virtual-scroll-viewport')].filter(e => e.checkVisibility());
+  if (!areas.length) return -1;
+  const area = areas[0];
+  area.scrollTop = area.scrollHeight;
+  area.dispatchEvent(new Event('scroll'));
+  return area.scrollHeight;
+}"""
+
+
+def _carregar_grade_inteira(tela: Tela, f: Frame, estabilidade: int = 3, maximo: int = 300) -> None:
+    """A grade busca os dados em lotes conforme é rolada (produção, 15/10/2026: sem rolar, o "marcar todos" pegou 30
+    de 311). Rola até o fim e repete até a altura parar de crescer; o rodapé confere depois."""
+    anterior, sem_mudar = None, 0
+    for _ in range(maximo):
+        altura = f.evaluate(_JS_ROLAR_ATE_O_FIM)
+        sem_mudar = sem_mudar + 1 if altura == anterior else 0
+        if altura == -1 or sem_mudar >= estabilidade:
+            break
+        anterior = altura
+        tela.page.wait_for_timeout(800)
+        _aguardar_ocioso(tela)
+
+
+def _marcar_todos(tela: Tela, f: Frame, conciliacao: Conciliacao, geral: Decimal) -> int:
+    """Marca TODAS as linhas pelo checkbox do cabeçalho e confere no rodapé que o total selecionado é o do filtro.
+    Não fechou -> desmarca e MensagemProtheus (nada foi conciliado)."""
+    chave = conciliacao.conta.chave
+    _carregar_grade_inteira(tela, f)
+    cabecalho = f.locator("thead po-checkbox [role=checkbox]")   # o do cabeçalho não tem o name das linhas
+    caixa = _esperar(tela, cabecalho, "marcar_todos")
+    if caixa.get_attribute("aria-checked") != "true":
+        caixa.click()
+    limite = time.monotonic() + 30
+    while (rodape := _rodape(f))["total"] != geral and time.monotonic() < limite:
+        tela.page.wait_for_timeout(500)
+    tela.print(f"conciliador_{chave}_selecionados")
+    if not rodape["selecionados"] or rodape["total"] != geral:
+        if caixa.get_attribute("aria-checked") == "true":
+            caixa.click()
+        raise MensagemProtheus(
+            f"Ao marcar todos os lançamentos de {conciliacao.data:%d/%m/%Y}, o total selecionado "
+            f"({rodape['selecionados']} registros, R$ {formatar_brl(rodape['total']) if rodape['total'] is not None else '?'}) "
+            f"não ficou igual ao total do filtro (R$ {formatar_brl(geral)}). Nada foi conciliado; conciliar manualmente.")
+    return rodape["selecionados"]
 
 
 def _toast(tela: Tela, f: Frame, texto: str, timeout: int = 120) -> None:
@@ -310,7 +378,7 @@ def _toast(tela: Tela, f: Frame, texto: str, timeout: int = 120) -> None:
     raise ErroDeTela(f"Conciliador: mensagem '{texto}' não apareceu. Diagnóstico: {caminho}")
 
 
-def _aplicar_conciliacao(tela: Tela, f: Frame, conciliacao: Conciliacao, visiveis: list, soma: Decimal,
+def _aplicar_conciliacao(tela: Tela, f: Frame, conciliacao: Conciliacao, tem_linhas: bool, soma: Decimal,
                          saldos_antes: dict) -> None:
     """Calibrado em 02/10/2026 (caução Santander 29000376, homologação):
 
@@ -322,17 +390,9 @@ def _aplicar_conciliacao(tela: Tela, f: Frame, conciliacao: Conciliacao, visivei
     O filtro (conta + data) garante que só os movimentos desta conta/dia estão na tela.
     """
     chave = conciliacao.conta.chave
-    if visiveis:  # já conferidas em _movimentos_a_conciliar (conta, data e soma)
-        for linha in visiveis:
-            caixa = linha.locator(f"{s.CONC_CHECKBOX_LINHA} [role=checkbox]").first
-            if caixa.get_attribute("aria-checked") != "true":
-                caixa.click()
-                tela.page.wait_for_timeout(300)
-        marcadas = [l.locator(f"{s.CONC_CHECKBOX_LINHA} [role=checkbox]").first.get_attribute("aria-checked")
-                    for l in visiveis]
-        if marcadas.count("true") != len(visiveis):
-            raise ErroDeTela(f"Esperava {len(visiveis)} linhas marcadas, marcadas: {marcadas}")
-        tela.print(f"conciliador_{chave}_selecionados")
+    if tem_linhas:
+        selecionados = _marcar_todos(tela, f, conciliacao, soma)
+        log.info("Conta %s: %d lançamentos marcados (R$ %s)", conciliacao.conta, selecionados, formatar_brl(soma))
         _esperar(tela, f.locator("po-dropdown").filter(has_text=s.CONC_ACOES), "acoes").click()
         _esperar(tela, f.get_by_text(s.CONC_CONCILIAR, exact=True), "acao_conciliar").click()
         _toast(tela, f, s.CONC_MATCH_SUCESSO)
@@ -347,7 +407,7 @@ def _aplicar_conciliacao(tela: Tela, f: Frame, conciliacao: Conciliacao, visivei
     # "Conciliação não realizada, não existem informações para gravação"). Match pendente = linha com "Cancelar Match".
     matches = f.get_by_text(s.CONC_CANCELAR_MATCH, exact=True)
     tem_match = any(matches.nth(i).is_visible() for i in range(matches.count()))
-    if not visiveis and not tem_match:
+    if not tem_linhas and not tem_match:
         # Saldo = extrato e nada a marcar nem a aplicar: os lançamentos do dia já estão conciliados
         tela.print(f"conciliador_{chave}_ja_conciliada")
         log.info("Conta %s: nada a conciliar em %s (lançamentos já conciliados)", conciliacao.conta, conciliacao.data)
@@ -364,7 +424,7 @@ def _aplicar_conciliacao(tela: Tela, f: Frame, conciliacao: Conciliacao, visivei
     _aguardar_ocioso(tela)
     # A conciliação JÁ foi aplicada: problema aqui não é falha técnica (repetir não adianta); vai para o relatório.
     # Com match pendente de execução anterior (sem linhas novas), a soma das linhas não é conhecida: não confere.
-    if visiveis and (motivo := conferir_conciliado(saldos_antes, depois, soma)):
+    if tem_linhas and (motivo := conferir_conciliado(saldos_antes, depois, soma)):
         raise MensagemProtheus(f"Conciliação aplicada, mas a conferência não fechou: {motivo}")
 
 

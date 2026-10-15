@@ -6,8 +6,8 @@ variação do saldo do dia, concilia mesmo assim e registra uma observação no 
 from datetime import date
 from decimal import Decimal
 
-from conciliacao.protheus.conciliador import (conferir_conciliado, observacao_lista_do_dia, saldos_do_modal,
-                                              soma_dos_movimentos)
+from conciliacao.protheus.conciliador import (conferir_conciliado, observacao_lista_do_dia, rodape_da_grade,
+                                              saldos_do_modal)
 
 # Texto do modal em produção (Daycoval, 13/10/2026): histórico não conciliado nesta rotina (conciliado ≠ bancário)
 MODAL_PRODUCAO = ("Saldos bancários Conta: 707 - 0001 - 1500926 Quantidade Reais (R$) Saldo anterior (Bancário) 969,31 "
@@ -28,18 +28,16 @@ def test_le_os_quatro_saldos_do_modal_de_producao():
                                                "Saldo atual (Conciliado)": Decimal("-118226.87")}
 
 
-CABECALHO = ["", "Filial Orig. ⇅", "Data Dispon. ⇅", "Data Mov. ⇅", "Moeda ⇅", "Valor Mov. ⇅", "Natureza ⇅",
-             "Banco ⇅", "Agencia ⇅", "Conta Banco ⇅", "Num Cheque ⇅", "Documento ⇅", "Rec/Pag"]
-# As 11 linhas de "Dados não Encontrados" da ABC C/C em 14/10/2026 (produção, 15/10/2026)
-LINHAS_ABC = [("357.977,90", "R"), ("0,89", "P"), ("10.502,72", "R"), ("15.345,60", "R"), ("3,46", "P"),
-              ("5,34", "P"), ("39.677,76", "R"), ("37.145,92", "R"), ("17.664,00", "R"), ("508.729,39", "P"),
-              ("2,67", "P")]
-
-
-def test_soma_dos_movimentos_da_grade():
-    linhas = [["", "010101", "14/10/2026", "14/10/2026", "M1", valor, "", "246", "0001", "006609345", "", "", tipo]
-              for valor, tipo in LINHAS_ABC]
-    assert soma_dos_movimentos(CABECALHO, linhas) == Decimal("-30427.85")   # = "Total Movimentos" do rodapé
+def test_rodape_da_grade_com_tudo_marcado_e_sem_nada_marcado():
+    """Produção, 15/10/2026 (Itaú C/C, 14/10): a grade é virtual (só ~28 linhas no HTML); o "marcar todos" do cabeçalho
+    selecionou os 311 lançamentos e o rodapé mostra o total selecionado e o total de todas as linhas do filtro."""
+    marcado = ["311 Registro(s) Selecionado(s)", "Total Movimentos 197.889,30", "Total Movimentos-Geral 197.889,30",
+               "Valor Total Entradas 1.551.590,05", "Valor Total Entradas-Geral 1.551.590,05"]
+    assert rodape_da_grade(marcado) == {"selecionados": 311, "total": Decimal("197889.30"), "geral": Decimal("197889.30")}
+    nada = ["0 Registro(s) Selecionado(s)", "Total Movimentos-Geral 197.889,30"]
+    assert rodape_da_grade(nada) == {"selecionados": 0, "total": None, "geral": Decimal("197889.30")}
+    # rótulo e valor no mesmo texto do pai, como lido na ABC ("Total Movimentos-11,85 Total Movimentos-Geral ...")
+    assert rodape_da_grade(["Total Movimentos -30.427,85 Total Movimentos-Geral -30.427,85"])["total"] == Decimal("-30427.85")
 
 
 def test_conferencia_pos_aplicacao_com_os_numeros_reais_da_abc():
@@ -60,7 +58,7 @@ def test_conferencia_pos_aplicacao_acusa_linhas_nao_registradas_e_modal_ilegivel
 
 def test_observacao_no_relatorio_quando_a_lista_nao_fecha_com_o_saldo_do_dia():
     texto = observacao_lista_do_dia(11, date(2026, 10, 14), Decimal("-30427.85"), Decimal("434.49"), Decimal("510.24"))
-    assert "Conciliados 11 lançamentos" in texto and "R$ -30.427,85" in texto and "R$ 75,75" in texto
+    assert "Conciliados os 11 lançamentos" in texto and "R$ -30.427,85" in texto and "R$ 75,75" in texto
     assert "R$ 30.503,60" in texto
     # lista que fecha com a variação do dia: sem observação
     assert observacao_lista_do_dia(3, date(2026, 10, 14), Decimal("75.75"), Decimal("434.49"), Decimal("510.24")) is None
