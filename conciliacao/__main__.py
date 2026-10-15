@@ -28,6 +28,7 @@ def _pedido(args, modo: Modo) -> Pedido:
         rotinas={Rotina(r) for r in args.rotinas.split(",")} if getattr(args, "rotinas", None) else None,
         limite=getattr(args, "limite", None), data_pasta=args.data_pasta, pasta=args.pasta,
         extratos_json=args.extratos_json,
+        refazer_conciliacao=getattr(args, "refazer_conciliacao", False),
     )
 
 
@@ -88,6 +89,9 @@ def main(argv: list[str] | None = None) -> int:
     p_executar.add_argument("--ensaio", action="store_true",
                             help="Percorre as telas preenchendo e conferindo tudo, mas CANCELA em vez de gravar")
     p_executar.add_argument("--limite", type=int, help="No máximo N lançamentos nesta execução")
+    p_executar.add_argument("--refazer-conciliacao", action="store_true",
+                            help="Concilia de novo as contas já conciliadas no dia (pega o que ficou em 'Dados não "
+                                 "Encontrados' depois; o que já foi conciliado não aparece lá e não é refeito)")
     p_mapear = sub.add_parser("mapear", help="Abre o Protheus com o Playwright Inspector")
     p_mapear.add_argument("--data-movimento", type=_data)
     p_api = sub.add_parser("api", help="Sobe a API HTTP (POST /execucoes) para sistemas externos")

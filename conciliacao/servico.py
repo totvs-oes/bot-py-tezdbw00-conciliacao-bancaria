@@ -47,6 +47,7 @@ class Pedido:
     data_pasta: Optional[date] = None            # padrão: dia útil seguinte ao movimento
     pasta: Optional[Path] = None                 # pasta exata com os PDFs (ignora a estrutura de Z:)
     extratos_json: Optional[Path] = None         # resposta da API de extratos já salva
+    refazer_conciliacao: bool = False            # concilia de novo contas já marcadas como conciliadas no controle
 
 
 @dataclass
@@ -151,7 +152,7 @@ def executar_dia(pedido: Pedido, ambiente: Ambiente, cadastro: Cadastro) -> Resu
 
         resultado = Executor(plano, cadastro, ambiente, registro, pasta_saida,
                              pedido.rotinas or set(Rotina), ensaio=pedido.modo == Modo.ENSAIO,
-                             limite=pedido.limite).executar()
+                             limite=pedido.limite, refazer_conciliacao=pedido.refazer_conciliacao).executar()
         caminho = relatorio.salvar(plano, pasta_saida, resultado, simulado=False)
 
         dia = plano.data_movimento.strftime("%d/%m/%Y")
