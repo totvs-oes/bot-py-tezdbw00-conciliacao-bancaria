@@ -122,6 +122,7 @@ CONC_SALDO_ANTERIOR_BANCARIO = "Saldo anterior (Bancário)"
 CONC_SALDO_ANTERIOR_CONCILIADO = "Saldo anterior (Conciliado)"
 CONC_COLUNA_VALOR = "Valor Mov."        # colunas da grade "Movimentos Bancários (FK5)"
 CONC_COLUNA_REC_PAG = "Rec/Pag"
+CONC_CANCELAR_MATCH = "Cancelar Match"                  # link de cada match pendente (aba Dados da Conciliação)
 CONC_TOAST = "po-toaster, .po-toaster"
 CONC_SAIR = "Sair da Conciliação"
 CONC_SAIR_PERGUNTA = "Deseja mesmo sair desta conciliação?"

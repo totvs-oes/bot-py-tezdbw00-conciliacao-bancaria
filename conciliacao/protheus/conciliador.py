@@ -298,8 +298,10 @@ def _toast(tela: Tela, f: Frame, texto: str, timeout: int = 120) -> None:
             "es => es.filter(e => e.checkVisibility()).map(e => e.innerText.replace(/\\s+/g, ' '))")
         if any(texto in m for m in mensagens):
             return
-        if erros := [m for m in mensagens if "erro" in m.lower() or "falha" in m.lower()]:
-            raise ErroDeTela(f"Conciliador: {erros[0][:300]}")
+        # Recusa do Conciliador (ex.: "Conciliação não realizada, não existem informações para gravação", produção
+        # 15/10/2026): é resposta do Protheus, não falha de tela -> relatório, sem nova tentativa
+        if erros := [m for m in mensagens if any(p in m.lower() for p in ("erro", "falha", "não realizada"))]:
+            raise MensagemProtheus(f"Conciliador: {erros[0][:300]}")
         tela.page.wait_for_timeout(500)
     caminho = tela.diagnostico(f"conciliador_sem_toast_{texto[:15]}")
     raise ErroDeTela(f"Conciliador: mensagem '{texto}' não apareceu. Diagnóstico: {caminho}")
@@ -337,7 +339,11 @@ def _aplicar_conciliacao(tela: Tela, f: Frame, conciliacao: Conciliacao, visivei
     tela.page.wait_for_timeout(1500)
     _aguardar_ocioso(tela)
     aplicar = f.get_by_role("button", name=s.CONC_APLICAR)
-    if not visiveis and not any(aplicar.nth(i).is_visible() for i in range(aplicar.count())):
+    # Em produção o botão "Aplicar Conciliação" fica visível mesmo sem nada a aplicar (15/10/2026: o clique deu
+    # "Conciliação não realizada, não existem informações para gravação"). Match pendente = linha com "Cancelar Match".
+    matches = f.get_by_text(s.CONC_CANCELAR_MATCH, exact=True)
+    tem_match = any(matches.nth(i).is_visible() for i in range(matches.count()))
+    if not visiveis and not tem_match:
         # Nada a conciliar nem a aplicar: o dia já foi conciliado (execução anterior que caiu depois de aplicar)
         saldos = _ler_saldos_do_modal(tela, f, f"conciliador_{chave}_ja_conciliada")
         if motivo := conferir_conciliado(saldos, conciliacao.saldo_extrato):
