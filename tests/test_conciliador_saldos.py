@@ -1,7 +1,13 @@
-"""Conferência depois de aplicar a conciliação (modal "Saldos bancários" do Novo Conciliador)."""
+"""Conciliação no Novo Conciliador: leitura do modal "Saldos bancários", soma da grade e conferência pós-aplicação.
+
+Regra (cliente, 15/10/2026): saldo do Protheus = extrato -> concilia. Se os lançamentos listados não somarem a
+variação do saldo do dia, concilia mesmo assim e registra uma observação no relatório.
+"""
+from datetime import date
 from decimal import Decimal
 
-from conciliacao.protheus.conciliador import conferir_conciliado, saldos_do_modal
+from conciliacao.protheus.conciliador import (conferir_conciliado, observacao_lista_do_dia, saldos_do_modal,
+                                              soma_dos_movimentos)
 
 # Texto do modal em produção (Daycoval, 13/10/2026): histórico não conciliado nesta rotina (conciliado ≠ bancário)
 MODAL_PRODUCAO = ("Saldos bancários Conta: 707 - 0001 - 1500926 Quantidade Reais (R$) Saldo anterior (Bancário) 969,31 "
@@ -10,35 +16,16 @@ MODAL_PRODUCAO = ("Saldos bancários Conta: 707 - 0001 - 1500926 Quantidade Reai
 
 
 def _modal(anterior_banc, anterior_conc, atual_banc, atual_conc):
-    return (f"Saldo anterior (Bancário) {anterior_banc} Saldo anterior (Conciliado) {anterior_conc} "
-            f"Total de entradas 1 1,00 Total de saídas 0 0,00 Saldo atual (Bancário) {atual_banc} "
-            f"Saldo atual (Conciliado) {atual_conc}")
+    return saldos_do_modal(f"Saldo anterior (Bancário) {anterior_banc} Saldo anterior (Conciliado) {anterior_conc} "
+                           f"Total de entradas 1 1,00 Total de saídas 0 0,00 Saldo atual (Bancário) {atual_banc} "
+                           f"Saldo atual (Conciliado) {atual_conc}")
 
 
 def test_le_os_quatro_saldos_do_modal_de_producao():
-    saldos = saldos_do_modal(MODAL_PRODUCAO)
-    assert saldos == {"Saldo anterior (Bancário)": Decimal("969.31"),
-                      "Saldo anterior (Conciliado)": Decimal("-118226.87"),
-                      "Saldo atual (Bancário)": Decimal("969.31"),
-                      "Saldo atual (Conciliado)": Decimal("-118226.87")}
-
-
-def test_historico_nao_conciliado_nao_e_erro_quando_o_dia_inteiro_foi_conciliado():
-    """Produção, 15/10/2026: extrato 510,24; o conciliado ficou 113.097,14 porque o conciliado anterior já carregava
-    112.586,90 de diferença. O dia foi todo conciliado: a conferência tem que passar."""
-    saldos = saldos_do_modal(_modal("1.000,00", "113.586,90", "510,24", "113.097,14"))
-    assert conferir_conciliado(saldos, Decimal("510.24")) is None
-
-
-def test_movimento_do_dia_conciliado_pela_metade_e_erro():
-    saldos = saldos_do_modal(_modal("1.000,00", "113.586,90", "510,24", "113.400,00"))
-    assert "nem todos os movimentos do dia" in conferir_conciliado(saldos, Decimal("510.24"))
-
-
-def test_bancario_diferente_do_extrato_e_modal_ilegivel_sao_erro():
-    saldos = saldos_do_modal(_modal("1.000,00", "1.000,00", "600,00", "600,00"))
-    assert "extrato" in conferir_conciliado(saldos, Decimal("510.24"))
-    assert "não consegui ler" in conferir_conciliado(saldos_do_modal("Saldo atual (Bancário) 510,24"), Decimal("510.24"))
+    assert saldos_do_modal(MODAL_PRODUCAO) == {"Saldo anterior (Bancário)": Decimal("969.31"),
+                                               "Saldo anterior (Conciliado)": Decimal("-118226.87"),
+                                               "Saldo atual (Bancário)": Decimal("969.31"),
+                                               "Saldo atual (Conciliado)": Decimal("-118226.87")}
 
 
 CABECALHO = ["", "Filial Orig. ⇅", "Data Dispon. ⇅", "Data Mov. ⇅", "Moeda ⇅", "Valor Mov. ⇅", "Natureza ⇅",
@@ -49,20 +36,31 @@ LINHAS_ABC = [("357.977,90", "R"), ("0,89", "P"), ("10.502,72", "R"), ("15.345,6
               ("2,67", "P")]
 
 
-def test_soma_dos_movimentos_da_grade_e_o_caso_que_nao_podia_ser_conciliado():
-    from conciliacao.protheus.conciliador import soma_dos_movimentos
+def test_soma_dos_movimentos_da_grade():
     linhas = [["", "010101", "14/10/2026", "14/10/2026", "M1", valor, "", "246", "0001", "006609345", "", "", tipo]
               for valor, tipo in LINHAS_ABC]
-    soma = soma_dos_movimentos(CABECALHO, linhas)
-    assert soma == Decimal("-30427.85")            # = "Total Movimentos" do rodapé da grade
-    variacao_do_dia = Decimal("510.24") - Decimal("434.49")
-    assert soma != variacao_do_dia                  # +75,75: com a conferência nova, a conciliação NÃO é aplicada
+    assert soma_dos_movimentos(CABECALHO, linhas) == Decimal("-30427.85")   # = "Total Movimentos" do rodapé
 
 
-def test_texto_do_relatorio_quando_a_conciliacao_nao_e_aplicada():
-    from datetime import date
-    from conciliacao.protheus.conciliador import motivo_lista_divergente
-    texto = motivo_lista_divergente(11, date(2026, 10, 14), Decimal("-30427.85"), Decimal("434.49"), Decimal("510.24"))
-    print(texto)
-    assert "R$ 510,24" in texto and "R$ -30.427,85" in texto and "R$ 75,75" in texto
-    assert "Faltam R$ 30.503,60" in texto and "conciliar manualmente" in texto
+def test_conferencia_pos_aplicacao_com_os_numeros_reais_da_abc():
+    """ABC C/C, 14/10: conciliado 143.524,99 antes; 11 linhas somando -30.427,85; depois 113.097,14 (o valor que
+    antes era tratado como erro por ser diferente do extrato de 510,24). O Protheus registrou exatamente as linhas."""
+    antes = _modal("434,49", "143.524,99", "510,24", "143.524,99")
+    depois = _modal("434,49", "143.524,99", "510,24", "113.097,14")
+    assert conferir_conciliado(antes, depois, Decimal("-30427.85")) is None
+
+
+def test_conferencia_pos_aplicacao_acusa_linhas_nao_registradas_e_modal_ilegivel():
+    antes = _modal("434,49", "143.524,99", "510,24", "143.524,99")
+    parcial = _modal("434,49", "143.524,99", "510,24", "143.000,00")
+    assert "linhas marcadas somam" in conferir_conciliado(antes, parcial, Decimal("-30427.85"))
+    assert "não consegui ler" in conferir_conciliado(antes, saldos_do_modal("Saldo atual (Bancário) 510,24"),
+                                                     Decimal("1"))
+
+
+def test_observacao_no_relatorio_quando_a_lista_nao_fecha_com_o_saldo_do_dia():
+    texto = observacao_lista_do_dia(11, date(2026, 10, 14), Decimal("-30427.85"), Decimal("434.49"), Decimal("510.24"))
+    assert "Conciliados 11 lançamentos" in texto and "R$ -30.427,85" in texto and "R$ 75,75" in texto
+    assert "R$ 30.503,60" in texto
+    # lista que fecha com a variação do dia: sem observação
+    assert observacao_lista_do_dia(3, date(2026, 10, 14), Decimal("75.75"), Decimal("434.49"), Decimal("510.24")) is None

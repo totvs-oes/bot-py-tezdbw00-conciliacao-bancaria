@@ -25,7 +25,6 @@ ESPERA_RETENTATIVA = 5 * 60  # segundos (spec v1.2: "tentar novamente após 5 mi
 FALHAS_TECNICAS = (ErroDeTela, ErroPlaywright, TimeoutError, ConnectionError)
 
 DIVERGENTE = "divergente"
-NAO_CONCILIADA = "não conciliada"  # o robô decidiu não conciliar (motivo no detalhe); nada foi marcado
 ENSAIADO = "ensaiado"  # só existe dentro da simulação do registro (modo ensaio)
 CONCILIADO = "conciliado"
 
@@ -172,21 +171,18 @@ class Executor:
                 self.resultado.conciliacoes[chave] = ("não executada", "há lançamentos da conta não concluídos")
                 continue
             try:
-                conciliou, saldo_protheus = conciliador.conciliar(sessao, conciliacao, ensaio=self.ensaio)
-            except conciliador.ConciliacaoNaoAplicada as motivo:
-                self.registro.marcar_conciliacao(conciliacao, DIVERGENTE, detalhe=str(motivo))
-                self.resultado.conciliacoes[chave] = (NAO_CONCILIADA, str(motivo))
-                continue
+                conciliou, saldo_protheus, observacao = conciliador.conciliar(sessao, conciliacao, ensaio=self.ensaio)
             except MensagemProtheus as mensagem:
                 self.registro.marcar_conciliacao(conciliacao, ERRO, detalhe=str(mensagem))
                 self.resultado.conciliacoes[chave] = (ERRO, str(mensagem))
                 continue
             if conciliou:
-                self.registro.marcar_conciliacao(conciliacao, CONCILIADO, saldo_protheus)
-                self.resultado.conciliacoes[chave] = (CONCILIADO, None)
+                self.registro.marcar_conciliacao(conciliacao, CONCILIADO, saldo_protheus, observacao)
+                self.resultado.conciliacoes[chave] = (CONCILIADO, observacao)
             elif self.ensaio and saldo_protheus == conciliacao.saldo_extrato:
                 self.resultado.conciliacoes[chave] = (
-                    "pronta para conciliar", f"Saldo Protheus = extrato = R$ {formatar_brl(saldo_protheus)} (ensaio)")
+                    "pronta para conciliar", " ".join(filter(None, [
+                        f"Saldo Protheus = extrato = R$ {formatar_brl(saldo_protheus)} (ensaio).", observacao])))
             else:
                 gap = saldo_protheus - conciliacao.saldo_extrato
                 detalhe = (f"Saldo Protheus R$ {formatar_brl(saldo_protheus)} × extrato "

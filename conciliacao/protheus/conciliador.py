@@ -40,25 +40,32 @@ def saldos_do_modal(texto: str) -> dict[str, Optional[Decimal]]:
     return {r: _valor_brl(texto.split(r, 1)[1]) if r in texto else None for r in rotulos}
 
 
-def conferir_conciliado(saldos: dict[str, Optional[Decimal]], saldo_extrato: Decimal) -> Optional[str]:
-    """Depois de aplicar: o que foi conciliado é exatamente o movimento do dia? None = sim; senão, o motivo.
+def conferir_conciliado(antes: dict[str, Optional[Decimal]], depois: dict[str, Optional[Decimal]],
+                        soma_marcada: Decimal) -> Optional[str]:
+    """Depois de aplicar: o Protheus registrou exatamente as linhas marcadas? None = sim; senão, o motivo.
 
-    Em produção (15/10/2026) o "Saldo anterior (Conciliado)" é diferente do Bancário: há movimentos de dias anteriores
-    nunca conciliados NESTA rotina. Então o "Saldo atual (Conciliado)" não é o saldo do extrato; o certo é
-    conciliado atual = conciliado anterior + movimento do dia (bancário atual - bancário anterior)."""
-    faltando = [r for r, v in saldos.items() if v is None]
-    if faltando:
-        return f"não consegui ler {faltando} no modal de saldos"
-    bancario, conciliado = saldos[s.CONC_SALDO_ATUAL], saldos[s.CONC_SALDO_CONCILIADO]
-    if bancario != saldo_extrato:
-        return f"'{s.CONC_SALDO_ATUAL}' = {bancario}, extrato = {saldo_extrato}"
-    movimento_do_dia = bancario - saldos[s.CONC_SALDO_ANTERIOR_BANCARIO]
-    esperado = saldos[s.CONC_SALDO_ANTERIOR_CONCILIADO] + movimento_do_dia
-    if conciliado != esperado:
-        return (f"'{s.CONC_SALDO_CONCILIADO}' = {conciliado}, esperado {esperado} (conciliado anterior "
-                f"{saldos[s.CONC_SALDO_ANTERIOR_CONCILIADO]} + movimento do dia {movimento_do_dia}): "
-                "nem todos os movimentos do dia foram conciliados")
+    Conciliado depois = conciliado antes + soma das linhas marcadas. Não se compara com o extrato: em produção
+    (15/10/2026) o conciliado acumulado carrega movimentos antigos nunca conciliados nesta rotina (ABC C/C:
+    143.524,99 - 30.427,85 = 113.097,14, com extrato de 510,24)."""
+    antes_valor, depois_valor = antes.get(s.CONC_SALDO_CONCILIADO), depois.get(s.CONC_SALDO_CONCILIADO)
+    if antes_valor is None or depois_valor is None:
+        return f"não consegui ler o '{s.CONC_SALDO_CONCILIADO}' no modal de saldos"
+    if depois_valor != antes_valor + soma_marcada:
+        return (f"'{s.CONC_SALDO_CONCILIADO}' foi de {antes_valor} para {depois_valor}, mas as linhas marcadas somam "
+                f"{soma_marcada} (esperado {antes_valor + soma_marcada})")
     return None
+
+
+def observacao_lista_do_dia(quantidade: int, dia, soma: Decimal, anterior: Decimal, atual: Decimal) -> Optional[str]:
+    """Observação para o relatório (não impede a conciliação, regra da cliente de 15/10/2026: saldo do Protheus = extrato
+    -> concilia) quando os lançamentos listados no Conciliador não somam a variação do saldo da conta no dia."""
+    variacao = atual - anterior
+    if soma == variacao:
+        return None
+    return (f"Conciliados {quantidade} lançamentos de {dia:%d/%m/%Y} (soma R$ {formatar_brl(soma)}). Observação: o saldo "
+            f"da conta variou R$ {formatar_brl(variacao)} no dia (de R$ {formatar_brl(anterior)} para "
+            f"R$ {formatar_brl(atual)}); R$ {formatar_brl(variacao - soma)} em lançamentos não apareceram na lista do "
+            "dia (data de disponibilidade diferente ou já conciliados).")
 
 
 def _frame(tela: Tela, timeout: int = 60) -> Frame:
@@ -223,12 +230,12 @@ def ler_saldos(tela: Tela, f: Frame, conciliacao: Conciliacao) -> dict[str, Opti
     return saldos
 
 
-def conciliar(sessao: SessaoProtheus, conciliacao: Conciliacao, ensaio: bool = False) -> tuple[bool, Decimal]:
-    """Lê o Saldo atual (Bancário) da conta no Conciliador e só concilia se for EXATAMENTE igual ao do extrato.
-
-    Antes de marcar qualquer linha, confere que os movimentos a conciliar somam exatamente a variação do saldo
-    bancário do dia (senão MensagemProtheus: vai para o relatório e nada é marcado; vale também no ensaio).
-    Retorna (conciliou, saldo_protheus). ensaio=True: só lê e compara, nunca concilia.
+def conciliar(sessao: SessaoProtheus, conciliacao: Conciliacao,
+              ensaio: bool = False) -> tuple[bool, Decimal, Optional[str]]:
+    """Lê o Saldo atual (Bancário) da conta no Conciliador e só concilia se for EXATAMENTE igual ao do extrato
+    (regra confirmada pela cliente em 15/10/2026). Os lançamentos do dia que não fecham com a variação do saldo
+    não impedem: viram observação no relatório.
+    Retorna (conciliou, saldo_protheus, observação). ensaio=True: só lê e compara, nunca concilia.
     """
     tela = sessao.abrir_rotina(s.ROTINA_CONCILIADOR)
     f = _frame(tela)
@@ -237,12 +244,12 @@ def conciliar(sessao: SessaoProtheus, conciliacao: Conciliacao, ensaio: bool = F
     saldo_protheus = saldos[s.CONC_SALDO_ATUAL]
     log.info("Conta %s: saldo Protheus %s x extrato %s", conciliacao.conta, saldo_protheus, conciliacao.saldo_extrato)
     if saldo_protheus != conciliacao.saldo_extrato:
-        return False, saldo_protheus
-    visiveis = _movimentos_a_conciliar(tela, f, conciliacao, saldos)
+        return False, saldo_protheus, None
+    visiveis, soma, observacao = _movimentos_a_conciliar(tela, f, conciliacao, saldos)
     if ensaio:
-        return False, saldo_protheus
-    _aplicar_conciliacao(tela, f, conciliacao, visiveis)
-    return True, saldo_protheus
+        return False, saldo_protheus, observacao
+    _aplicar_conciliacao(tela, f, conciliacao, visiveis, soma, saldos)
+    return True, saldo_protheus, observacao
 
 
 def soma_dos_movimentos(cabecalho: list[str], linhas: list[list[str]]) -> Decimal:
@@ -259,10 +266,10 @@ def soma_dos_movimentos(cabecalho: list[str], linhas: list[list[str]]) -> Decima
     return total
 
 
-def _movimentos_a_conciliar(tela: Tela, f: Frame, conciliacao: Conciliacao, saldos: dict) -> list:
-    """Aba "Dados não Encontrados": confere que cada linha é da conta e do dia e que a soma delas é a variação do
-    saldo bancário do dia. Produção, 15/10/2026 (ABC C/C, movimento de 14/10): saldo bancário 434,49 -> 510,24
-    (+75,75), mas os 11 movimentos listados somavam -30.427,85 e foram conciliados assim mesmo."""
+def _movimentos_a_conciliar(tela: Tela, f: Frame, conciliacao: Conciliacao,
+                            saldos: dict) -> tuple[list, Decimal, Optional[str]]:
+    """Aba "Dados não Encontrados": confere que cada linha é da conta e do dia e soma as linhas.
+    Devolve (linhas, soma, observação se a soma não for a variação do saldo do dia)."""
     chave = conciliacao.conta.chave
     _esperar(tela, f.get_by_text(s.CONC_ABA_NAO_ENCONTRADOS, exact=True), "aba_nao_encontrados").click()
     tela.page.wait_for_timeout(1500)
@@ -271,7 +278,7 @@ def _movimentos_a_conciliar(tela: Tela, f: Frame, conciliacao: Conciliacao, sald
     linhas = f.locator("tbody tr").filter(has=f.locator(s.CONC_CHECKBOX_LINHA))
     visiveis = [linhas.nth(i) for i in range(linhas.count()) if linhas.nth(i).is_visible()]
     if not visiveis:
-        return visiveis
+        return visiveis, Decimal("0"), None
     for linha in visiveis:  # conferência: tudo que vai ser marcado é desta conta e deste dia
         texto = linha.inner_text()
         if conciliacao.conta.numero not in texto or conciliacao.data.strftime("%d/%m/%Y") not in texto:
@@ -279,29 +286,12 @@ def _movimentos_a_conciliar(tela: Tela, f: Frame, conciliacao: Conciliacao, sald
     cabecalho = visiveis[0].locator("xpath=ancestor::table[1]").locator("thead th").all_inner_texts()
     soma = soma_dos_movimentos(cabecalho, [l.locator("td").all_inner_texts() for l in visiveis])
     anterior = saldos[s.CONC_SALDO_ANTERIOR_BANCARIO]
-    if anterior is None:
-        raise ErroDeTela(f"Não consegui ler o '{s.CONC_SALDO_ANTERIOR_BANCARIO}' ({chave})")
-    variacao = saldos[s.CONC_SALDO_ATUAL] - anterior
-    if soma != variacao:
-        tela.print(f"conciliador_{chave}_movimentos_divergentes")
-        raise ConciliacaoNaoAplicada(motivo_lista_divergente(len(visiveis), conciliacao.data, soma, anterior,
-                                                             saldos[s.CONC_SALDO_ATUAL]))
-    return visiveis
-
-
-class ConciliacaoNaoAplicada(MensagemProtheus):
-    """O robô decidiu NÃO conciliar a conta (nada foi marcado). Vai para o relatório como "não conciliada"."""
-
-
-def motivo_lista_divergente(quantidade: int, dia, soma: Decimal, anterior: Decimal, atual: Decimal) -> str:
-    """Texto do relatório/e-mail para a equipe financeira quando a lista do Conciliador não fecha com o saldo."""
-    variacao = atual - anterior
-    return (f"Saldo do Protheus confere com o extrato (R$ {formatar_brl(atual)}), mas os {quantidade} lançamentos de "
-            f"{dia:%d/%m/%Y} listados no Conciliador somam R$ {formatar_brl(soma)}, enquanto o saldo da conta variou "
-            f"R$ {formatar_brl(variacao)} no dia (de R$ {formatar_brl(anterior)} para R$ {formatar_brl(atual)}). "
-            f"Faltam R$ {formatar_brl(variacao - soma)} em lançamentos que não aparecem nessa lista (data de "
-            "disponibilidade diferente ou já conciliados). Para não conciliar um conjunto incompleto, o robô não "
-            "marcou nada. Ação: conferir no Conciliador os lançamentos da conta neste dia e conciliar manualmente.")
+    observacao = None
+    if anterior is not None:
+        observacao = observacao_lista_do_dia(len(visiveis), conciliacao.data, soma, anterior, saldos[s.CONC_SALDO_ATUAL])
+    if observacao:
+        log.info("Conta %s: %s", conciliacao.conta, observacao)
+    return visiveis, soma, observacao
 
 
 def _toast(tela: Tela, f: Frame, texto: str, timeout: int = 120) -> None:
@@ -320,14 +310,15 @@ def _toast(tela: Tela, f: Frame, texto: str, timeout: int = 120) -> None:
     raise ErroDeTela(f"Conciliador: mensagem '{texto}' não apareceu. Diagnóstico: {caminho}")
 
 
-def _aplicar_conciliacao(tela: Tela, f: Frame, conciliacao: Conciliacao, visiveis: list) -> None:
+def _aplicar_conciliacao(tela: Tela, f: Frame, conciliacao: Conciliacao, visiveis: list, soma: Decimal,
+                         saldos_antes: dict) -> None:
     """Calibrado em 02/10/2026 (caução Santander 29000376, homologação):
 
         aba "Dados não Encontrados" -> marcar todos (checkbox do cabeçalho) -> Ações > Conciliar
         -> toast "Conciliar - Execução realizada com sucesso!" (cria o match, ainda reversível)
         -> "Aplicar Conciliação" -> "Deseja mesmo aplicar todos os dados da Conciliação?" Ok
         -> toast "Conciliação realizada com sucesso" (efetiva: status N -> S)
-        -> confere "Saldo atual (Conciliado)" = saldo do extrato -> Sair da Conciliação.
+        -> confere "Saldo atual (Conciliado)" = antes + soma das linhas marcadas -> Sair da Conciliação.
     O filtro (conta + data) garante que só os movimentos desta conta/dia estão na tela.
     """
     chave = conciliacao.conta.chave
@@ -357,11 +348,9 @@ def _aplicar_conciliacao(tela: Tela, f: Frame, conciliacao: Conciliacao, visivei
     matches = f.get_by_text(s.CONC_CANCELAR_MATCH, exact=True)
     tem_match = any(matches.nth(i).is_visible() for i in range(matches.count()))
     if not visiveis and not tem_match:
-        # Nada a conciliar nem a aplicar: o dia já foi conciliado (execução anterior que caiu depois de aplicar)
-        saldos = _ler_saldos_do_modal(tela, f, f"conciliador_{chave}_ja_conciliada")
-        if motivo := conferir_conciliado(saldos, conciliacao.saldo_extrato):
-            raise MensagemProtheus(f"Nada a conciliar em {conciliacao.data:%d/%m/%Y}, mas a conferência não fecha: {motivo}")
-        log.info("Conta %s: movimentos de %s já conciliados", conciliacao.conta, conciliacao.data)
+        # Saldo = extrato e nada a marcar nem a aplicar: os lançamentos do dia já estão conciliados
+        tela.print(f"conciliador_{chave}_ja_conciliada")
+        log.info("Conta %s: nada a conciliar em %s (lançamentos já conciliados)", conciliacao.conta, conciliacao.data)
         return
     _esperar(tela, aplicar, "aplicar_conciliacao").click()
     _esperar_modal(tela, f, s.CONC_APLICAR_PERGUNTA).get_by_role("button", name=s.CONC_OK).first.click()
@@ -369,17 +358,14 @@ def _aplicar_conciliacao(tela: Tela, f: Frame, conciliacao: Conciliacao, visivei
     _aguardar_ocioso(tela)
     tela.print(f"conciliador_{chave}_aplicado")
 
-    saldos = _ler_saldos_do_modal(tela, f, f"conciliador_{chave}_saldos_depois")
+    depois = _ler_saldos_do_modal(tela, f, f"conciliador_{chave}_saldos_depois")
     _esperar(tela, f.get_by_role("button", name=s.CONC_SAIR), "sair").click()
     _esperar_modal(tela, f, s.CONC_SAIR_PERGUNTA).get_by_role("button", name=s.CONC_OK).first.click()
     _aguardar_ocioso(tela)
-    # A conciliação JÁ foi aplicada: problema aqui não é falha técnica (repetir não adianta); vai para o relatório
-    if motivo := conferir_conciliado(saldos, conciliacao.saldo_extrato):
+    # A conciliação JÁ foi aplicada: problema aqui não é falha técnica (repetir não adianta); vai para o relatório.
+    # Com match pendente de execução anterior (sem linhas novas), a soma das linhas não é conhecida: não confere.
+    if visiveis and (motivo := conferir_conciliado(saldos_antes, depois, soma)):
         raise MensagemProtheus(f"Conciliação aplicada, mas a conferência não fechou: {motivo}")
-    historico = saldos[s.CONC_SALDO_CONCILIADO] - saldos[s.CONC_SALDO_ATUAL]
-    if historico:
-        log.warning("Conta %s conciliada; o saldo conciliado acumulado difere do bancário em %s (movimentos de dias "
-                    "anteriores não conciliados no Conciliador)", conciliacao.conta, historico)
 
 
 def _ler_saldos_do_modal(tela: Tela, f: Frame, print_nome: str) -> dict[str, Optional[Decimal]]:
