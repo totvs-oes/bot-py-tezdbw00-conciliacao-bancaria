@@ -57,3 +57,12 @@ def test_soma_dos_movimentos_da_grade_e_o_caso_que_nao_podia_ser_conciliado():
     assert soma == Decimal("-30427.85")            # = "Total Movimentos" do rodapé da grade
     variacao_do_dia = Decimal("510.24") - Decimal("434.49")
     assert soma != variacao_do_dia                  # +75,75: com a conferência nova, a conciliação NÃO é aplicada
+
+
+def test_texto_do_relatorio_quando_a_conciliacao_nao_e_aplicada():
+    from datetime import date
+    from conciliacao.protheus.conciliador import motivo_lista_divergente
+    texto = motivo_lista_divergente(11, date(2026, 10, 14), Decimal("-30427.85"), Decimal("434.49"), Decimal("510.24"))
+    print(texto)
+    assert "R$ 510,24" in texto and "R$ -30.427,85" in texto and "R$ 75,75" in texto
+    assert "Faltam R$ 30.503,60" in texto and "conciliar manualmente" in texto

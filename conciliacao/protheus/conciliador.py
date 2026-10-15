@@ -18,7 +18,7 @@ from typing import Optional
 
 from playwright.sync_api import Frame
 
-from conciliacao.modelos import Conciliacao, dinheiro
+from conciliacao.modelos import Conciliacao, dinheiro, formatar_brl
 from conciliacao.protheus import seletores as s
 from conciliacao.protheus.sessao import SessaoProtheus
 from conciliacao.protheus.tela import ErroDeTela, MensagemProtheus, Tela
@@ -284,11 +284,24 @@ def _movimentos_a_conciliar(tela: Tela, f: Frame, conciliacao: Conciliacao, sald
     variacao = saldos[s.CONC_SALDO_ATUAL] - anterior
     if soma != variacao:
         tela.print(f"conciliador_{chave}_movimentos_divergentes")
-        raise MensagemProtheus(
-            f"Os {len(visiveis)} movimentos de {conciliacao.data:%d/%m/%Y} a conciliar somam {soma}, mas o saldo "
-            f"bancário do dia variou {variacao} ({anterior} -> {saldos[s.CONC_SALDO_ATUAL]}): há movimento do dia "
-            "fora da lista (outra data de disponibilidade ou já conciliado). Conciliação NÃO aplicada.")
+        raise ConciliacaoNaoAplicada(motivo_lista_divergente(len(visiveis), conciliacao.data, soma, anterior,
+                                                             saldos[s.CONC_SALDO_ATUAL]))
     return visiveis
+
+
+class ConciliacaoNaoAplicada(MensagemProtheus):
+    """O robô decidiu NÃO conciliar a conta (nada foi marcado). Vai para o relatório como "não conciliada"."""
+
+
+def motivo_lista_divergente(quantidade: int, dia, soma: Decimal, anterior: Decimal, atual: Decimal) -> str:
+    """Texto do relatório/e-mail para a equipe financeira quando a lista do Conciliador não fecha com o saldo."""
+    variacao = atual - anterior
+    return (f"Saldo do Protheus confere com o extrato (R$ {formatar_brl(atual)}), mas os {quantidade} lançamentos de "
+            f"{dia:%d/%m/%Y} listados no Conciliador somam R$ {formatar_brl(soma)}, enquanto o saldo da conta variou "
+            f"R$ {formatar_brl(variacao)} no dia (de R$ {formatar_brl(anterior)} para R$ {formatar_brl(atual)}). "
+            f"Faltam R$ {formatar_brl(variacao - soma)} em lançamentos que não aparecem nessa lista (data de "
+            "disponibilidade diferente ou já conciliados). Para não conciliar um conjunto incompleto, o robô não "
+            "marcou nada. Ação: conferir no Conciliador os lançamentos da conta neste dia e conciliar manualmente.")
 
 
 def _toast(tela: Tela, f: Frame, texto: str, timeout: int = 120) -> None:

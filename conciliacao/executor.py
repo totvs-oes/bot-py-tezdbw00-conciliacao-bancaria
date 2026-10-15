@@ -25,6 +25,7 @@ ESPERA_RETENTATIVA = 5 * 60  # segundos (spec v1.2: "tentar novamente após 5 mi
 FALHAS_TECNICAS = (ErroDeTela, ErroPlaywright, TimeoutError, ConnectionError)
 
 DIVERGENTE = "divergente"
+NAO_CONCILIADA = "não conciliada"  # o robô decidiu não conciliar (motivo no detalhe); nada foi marcado
 ENSAIADO = "ensaiado"  # só existe dentro da simulação do registro (modo ensaio)
 CONCILIADO = "conciliado"
 
@@ -172,6 +173,10 @@ class Executor:
                 continue
             try:
                 conciliou, saldo_protheus = conciliador.conciliar(sessao, conciliacao, ensaio=self.ensaio)
+            except conciliador.ConciliacaoNaoAplicada as motivo:
+                self.registro.marcar_conciliacao(conciliacao, DIVERGENTE, detalhe=str(motivo))
+                self.resultado.conciliacoes[chave] = (NAO_CONCILIADA, str(motivo))
+                continue
             except MensagemProtheus as mensagem:
                 self.registro.marcar_conciliacao(conciliacao, ERRO, detalhe=str(mensagem))
                 self.resultado.conciliacoes[chave] = (ERRO, str(mensagem))
