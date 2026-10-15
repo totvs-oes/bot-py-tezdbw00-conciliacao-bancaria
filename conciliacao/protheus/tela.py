@@ -24,6 +24,7 @@ log = logging.getLogger(__name__)
 TIMEOUT_PADRAO = 30_000      # ms
 TIMEOUT_GRAVACAO = 90_000    # gravação + contabilização on-line pode demorar
 ESPERA_VALIDACAO = 500       # ms após o Tab para o AdvPL validar o campo
+ESPERA_FILIAIS_MS = 10_000   # quanto esperar o diálogo "Filiais" aparecer (produção: sempre aparece)
 
 # Para cada rótulo AdvPL visível com o texto pedido (em ordem de leitura), o id do campo logo abaixo dele.
 # O input fica no shadow DOM do wa-text-input: document.activeElement é o host, não o input
@@ -115,6 +116,7 @@ class Tela:
     def __init__(self, page: Page, pasta_prints: Path):
         self.page = page
         self.pasta_prints = pasta_prints
+        self._filiais_aparece: Optional[bool] = None   # o diálogo "Filiais" aparece neste ambiente?
         self.pasta_prints.mkdir(parents=True, exist_ok=True)
         page.set_default_timeout(TIMEOUT_PADRAO)
 
@@ -292,12 +294,15 @@ class Tela:
         """Clica num botão que fecha a tela/diálogo e garante que fechou (o Protheus às vezes ignora o clique
         enquanto ainda processa a validação do último campo). Tenta de novo se o botão continuar na tela."""
         for tentativa in range(1, tentativas + 1):
-            botao = self.botao(texto, f"botao_{texto}")
-            botao.click()
+            # Acompanha o MESMO botão clicado: procurar de novo pelo nome achava outro botão. Produção, 14/10/2026:
+            # o "OK" do diálogo Filiais fechava, o formulário de transferência abria e o robô achava o "Ok" do
+            # formulário, concluía que nada fechou e clicava nele (o botão que grava a transferência).
+            clicado = self.botao(texto, f"botao_{texto}").element_handle()
+            clicado.click()
             for _ in range(10):
                 self.page.wait_for_timeout(500)
                 try:
-                    if not botao.is_visible():
+                    if not clicado.is_visible():
                         self.esperar_ocioso()
                         self.verificar_mensagem()
                         return
@@ -373,12 +378,42 @@ class Tela:
             "() => Array.from(document.querySelectorAll('wa-menu-popup-item')).some((e) => e.checkVisibility())")
 
     def selecionar_filial(self, codigo: str) -> None:
-        """Diálogo "Filiais" antes do formulário. Na homologação ele NÃO aparece (a rotina já abre na
-        filial do ambiente); se aparecer em outro ambiente, escolhe a filial e confirma."""
-        if not self.existe(s.DIALOGO_FILIAIS, timeout=2_000):
-            return
-        self.page.get_by_text(codigo, exact=True).first.click()
-        self.confirmar(s.BOTAO_OK)
+        """Diálogo "Filiais" (wa-dialog title="Filiais", botões OK/Cancelar) antes do formulário de Pagar, Receber e
+        Transferência. Produção (14/10/2026): aparece sempre; homologação: nunca. Tudo DENTRO do diálogo: o
+        formulário que abre depois também tem um botão "Ok" (o que grava), e ele nunca pode ser o clicado aqui.
+
+        A 1ª vez espera o diálogo com folga; nas seguintes espera conforme o que se viu (aparece -> espera de novo
+        com folga; não aparece -> espera curta, para não atrasar cada lançamento na homologação)."""
+        dialogo = self.page.locator(f'wa-dialog.dict-msdialog[title="{s.DIALOGO_FILIAIS}"]')
+        espera = ESPERA_FILIAIS_MS if self._filiais_aparece is not False else 2_000
+        limite = time.monotonic() + espera / 1000
+        while not (dialogo.count() and dialogo.last.is_visible()):
+            if time.monotonic() > limite:
+                if self._filiais_aparece is None:
+                    self._filiais_aparece = False
+                return
+            self.page.wait_for_timeout(300)
+        self._filiais_aparece = True
+        alvo = dialogo.last
+        alvo.get_by_text(codigo, exact=True).first.click()
+        # Clicar na linha dispara processamento no servidor; o OK clicado logo em seguida era ignorado (15/10/2026)
+        self.esperar_ocioso()
+        self.page.wait_for_timeout(ESPERA_VALIDACAO)
+        # O clique vale no <button> de dentro do wa-button (no host ele é ignorado: 15/10/2026). Enquanto o diálogo
+        # estiver na tela, clicar de novo no OK DELE é seguro: o "Ok" do formulário ainda não existe.
+        ok = alvo.locator(f'wa-button[caption="{s.BOTAO_OK}"] button').first
+        for tentativa in range(1, 4):
+            ok.click()
+            limite = time.monotonic() + 5
+            while time.monotonic() < limite:
+                if not (dialogo.count() and dialogo.last.is_visible()):
+                    self.esperar_ocioso()
+                    self.verificar_mensagem()
+                    return
+                self.page.wait_for_timeout(300)
+            log.info("Diálogo '%s' continuou aberto depois do OK (tentativa %d)", s.DIALOGO_FILIAIS, tentativa)
+        caminho = self.diagnostico("filiais_nao_fechou")
+        raise ErroDeTela(f"O diálogo '{s.DIALOGO_FILIAIS}' não fechou depois do OK. Diagnóstico: {caminho}")
 
     def fechar_avisos(self, espera_ms: int = 15_000, quieto_ms: int = 3_000, maximo: int = 5) -> list[str]:
         """Fecha avisos informativos do Protheus: wa-dialog com botão "Fechar". Ex. (homologação, logo após o
