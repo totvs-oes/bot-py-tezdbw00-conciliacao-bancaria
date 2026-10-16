@@ -57,7 +57,10 @@ contas:
   - {chave: safra_aplic,     banco: "422", agencia: "03800", numero: "9999999999", tipo: aplicacao}
 
   # --- Itaú
-  - {chave: itau_cc,     banco: "341", agencia: "4685", numero: "06896",      tipo: corrente, arquivo: '^ITAU 0*6896-?9\b'}
+  # Cliente, 16/10/2026: a C/C concilia pelo "SALDO TOTAL DISPONÍVEL DIA" da data do movimento (conta + aplicação
+  # automática), não pelo "SALDO MOVIMENTAÇÃO CONTA" (R$ 1,00 depois da aplicação automática).
+  - {chave: itau_cc,     banco: "341", agencia: "4685", numero: "06896",      tipo: corrente, arquivo: '^ITAU 0*6896-?9\b',
+     saldo_conciliacao: '^SALDO TOTAL DISPONIVEL DIA$'}
   - {chave: itau_caucao, banco: "341", agencia: "4685", numero: "83117",      tipo: caucao,   arquivo: '^ITAU 0*8311-?7\b'}
   - {chave: itau_cambio, banco: "341", agencia: "4685", numero: "0000000000", tipo: cambio}
   - {chave: itau_aplic,  banco: "341", agencia: "4685", numero: "9999999999", tipo: aplicacao}

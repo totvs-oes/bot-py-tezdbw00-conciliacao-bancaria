@@ -292,3 +292,16 @@ def test_safra_vinculada_que_nao_zera_no_dia_vira_pendencia(cadastro):
     plano = planejar(ler_resposta_api(_safra(SALDOS_SAFRA, so_o_credito), cadastro), cadastro, DIA)
     assert "safra_vinculada" not in {c.conta.chave for c in plano.conciliacoes}
     assert _pendencias(plano, "deve fechar o dia zerada")
+
+
+def test_itau_cc_concilia_pelo_saldo_total_disponivel_do_dia(cadastro):
+    """Cliente, 16/10/2026: Itaú C/C concilia pela linha "SALDO TOTAL DISPONÍVEL DIA" da data do movimento."""
+    resposta = {"banco_0341": [{
+        "arquivo": "ITAU 6896-9  15-10.pdf", "metodo": "layout Itaú", "conta": "06896-9",
+        "conferencia": {"saldo_anterior": 467258.64, "saldo_final": -98407.74, "ok": True},
+        "lancamentos": [{"data": "14/10/2026", "historico": "TAR 30H INT EMPR PLUS", "operacao": "debito", "valor": 52.4}],
+        "saldos_informados": [{"data": "14/10/2026", "descricao": "SALDO TOTAL DISPONÍVEL DIA", "valor": 665147.94},
+                              {"data": "14/10/2026", "descricao": "SALDO MOVIMENTAÇÃO CONTA", "valor": 1.0},
+                              {"data": "15/10/2026", "descricao": "SALDO EM CONTA CORRENTE", "valor": -98407.74}]}]}
+    plano = planejar(ler_resposta_api(resposta, cadastro), cadastro, date(2026, 10, 14))
+    assert {c.conta.chave: c.saldo_extrato for c in plano.conciliacoes} == {"itau_cc": Decimal("665147.94")}
