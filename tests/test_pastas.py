@@ -90,3 +90,42 @@ def test_atualizado_da_pasta_do_dia_e_do_movimento_seguinte(cadastro, tmp_path):
 
     assert [p.name for p in listar_extratos(p11, p10, cadastro)] == ["SAFRA 580275-7 11-09.pdf"]
     assert [p.name for p in listar_extratos(p14, p11, cadastro)] == ["SAFRA 580275-7 11-09.pdf ATUALIZADO.pdf"]
+
+
+def _pasta_15_10(tmp_path):
+    """Cenário real de 16/10/2026: pasta 15-10 com os extratos normais do movimento de 14/10 e, salvo no dia
+    seguinte, o ATUALIZADO do Safra de 14/10. A pasta 16-10 (movimento de 15/10) ainda pode estar vazia."""
+    raiz = tmp_path / "2026 AEROFLEX" / "10 - OUTUBRO"
+    p14, p15, p16 = raiz / "14-10", raiz / "15-10", raiz / "16-10"
+    for pasta in (p14, p15, p16):
+        pasta.mkdir(parents=True)
+    for nome in ("SAFRA 580275-7  15-10.pdf", "ITAU 6896-9  15-10.pdf", "SAFRA 580275-7  14-10.pdf ATUALIZADO.pdf"):
+        (p15 / nome).write_bytes(b"%PDF-")
+    return tmp_path, p14, p15, p16
+
+
+def test_atualizado_vale_para_o_movimento_da_data_do_nome(cadastro, tmp_path):
+    _, p14, p15, p16 = _pasta_15_10(tmp_path)
+    # movimento de 14/10 (pasta 15-10): o ATUALIZADO de 14-10 substitui o extrato normal do Safra
+    assert sorted(p.name for p in listar_extratos(p15, p14, cadastro, data_movimento=date(2026, 10, 14))) == \
+        ["ITAU 6896-9  15-10.pdf", "SAFRA 580275-7  14-10.pdf ATUALIZADO.pdf"]
+    # movimento de 15/10 com a pasta 16-10 vazia: não é o dia (o ATUALIZADO de 14-10 sozinho não conta)
+    assert listar_extratos(p16, p15, cadastro, data_movimento=date(2026, 10, 15)) == []
+    # pasta 16-10 chegou: o ATUALIZADO de 14-10 não entra no movimento de 15/10
+    (p16 / "SAFRA 580275-7  16-10.pdf").write_bytes(b"%PDF-")
+    assert [p.name for p in listar_extratos(p16, p15, cadastro, data_movimento=date(2026, 10, 15))] == \
+        ["SAFRA 580275-7  16-10.pdf"]
+
+
+def test_execucao_do_dia_reprocessa_o_safra_do_dia_anterior(cadastro, tmp_path):
+    from conciliacao.configuracao import carregar_ambiente
+    from conciliacao.servico import Modo, Pedido, pedido_retroativo
+    raiz, *_ = _pasta_15_10(tmp_path)
+    ambiente = carregar_ambiente()
+    ambiente.pasta_extratos, ambiente.fonte_extratos, ambiente.feriados = raiz, "local", frozenset()
+    retro = pedido_retroativo(Pedido(data_movimento=date(2026, 10, 15), modo=Modo.EXECUTAR), ambiente, cadastro)
+    assert retro.data_movimento == date(2026, 10, 14) and retro.retroativo_contas == {"safra_cc"}
+    assert pedido_retroativo(retro, ambiente, cadastro) is None                       # sem retroativo do retroativo
+    assert pedido_retroativo(Pedido(data_movimento=date(2026, 10, 15), modo=Modo.PLANEJAR), ambiente, cadastro) is None
+    # sem ATUALIZADO do dia anterior: nada a reprocessar
+    assert pedido_retroativo(Pedido(data_movimento=date(2026, 10, 14), modo=Modo.EXECUTAR), ambiente, cadastro) is None

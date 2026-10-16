@@ -42,7 +42,7 @@ def _funcao(item: ItemPlano) -> Callable:
 class Executor:
     def __init__(self, plano: Plano, cadastro: Cadastro, ambiente: Ambiente, registro: Registro,
                  pasta_saida: Path, rotinas: set[Rotina], ensaio: bool = False, limite: Optional[int] = None,
-                 refazer_conciliacao: bool = False):
+                 refazer_conciliacao: bool = False, refazer_conciliacao_contas: frozenset[str] = frozenset()):
         """ensaio: percorre as telas preenchendo e conferindo tudo, mas CANCELA em vez de gravar; o registro
         não é alterado. limite: no máximo N lançamentos (útil para homologar aos poucos)."""
         self.plano = plano
@@ -56,6 +56,7 @@ class Executor:
         # Conta já conciliada no controle é pulada; com refazer_conciliacao, concilia de novo o que ainda estiver em
         # "Dados não Encontrados" (15/10/2026: usuário sem acesso a todas as filiais não via parte dos lançamentos)
         self.refazer_conciliacao = refazer_conciliacao
+        self.refazer_conciliacao_contas = refazer_conciliacao_contas   # Safra retroativo: só as contas do ATUALIZADO
         self.resultado = ResultadoExecucao()
 
     def executar(self) -> ResultadoExecucao:
@@ -168,7 +169,8 @@ class Executor:
         com_problema = self._contas_com_problema()
         for conciliacao in self.plano.conciliacoes:
             chave = conciliacao.conta.chave
-            if self.registro.status_conciliacao(conciliacao) == CONCILIADO and not self.refazer_conciliacao:
+            refazer = self.refazer_conciliacao or chave in self.refazer_conciliacao_contas
+            if self.registro.status_conciliacao(conciliacao) == CONCILIADO and not refazer:
                 self.resultado.conciliacoes[chave] = (CONCILIADO, "já conciliada em execução anterior")
                 continue
             if chave in com_problema:

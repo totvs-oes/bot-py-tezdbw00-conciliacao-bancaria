@@ -110,18 +110,60 @@ def conta_do_arquivo(arquivo: str, cadastro: Cadastro) -> Optional[Conta]:
     return encontradas[0] if encontradas else None
 
 
-def listar_extratos(pasta_dia: PurePath, pasta_movimento: Optional[PurePath], cadastro: Cadastro,
-                    fonte: Fonte = LOCAL) -> list[PurePath]:
-    """PDFs a processar: os da pasta do dia + os ATUALIZADO da pasta da data do movimento (Safra retroativo).
+RE_DIA_MES = re.compile(r"(?<!\d)(\d{2})-(\d{2})(?!\d)")
 
-    Um arquivo ATUALIZADO substitui o original da mesma conta. O ATUALIZADO que está na própria pasta do dia é o
-    do movimento SEGUINTE (a cliente o salva na pasta da data da movimentação): fica de fora. Visto em 11-09:
-    "SAFRA 580275-7 11-09.pdf ATUALIZADO.pdf" só tem o dia 11/09 e tirava do movimento de 10/09 o resgate e a tarifa.
+
+def dia_mes_no_nome(arquivo: str) -> Optional[tuple[int, int]]:
+    """(dia, mês) da data no nome: "SAFRA 580275-7  14-10.pdf ATUALIZADO.pdf" -> (14, 10). Sem data -> None."""
+    datas = RE_DIA_MES.findall(nome_normalizado(arquivo))
+    return (int(datas[-1][0]), int(datas[-1][1])) if datas else None
+
+
+def _dia_mes_da_pasta(pasta: Optional[PurePath]) -> Optional[tuple[int, int]]:
+    m = RE_DIA_MES.fullmatch(pasta.name) if pasta is not None else None
+    return (int(m.group(1)), int(m.group(2))) if m else None
+
+
+def atualizados_do_dia(pastas: Iterable[PurePath], dia: date, fonte: Fonte = LOCAL) -> list[PurePath]:
+    """Arquivos ATUALIZADO cujo nome tem a data `dia` (Safra: liberado no dia seguinte e salvo pela cliente na pasta
+    dos extratos daquele movimento, ex.: "SAFRA 580275-7  14-10.pdf ATUALIZADO" na pasta 15-10, em 16/10/2026)."""
+    vistos, resultado = set(), []
+    for pasta in pastas:
+        for nome in fonte.pdfs(pasta):
+            if eh_atualizado(nome) and dia_mes_no_nome(nome) == (dia.day, dia.month) and nome not in vistos:
+                vistos.add(nome)
+                resultado.append(pasta / nome)
+    return resultado
+
+
+def listar_extratos(pasta_dia: PurePath, pasta_movimento: Optional[PurePath], cadastro: Cadastro,
+                    fonte: Fonte = LOCAL, data_movimento: Optional[date] = None) -> list[PurePath]:
+    """PDFs a processar: os extratos normais da pasta do dia + os ATUALIZADO do movimento (Safra retroativo).
+
+    O ATUALIZADO vale para o movimento da DATA DO NOME, esteja na pasta do dia ou na da data do movimento:
+    - 11-09: "SAFRA 580275-7 11-09.pdf ATUALIZADO.pdf" na pasta 11-09 só tinha o dia 11/09 (é do movimento de 11/09,
+      não do de 10/09, que lê a pasta 11-09; tirava do dia 10 o resgate e a tarifa);
+    - 16/10/2026: "SAFRA 580275-7  14-10.pdf ATUALIZADO" na pasta 15-10 (a dos extratos do movimento de 14/10) só tem
+      o dia 14/10 (era lido como se fosse do movimento de 15/10).
+    ATUALIZADO sem data no nome: só o da pasta da data do movimento (regra antiga). Um ATUALIZADO substitui o original
+    da mesma conta. Pasta do dia sem nenhum extrato normal = ainda não chegou: lista vazia (o ATUALIZADO sozinho não
+    é o dia).
     """
-    arquivos = [pasta_dia / nome for nome in fonte.pdfs(pasta_dia)]
-    if pasta_movimento and pasta_movimento != pasta_dia:
-        arquivos = [a for a in arquivos if not eh_atualizado(a.name)]
-        arquivos += [pasta_movimento / nome for nome in fonte.pdfs(pasta_movimento) if eh_atualizado(nome)]
+    if pasta_movimento is None or pasta_movimento == pasta_dia:
+        arquivos = [pasta_dia / nome for nome in fonte.pdfs(pasta_dia)]
+    else:
+        dia_mes = (data_movimento.day, data_movimento.month) if data_movimento else _dia_mes_da_pasta(pasta_movimento)
+        arquivos = [pasta_dia / nome for nome in fonte.pdfs(pasta_dia) if not eh_atualizado(nome)]
+        if not arquivos:
+            return []
+        for pasta in (pasta_dia, pasta_movimento):
+            for nome in fonte.pdfs(pasta):
+                if not eh_atualizado(nome):
+                    continue
+                data_nome = dia_mes_no_nome(nome)
+                if (data_nome == dia_mes if data_nome else pasta == pasta_movimento) \
+                        and nome not in {a.name for a in arquivos}:
+                    arquivos.append(pasta / nome)
 
     atualizados = {}
     for arquivo in arquivos:

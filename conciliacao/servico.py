@@ -17,7 +17,8 @@ from conciliacao import notificacao, relatorio
 from conciliacao.configuracao import Ambiente, Cadastro
 from conciliacao.extratos import cliente_api
 from conciliacao.extratos.leitura import ler_resposta_api
-from conciliacao.extratos.pastas import LOCAL, dia_util_anterior, dia_util_seguinte, listar_extratos, pasta_do_dia
+from conciliacao.extratos.pastas import (LOCAL, atualizados_do_dia, conta_do_arquivo, dia_util_anterior,
+                                         dia_util_seguinte, listar_extratos, pasta_do_dia)
 from conciliacao.modelos import Plano, Rotina
 from conciliacao.planejamento import planejar
 from conciliacao.registro import Registro
@@ -48,6 +49,9 @@ class Pedido:
     pasta: Optional[Path] = None                 # pasta exata com os PDFs (ignora a estrutura de Z:)
     extratos_json: Optional[Path] = None         # resposta da API de extratos já salva
     refazer_conciliacao: bool = False            # concilia de novo contas já marcadas como conciliadas no controle
+    # Reprocessamento do dia anterior por causa de um ATUALIZADO (Safra): só estas contas têm a conciliação refeita
+    # e não se procura outro retroativo a partir dele
+    retroativo_contas: frozenset[str] = frozenset()
 
 
 @dataclass
@@ -104,7 +108,8 @@ def _obter_resposta_api(pedido: Pedido, ambiente: Ambiente, cadastro: Cadastro, 
             data_pasta = pedido.data_pasta or dia_util_seguinte(data_movimento, ambiente.feriados)
             pasta_dia = pasta_do_dia(raiz, data_pasta, fonte)
             pasta_movimento = pasta_do_dia(raiz, data_movimento, fonte)
-        arquivos = listar_extratos(pasta_dia, pasta_movimento, cadastro, fonte)
+        arquivos = listar_extratos(pasta_dia, pasta_movimento, cadastro, fonte,
+                                   None if pedido.pasta else data_movimento)
     finally:
         if sftp:
             fonte.close()
@@ -132,9 +137,40 @@ def montar_plano(pedido: Pedido, ambiente: Ambiente, cadastro: Cadastro) -> tupl
     return planejar(extratos, cadastro, data_movimento, ambiente.feriados), pasta_saida
 
 
+def pedido_retroativo(pedido: Pedido, ambiente: Ambiente, cadastro: Cadastro) -> Optional[Pedido]:
+    """Safra retroativo (cliente, 16/10/2026): o extrato ATUALIZADO do Safra só sai no dia seguinte e a cliente o salva
+    na pasta dos extratos daquele movimento (ex.: "SAFRA 580275-7  14-10.pdf ATUALIZADO" na pasta 15-10, em 16/10).
+    Ao rodar o movimento D, se existir ATUALIZADO do movimento anterior, devolve o pedido para reprocessá-lo: o
+    ATUALIZADO substitui o extrato normal, o que já foi lançado é pulado (controle) e a conciliação das contas do
+    ATUALIZADO é refeita. None = nada a reprocessar."""
+    if pedido.modo == Modo.PLANEJAR or pedido.retroativo_contas or pedido.pasta or pedido.extratos_json \
+            or ambiente.fonte_extratos == "sftp":
+        return None
+    anterior = dia_util_anterior(data_do_movimento(pedido, ambiente), ambiente.feriados)
+    raiz = ambiente.pasta_extratos
+    pastas = [pasta_do_dia(raiz, dia_util_seguinte(anterior, ambiente.feriados)), pasta_do_dia(raiz, anterior)]
+    arquivos = atualizados_do_dia(pastas, anterior)
+    contas = frozenset(c.chave for a in arquivos if (c := conta_do_arquivo(a.name, cadastro)))
+    if not contas:
+        return None
+    log.info("Safra retroativo: %s -> reprocessando o movimento de %s (conciliação refeita: %s)",
+             ", ".join(a.name for a in arquivos), anterior.strftime("%d/%m/%Y"), ", ".join(sorted(contas)))
+    return Pedido(data_movimento=anterior, modo=pedido.modo, rotinas=pedido.rotinas, retroativo_contas=contas)
+
+
 def executar_dia(pedido: Pedido, ambiente: Ambiente, cadastro: Cadastro) -> ResultadoDia:
-    """Roda o dia inteiro conforme o modo. Falha técnica do Protheus não levanta exceção: vira Desfecho.FALHA
-    (o Executor já esperou e tentou de novo). Erros antes do Protheus (pasta vazia, API fora) levantam."""
+    """Roda o dia inteiro conforme o modo. Antes, o Safra retroativo do dia anterior, se houver ATUALIZADO
+    (pedido_retroativo; falha nele não impede o dia). Falha técnica do Protheus não levanta exceção: vira
+    Desfecho.FALHA (o Executor já esperou e tentou de novo). Erros antes do Protheus (pasta vazia, API fora) levantam."""
+    if retro := pedido_retroativo(pedido, ambiente, cadastro):
+        try:
+            _executar_um_dia(retro, ambiente, cadastro)
+        except Exception:  # noqa: BLE001 — o movimento do dia segue mesmo se o retroativo falhar
+            log.exception("Safra retroativo de %s falhou; seguindo com o movimento do dia", retro.data_movimento)
+    return _executar_um_dia(pedido, ambiente, cadastro)
+
+
+def _executar_um_dia(pedido: Pedido, ambiente: Ambiente, cadastro: Cadastro) -> ResultadoDia:
     with log_em_arquivo(ambiente.pasta_saida / data_do_movimento(pedido, ambiente).isoformat()):
         plano, pasta_saida = montar_plano(pedido, ambiente, cadastro)
         registro = Registro(ambiente.pasta_saida / "controle.sqlite")
@@ -152,7 +188,8 @@ def executar_dia(pedido: Pedido, ambiente: Ambiente, cadastro: Cadastro) -> Resu
 
         resultado = Executor(plano, cadastro, ambiente, registro, pasta_saida,
                              pedido.rotinas or set(Rotina), ensaio=pedido.modo == Modo.ENSAIO,
-                             limite=pedido.limite, refazer_conciliacao=pedido.refazer_conciliacao).executar()
+                             limite=pedido.limite, refazer_conciliacao=pedido.refazer_conciliacao,
+                             refazer_conciliacao_contas=pedido.retroativo_contas).executar()
         caminho = relatorio.salvar(plano, pasta_saida, resultado, simulado=False)
 
         dia = plano.data_movimento.strftime("%d/%m/%Y")
@@ -162,8 +199,8 @@ def executar_dia(pedido: Pedido, ambiente: Ambiente, cadastro: Cadastro) -> Resu
                                f"[Conciliação] FALHA na execução de {dia}", resultado.erro_geral, caminho)
             desfecho = Desfecho.FALHA
         else:
-            assunto = (f"[Conciliação] {dia}: {len(plano.pendencias)} pendência(s), "
-                       f"{len(nao_conciliadas)} conta(s) não conciliada(s)")
+            assunto = (f"[Conciliação] {dia}{' (Safra atualizado)' if pedido.retroativo_contas else ''}: "
+                       f"{len(plano.pendencias)} pendência(s), {len(nao_conciliadas)} conta(s) não conciliada(s)")
             notificacao.enviar(ambiente, ambiente.email_operacao, assunto, caminho.read_text(encoding="utf-8"), caminho)
             desfecho = Desfecho.COM_PENDENCIAS if plano.pendencias or nao_conciliadas else Desfecho.OK
         return _resultado(plano, pedido.modo, desfecho, caminho, resultado)
