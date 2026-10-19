@@ -95,6 +95,14 @@ regras:
     motivo: "Pagamento do Contas a Pagar debitado no banco (conta de consumo / seguro): não é lançado pelo robô."
     acao: "Fazer a baixa manual do título no Contas a Pagar; sem ela o saldo da conta não fecha na conciliação."
 
+  # --- Itaú: aplicação automática ("APL APLIC AUT MAIS" / "RES APLIC AUT MAIS AP") não é lançada (cliente,
+  # 15-19/10/2026): não altera o saldo da conta, que é conciliado pelo "SALDO TOTAL DISPONÍVEL DIA" (conta +
+  # aplicação automática). Antes das regras de aplicação/resgate, que pegariam esses históricos.
+  - nome: aplicacao_automatica_itau
+    categoria: fora_do_escopo
+    bancos: ["341"]
+    historico: '^(RES |APL )?APLIC AUT MAIS\b'   # o rendimento "REND PAGO APLIC AUT MAIS" continua rendimento
+
   # --- Aplicações financeiras (CC <-> conta aplicação)
   - nome: resgate_aplicacao
     categoria: transferencia

@@ -66,7 +66,7 @@ contas:
   - {chave: itau_aplic,  banco: "341", agencia: "4685", numero: "9999999999", tipo: aplicacao}
 
   # --- Caixa (o arquivo pode vir sem número de conta: "BANCO CAIXA 10-09.pdf", "BANCO CAIXA - 14-09.pdf")
-  - {chave: caixa_cc,        banco: "104", agencia: "4266", numero: "0005769805", tipo: corrente,  arquivo: '^(BANCO )?CAIXA( CC)?( 0*5769805-?\d+)?( -)? \d{2}-\d{2}\b'}   # "CAIXA CC 15-10.pdf" (15/10/2026)
+  - {chave: caixa_cc,        banco: "104", agencia: "4266", numero: "0005769805", tipo: corrente,  arquivo: '^(BANCO )?CAIXA( CC)?( 0*5769805-?\d+)?( -)?( \d{2}-\d{2})?\.PDF\b'}   # "CAIXA CC 15-10.pdf", "CAIXA CC.pdf" (19/10/2026)
   # "CAIXA VINCULADA.pdf" (11-09); no PDF a conta é 4266/1292/000572845528-6 -> conferir o número no Protheus
   - {chave: caixa_vinculada, banco: "104", agencia: "4266", numero: "57845528",   tipo: vinculada, arquivo: '^(BANCO )?CAIXA (0*57845528|VINCULADA)'}
   - {chave: caixa_aplic,     banco: "104", agencia: "4266", numero: "9999999999", tipo: aplicacao}

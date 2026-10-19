@@ -29,11 +29,11 @@ def _lancamento(cadastro, conta, historico, operacao):
     ("bradesco_cc", "RESGATE MERCADO ABERTO 3595454", "credito", "transferencia", "resgate_aplicacao"),
     ("santander_cc", "RESGATE CONTAMAX AUTOMATICO 000000", "credito", "transferencia", "resgate_aplicacao"),
     ("abc_cc", "RESGATE APLIC. FINANCEIRA", "credito", "transferencia", "resgate_aplicacao"),
-    ("itau_cc", "RES APLIC AUT MAIS", "credito", "transferencia", "resgate_aplicacao"),
+    ("itau_cc", "RES APLIC AUT MAIS", "credito", "fora_do_escopo", "aplicacao_automatica_itau"),
     ("santander_cc", "APLICACAO CONTAMAX 000000", "debito", "transferencia", "aplicacao"),
     ("safra_cc", "APLICACAO CDB AUTOMATICO 5802749", "debito", "transferencia", "aplicacao"),
     ("abc_cc", "APLICACAO FINANCEIRA", "debito", "transferencia", "aplicacao"),
-    ("itau_cc", "APL APLIC AUT MAIS AP", "debito", "transferencia", "aplicacao"),
+    ("itau_cc", "APL APLIC AUT MAIS AP", "debito", "fora_do_escopo", "aplicacao_automatica_itau"),
     # Caixa vinculada -> C/C (10/09/2026)
     ("caixa_vinculada", "TRANSF RECURSO AGENCIA 07872967000102 AEROFLEX INDUSTRIA DE A. LTDA 101111 11:11:45",
      "debito", "transferencia", "liberacao_caucao"),
@@ -64,6 +64,10 @@ def _lancamento(cadastro, conta, historico, operacao):
     ("caixa_cc", "COB EST137 71026 01:34:42", "debito", "tarifa", "tarifa_cobranca_caixa"),
     ("caixa_cc", "COB MAN061 131026 01:55:41", "debito", "tarifa", "tarifa"),
     ("caixa_cc", "COB INTERN 131026 02:49:58", "debito", "tarifa", "tarifa"),
+    # 19/10/2026: aplicação automática do Itaú não é lançada (não altera o saldo total disponível); o rendimento sim
+    ("itau_cc", "RES APLIC AUT MAIS AP", "credito", "fora_do_escopo", "aplicacao_automatica_itau"),
+    ("itau_cc", "APL APLIC AUT MAIS", "debito", "fora_do_escopo", "aplicacao_automatica_itau"),
+    ("itau_cc", "REND PAGO APLIC AUT APR", "credito", "rendimento", "rendimento"),
     # 14/10/2026: toda amortização de capital de giro do BB é baixa manual
     ("bb_cc", "Cap Giro Dig Amortização", "debito", "acao_manual", "amortizacao_contrato"),
     ("bb_cc", "Capital de Giro Amortização Parcela 3/12", "debito", "acao_manual", "amortizacao_contrato"),

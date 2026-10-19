@@ -26,7 +26,9 @@ def test_dia_util_anterior():
     ("ABC 6609345-9 10-09.pdf", "abc_cc"),
     ("ABC 6609348-3 10-09.pdf", "abc_caucao"),
     ("BANCO CAIXA 10-09.pdf", "caixa_cc"),
-    ("CAIXA CC 15-10.pdf", "caixa_cc"),          # 15/10/2026: sem conta, as tarifas da Caixa não eram lançadas
+    ("CAIXA CC 15-10.pdf", "caixa_cc"),
+    ("CAIXA CC.pdf", "caixa_cc"),                # 19/10/2026: sem data no nome, a Caixa ficava sem conta
+    ("CAIXA VINCULADA.pdf", "caixa_vinculada"),          # 15/10/2026: sem conta, as tarifas da Caixa não eram lançadas
     ("BANCO DO BRASIL 410004 10-09.pdf", "bb_cc"),
     ("BRADESCO 3179-8 10-09.pdf", "bradesco_caucao"),
     ("BRADESCO 50542-0 10-09.pdf", "bradesco_cc"),
