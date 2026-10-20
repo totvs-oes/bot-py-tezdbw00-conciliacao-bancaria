@@ -25,6 +25,7 @@ class Regra:
     operacao: Optional[str] = None
     tipos_conta: Optional[tuple[str, ...]] = None
     bancos: Optional[tuple[str, ...]] = None
+    contas: Optional[tuple[str, ...]] = None   # chaves de conta (ex.: só a caução central do Santander)
     destino_tipo: Optional[str] = None
     origem_tipo: Optional[tuple[str, ...]] = None
     origem_conta: Optional[str] = None
@@ -112,6 +113,7 @@ def carregar_cadastro(pasta: Path = PASTA_CONFIG) -> Cadastro:
             operacao=r.get("operacao"),
             tipos_conta=_tupla(r.get("tipos_conta")),
             bancos=_tupla(r.get("bancos")),
+            contas=_tupla(r.get("contas")),
             destino_tipo=r.get("destino_tipo"),
             origem_tipo=_tupla(r.get("origem_tipo")),
             origem_conta=r.get("origem_conta"),

@@ -12,6 +12,7 @@
 #   operacao      debito | credito (opcional = qualquer)
 #   tipos_conta   tipos da conta do extrato (opcional = qualquer)
 #   bancos        códigos COMPE (opcional = qualquer)
+#   contas        chaves de conta de config/contas.yaml (opcional = qualquer)
 #   destino_tipo  (transferencia) tipo da conta destino no MESMO banco; a conta do extrato é a origem
 #   origem_tipo   (transferencia) tipo da conta origem no MESMO banco; a conta do extrato é o destino
 #   origem_conta  (consolidacao) chave da conta de origem
@@ -31,6 +32,14 @@ constantes:
   beneficiario_rendimento: "AEROFLEX"
   configuracao_conciliacao: "0024"
   historico_transferencia: "TRANSF {so} {to} P/ {sd} {td}"
+  # PIX entre contas correntes da própria Aeroflex (cliente, 20/10/2026): vira transferência quando o DÉBITO de PIX
+  # numa conta tem, no mesmo dia, um CRÉDITO de mesmo valor em outra conta corrente da Aeroflex vindo da própria
+  # Aeroflex. Débito ou crédito que diz ser da Aeroflex e fica sem par -> pendência; PIX comum continua fora do escopo.
+  pix_mesma_titularidade:
+    debito: '\bPIX\b'                                  # PIX ENVIADO / PAGAMENTO PIX / PAGFOR PIX OUTRA INST
+    credito: '\bPIX\b.*\b(RECEB|RECEBIDO)'
+    da_aeroflex: '\bAEROFLE|\bMESMA T\s*I\s*T'          # "DES: AEROFLEX", "PIX RECEBIDO AEROFLE", "MESMA T IT"
+    historico: "TRANSF {so} C/C P/ {sd} C/C"
   abreviacao_tipo:
     corrente: "C/C"
     caucao: "CAU"
@@ -40,6 +49,13 @@ constantes:
     auxiliar: "AUX"
 
 regras:
+  # --- Santander caução central 29000181: os créditos de cobrança do extrato dela já entram no Protheus pela baixa
+  # automática; a conta só é conciliada (cliente, 20/10/2026). Antes da consolidação, que valeria para qualquer caução.
+  - nome: cobranca_caucao_central_santander
+    categoria: fora_do_escopo
+    contas: [santander_caucao_central]
+    historico: '^COBRANCA GARANTIA\b'
+
   # --- Santander: créditos de cobrança nas cauções -> base da transferência 29000181 -> caução (só no Protheus)
   - nome: consolidacao_santander
     categoria: consolidacao
@@ -64,7 +80,8 @@ regras:
     operacao: credito
     tipos_conta: [corrente]
     # Caixa: a vinculada transfere como "TRANSF RECURSO AGENCIA" e o crédito chega na C/C como "CRED TEV" (10/09/2026)
-    historico: '\bTEG\b|TRANSF\.? ?EXCEDENTE|LIBERACAO DE (CONTA )?VINCULADA|MESMA TITULARI|TRANSFERENCIA ENTRE C/?C|^CRED TEV\b'
+    # ou "CREDITO TRANSF AGENCIA ... AEROFLEX" (extrato novo da Caixa, out/2026)
+    historico: '\bTEG\b|TRANSF\.? ?EXCEDENTE|LIBERACAO DE (CONTA )?VINCULADA|MESMA TITULARI|TRANSFERENCIA ENTRE C/?C|^CRED TEV\b|^CREDITO TRANSF AGENCIA\b'
     origem_tipo: [caucao, vinculada]
 
   # --- Itaú "KG": pagamento ligado ao Contas a Pagar; a baixa é manual (cliente, 05/10/2026). Não lançar.
@@ -191,4 +208,4 @@ regras:
       - '^DEVOLUCAO DE TED\b'   # Safra: pagamento estornado pelo banco; sem ação (cliente, 09/10/2026)
       - '^IMPOSTOS\b|^CONTR IMP\b|PRESTACAO CONSORCIO|DEBITO AUT(\.|OMATICO\b)'
       - '^PAGAMENTO DE BOLETO\b|PAGAMENTO DE SALARIO|^ENVIO TED\b'   # pagamentos (10/09/2026)
-      - '^COB (INTERN|COMPE|LOT|AGENC)'   # Caixa vinculada: créditos de cobrança (os débitos já caíram em tarifa)
+      - '^COB (INTERN|COMPE|LOT|AGENC|AGN)'   # Caixa vinculada ("COB AGN DH", 19/10/2026): créditos de cobrança (os débitos já caíram em tarifa)

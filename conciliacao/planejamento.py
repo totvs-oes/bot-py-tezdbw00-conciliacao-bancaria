@@ -48,12 +48,13 @@ class _Planejador:
     # ------------------------------------------------------------------
     def executar(self) -> None:
         normais = [e for e in self.plano.extratos if not e.eh_detalhe_tarifas]
-        for extrato in normais:
-            if self._extrato_utilizavel(extrato):
-                for lancamento in extrato.lancamentos:
-                    if lancamento.data == self.dia:
-                        self._tratar(lancamento)
-                self._planejar_conciliacao(extrato)
+        utilizaveis = [e for e in normais if self._extrato_utilizavel(e)]
+        pareados = self._pix_entre_contas(utilizaveis)
+        for extrato in utilizaveis:
+            for lancamento in extrato.lancamentos:
+                if lancamento.data == self.dia and (lancamento.arquivo, lancamento.indice) not in pareados:
+                    self._tratar(lancamento)
+            self._planejar_conciliacao(extrato)
 
         self.plano.transferencias = self._consolidacoes_santander() + self.transferencias_do_extrato
         self._parear_contrapartidas()
@@ -91,6 +92,44 @@ class _Planejador:
         return True
 
     # ------------------------------------------------------------------
+    def _pix_entre_contas(self, extratos: list[ExtratoLido]) -> set[tuple[str, int]]:
+        """PIX entre contas correntes da Aeroflex (cliente, 20/10/2026: Bradesco "PIX ENVIADO DES: AEROFLEX", Santander
+        "PAGFOR PIX OUTRA INST- MESMA TIT", ABC "PAGAMENTO PIX" -> Itaú "PIX RECEBIDO AEROFLE"). O destino só é
+        conhecido pelo crédito: débito de PIX + crédito de PIX da Aeroflex, mesmo valor, outra conta corrente = uma
+        transferência. Devolve os lançamentos usados (não passam pelas regras). Lado "da Aeroflex" sem par -> pendência."""
+        config = self.cadastro.constantes.get("pix_mesma_titularidade")
+        if not config:
+            return set()
+        debito, credito, aeroflex = (re.compile(config[k]) for k in ("debito", "credito", "da_aeroflex"))
+        do_dia = [l for e in extratos if e.conta and e.conta.tipo.value == "corrente"
+                  for l in e.lancamentos if l.data == self.dia]
+        saidas = [l for l in do_dia if l.operacao == "debito" and debito.search(normalizar(l.historico))
+                  and not credito.search(normalizar(l.historico))]
+        entradas = [l for l in do_dia if l.operacao == "credito" and credito.search(normalizar(l.historico))
+                    and aeroflex.search(normalizar(l.historico))]
+        usados: set[tuple[str, int]] = set()
+        # primeiro os débitos que dizem ser para a Aeroflex, depois os genéricos ("PAGAMENTO PIX")
+        for saida in sorted(saidas, key=lambda l: not aeroflex.search(normalizar(l.historico))):
+            par = next((e for e in entradas if e.valor == saida.valor and e.conta != saida.conta
+                        and (e.arquivo, e.indice) not in usados), None)
+            if par is None:
+                continue
+            usados |= {(saida.arquivo, saida.indice), (par.arquivo, par.indice)}
+            self.transferencias_do_extrato.append(Transferencia(
+                rotina=Rotina.TRANSFERENCIA, data=self.dia, valor=saida.valor, origem=saida.conta, destino=par.conta,
+                historico=self._historico_transferencia(config.get("historico"), saida.conta, par.conta),
+                origem_extrato=f"{saida.arquivo}#{saida.indice}",
+            ))
+        for lancamento in saidas + entradas:
+            if (lancamento.arquivo, lancamento.indice) in usados or not aeroflex.search(normalizar(lancamento.historico)):
+                continue
+            usados.add((lancamento.arquivo, lancamento.indice))
+            self._pendencia(lancamento.arquivo,
+                            "PIX entre contas da Aeroflex sem o lançamento correspondente (mesmo valor) na outra conta "
+                            "corrente: a transferência não foi lançada.",
+                            "Conferir o extrato da outra conta e lançar a transferência manualmente.", lancamento)
+        return usados
+
     def _tratar(self, lancamento: LancamentoExtrato) -> None:
         classificacao = classificar(lancamento, self.cadastro.regras)
         categoria = classificacao.categoria

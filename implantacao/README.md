@@ -45,7 +45,7 @@ Importe os dois arquivos em **Agendador de Tarefas > Ação > Importar tarefa...
 | Arquivo | Tarefa | Quando | Estado |
 |---|---|---|---|
 | `tarefa_api_leitura.xml` | API de leitura em `127.0.0.1:5000`, sem janela (`executar_api.py`), log em `logs\api.log` | todo dia 07:50 (se já estiver no ar, não sobe outra); reinicia até 3x se cair | habilitada |
-| `tarefa_robo.xml` | `python -m conciliacao executar` (movimento do dia útil anterior) | seg a sex 08:00 | **desabilitada** |
+| `tarefa_robo.xml` | `python -m conciliacao executar` (movimento do dia útil anterior) | seg a sex 08:00 e 14:00 (reprocessamento) | **desabilitada** |
 
 Na importação, confira na aba Geral o usuário (`rpa.aeroflex`) e "Executar somente quando o usuário estiver conectado".
 Os caminhos das ações são `C:\RPA\...`: ajuste na aba Ações se as pastas forem outras.
@@ -55,6 +55,9 @@ Os caminhos das ações são `C:\RPA\...`: ajuste na aba Ações se as pastas fo
 - Log do robô: `saida\AAAA-MM-DD\execucao.log`; o histórico de cada execução aparece na aba Histórico da tarefa.
 - Fim de semana e feriados (`FERIADOS`): o robô termina em seguida, sem processar nada.
 - Segunda-feira processa a sexta.
+- Às 14:00 o robô roda de novo o mesmo movimento: pega extratos que chegaram depois das 08:00 e o que a equipe
+  corrigiu. Não duplica nada (controle de idempotência) e não reconcilia contas já conciliadas. Para mudar o
+  horário: propriedades da tarefa > Disparadores.
 
 `API_EXTRATOS_URL` do robô: `http://127.0.0.1:5000/extratos` (no Windows, `localhost` resolve primeiro para o
 IPv6 `::1`, e a API escuta só no IPv4).

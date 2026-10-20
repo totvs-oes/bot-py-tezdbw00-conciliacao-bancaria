@@ -13,6 +13,8 @@ def _casa(regra: Regra, lancamento: LancamentoExtrato, historico: str) -> bool:
         return False
     if regra.bancos and lancamento.conta.banco not in regra.bancos:
         return False
+    if regra.contas and lancamento.conta.chave not in regra.contas:
+        return False
     return bool(regra.historico.search(historico))
 
 

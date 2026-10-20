@@ -305,3 +305,51 @@ def test_itau_cc_concilia_pelo_saldo_total_disponivel_do_dia(cadastro):
                               {"data": "15/10/2026", "descricao": "SALDO EM CONTA CORRENTE", "valor": -98407.74}]}]}
     plano = planejar(ler_resposta_api(resposta, cadastro), cadastro, date(2026, 10, 14))
     assert {c.conta.chave: c.saldo_extrato for c in plano.conciliacoes} == {"itau_cc": Decimal("665147.94")}
+
+
+def _pix(arquivo, conta, lancamentos):
+    return {"arquivo": arquivo, "metodo": "layout", "conta": conta,
+            "conferencia": {"saldo_anterior": None, "saldo_final": None, "ok": None},
+            "lancamentos": [{"data": "19/10/2026", "historico": h, "operacao": op, "valor": v} for h, op, v in lancamentos]}
+
+
+def test_pix_entre_contas_da_aeroflex_vira_transferencia(cadastro):
+    """Cliente, 20/10/2026 (movimento de 19/10): PIX de Bradesco, Santander e ABC para o Itaú C/C."""
+    resposta = {
+        "banco_0237": [_pix("BRADESCO 50542-0 20-10.pdf", "0050542-0",
+                            [("PIX ENVIADO DES: AEROFLEX IND STRIA DE 19/10 1627421", "debito", 700000.0)])],
+        "banco_0033": [_pix("SANTANDER 130018420 20-10.pdf", "13001842",
+                            [("PAGFOR PIX OUTRA INST- MESMA T IT D - 000001 031019", "debito", 1000000.0)])],
+        "banco_0246": [_pix("ABC 6609345-9 20-10.pdf", "6609345",
+                            [("PAGAMENTO PIX", "debito", 1260000.0),
+                             ("PAGAMENTO PIX", "debito", 5432.10)])],          # PIX a fornecedor: sem par
+        "banco_0341": [_pix("ITAU 6896-9 20-10.pdf", "06896-9",
+                            [("PIX RECEBIDO AEROFLE19/10", "credito", 1260000.0),
+                             ("PIX RECEBIDO AEROFLE19/10", "credito", 700000.0),
+                             ("PIX RECEBIDO AEROFLE19/10", "credito", 1000000.0)])],
+    }
+    plano = planejar(ler_resposta_api(resposta, cadastro), cadastro, date(2026, 10, 19))
+    transf = {(t.origem.chave, t.destino.chave, t.valor, t.historico) for t in plano.transferencias}
+    assert transf == {("bradesco_cc", "itau_cc", Decimal("700000.00"), "TRANSF BRAD C/C P/ ITAU C/C"),
+                      ("santander_cc", "itau_cc", Decimal("1000000.00"), "TRANSF SANT C/C P/ ITAU C/C"),
+                      ("abc_cc", "itau_cc", Decimal("1260000.00"), "TRANSF ABC C/C P/ ITAU C/C")}
+    assert [l.valor for l in plano.fora_do_escopo] == [Decimal("5432.10")]   # PIX comum continua fora do escopo
+    assert not _pendencias(plano, "PIX")
+
+
+def test_pix_da_aeroflex_sem_par_vira_pendencia(cadastro):
+    resposta = {"banco_0237": [_pix("BRADESCO 50542-0 20-10.pdf", "0050542-0",
+                                    [("PIX ENVIADO DES: AEROFLEX IND STRIA DE 19/10 1627421", "debito", 700000.0)])]}
+    plano = planejar(ler_resposta_api(resposta, cadastro), cadastro, date(2026, 10, 19))
+    assert not plano.transferencias
+    assert [p.valor for p in _pendencias(plano, "PIX entre contas da Aeroflex")] == [Decimal("700000.00")]
+
+
+def test_caucao_central_do_santander_so_concilia(cadastro):
+    """Cliente, 20/10/2026: o extrato da 29000181-8 é conciliado; os créditos de cobrança dele já estão no Protheus."""
+    extrato = _pix("SANTANDER 290001818 20-10.pdf", "290001818",
+                   [("COBRANCA GARANTIA 000000", "credito", 4422.2), ("COBRANCA GARANTIA 000000", "credito", 1203.6)])
+    extrato["conferencia"] = {"saldo_anterior": 363924.25, "saldo_final": 369550.05, "ok": True}
+    plano = planejar(ler_resposta_api({"banco_0033": [extrato]}, cadastro), cadastro, date(2026, 10, 19))
+    assert not plano.transferencias and len(plano.fora_do_escopo) == 2
+    assert {c.conta.chave: c.saldo_extrato for c in plano.conciliacoes} == {"santander_caucao_central": Decimal("369550.05")}
