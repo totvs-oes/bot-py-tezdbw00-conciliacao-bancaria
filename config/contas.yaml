@@ -35,8 +35,11 @@ contas:
 
   # --- Santander
   - {chave: santander_cc,             banco: "033", agencia: "04296", numero: "0013001842", tipo: corrente, arquivo: '^SANTANDER 0*13001842-?0\b'}
-  # Caução central: extrato "SANTANDER 290001818 DD-MM.pdf" (29000181-8); conciliada pelo saldo (cliente, 20/10/2026)
-  - {chave: santander_caucao_central, banco: "033", agencia: "4296",  numero: "29000181",   tipo: caucao, arquivo: '^SANTANDER 0*29000181-?8\b'}
+  # Caução central 29000181-8: FORA da automação (cliente, 21/10/2026) — não é conciliada. O arquivo
+  # "SANTANDER 290001818 DD-MM.pdf" continua reconhecido só para não virar pendência se for salvo na pasta;
+  # os créditos dele são informativos (regra cobranca_caucao_central_santander).
+  - {chave: santander_caucao_central, banco: "033", agencia: "4296",  numero: "29000181",   tipo: caucao, arquivo: '^SANTANDER 0*29000181-?8\b',
+     conciliar: false}
   - {chave: santander_caucao_371,     banco: "033", agencia: "4296",  numero: "29000371",   tipo: caucao, arquivo: '^SANTANDER 29000371-?\d\b'}
   - {chave: santander_caucao_376,     banco: "033", agencia: "4296",  numero: "29000376",   tipo: caucao, arquivo: '^SANTANDER 29000376-?\d\b'}
   - {chave: santander_caucao_432,     banco: "033", agencia: "4296",  numero: "29000432",   tipo: caucao, arquivo: '^SANTANDER 29000432-?\d\b'}

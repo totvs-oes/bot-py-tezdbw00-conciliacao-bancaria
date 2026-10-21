@@ -345,11 +345,12 @@ def test_pix_da_aeroflex_sem_par_vira_pendencia(cadastro):
     assert [p.valor for p in _pendencias(plano, "PIX entre contas da Aeroflex")] == [Decimal("700000.00")]
 
 
-def test_caucao_central_do_santander_so_concilia(cadastro):
-    """Cliente, 20/10/2026: o extrato da 29000181-8 é conciliado; os créditos de cobrança dele já estão no Protheus."""
+def test_caucao_central_do_santander_fora_da_automacao(cadastro):
+    """Cliente, 21/10/2026: a 29000181-8 saiu da automação. Se o extrato dela vier na pasta, nada é lançado nem
+    conciliado e não vira pendência (os créditos de cobrança ficam só como informação)."""
     extrato = _pix("SANTANDER 290001818 20-10.pdf", "290001818",
                    [("COBRANCA GARANTIA 000000", "credito", 4422.2), ("COBRANCA GARANTIA 000000", "credito", 1203.6)])
     extrato["conferencia"] = {"saldo_anterior": 363924.25, "saldo_final": 369550.05, "ok": True}
     plano = planejar(ler_resposta_api({"banco_0033": [extrato]}, cadastro), cadastro, date(2026, 10, 19))
     assert not plano.transferencias and len(plano.fora_do_escopo) == 2
-    assert {c.conta.chave: c.saldo_extrato for c in plano.conciliacoes} == {"santander_caucao_central": Decimal("369550.05")}
+    assert not plano.conciliacoes and not plano.pendencias
