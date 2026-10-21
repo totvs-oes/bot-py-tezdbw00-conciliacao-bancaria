@@ -52,12 +52,14 @@ constantes:
     auxiliar: "AUX"
 
 regras:
-  # --- Santander caução central 29000181: os créditos de cobrança do extrato dela já entram no Protheus pela baixa
-  # automática; a conta só é conciliada (cliente, 20/10/2026). Antes da consolidação, que valeria para qualquer caução.
+  # --- Santander caução central 29000181 (cliente, 21/10/2026): no Protheus recebe todos os recebimentos e é a ORIGEM
+  # das transferências para as cauções 29000371/376/432 (regra consolidacao_santander, calculada pelos extratos delas);
+  # no banco ela não movimenta. Se o extrato dela vier na pasta, NENHUMA linha é lançada (nem liberação para a C/C) e
+  # a conta não é conciliada (contas.yaml). Primeira regra: vale antes de qualquer outra.
   - nome: cobranca_caucao_central_santander
     categoria: fora_do_escopo
     contas: [santander_caucao_central]
-    historico: '^COBRANCA GARANTIA\b'
+    historico: '.'
 
   # --- Santander: créditos de cobrança nas cauções -> base da transferência 29000181 -> caução (só no Protheus)
   - nome: consolidacao_santander

@@ -70,6 +70,8 @@ def _lancamento(cadastro, conta, historico, operacao):
     ("caixa_vinculada", "COB AGN DH 161026 03:11:41", "credito", "fora_do_escopo", "fora_do_escopo"),
     # 20/10/2026: cobrança na caução central do Santander é baixa automática; nas outras cauções, consolidação
     ("santander_caucao_central", "COBRANCA GARANTIA 000000", "credito", "fora_do_escopo", "cobranca_caucao_central_santander"),
+    ("santander_caucao_central", "SALDO VINCULADO LIBERADO", "debito", "fora_do_escopo", "cobranca_caucao_central_santander"),
+    ("santander_caucao_432", "SALDO VINCULADO LIBERADO", "debito", "transferencia", "liberacao_caucao"),
     ("santander_caucao_376", "COBRANCA GARANTIA 000000", "credito", "consolidacao", "consolidacao_santander"),
     # 19/10/2026: aplicação automática do Itaú não é lançada (não altera o saldo total disponível); o rendimento sim
     ("itau_cc", "RES APLIC AUT MAIS AP", "credito", "fora_do_escopo", "aplicacao_automatica_itau"),
