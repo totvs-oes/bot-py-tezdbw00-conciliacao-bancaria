@@ -354,3 +354,22 @@ def test_caucao_central_do_santander_fora_da_automacao(cadastro):
     plano = planejar(ler_resposta_api({"banco_0033": [extrato]}, cadastro), cadastro, date(2026, 10, 19))
     assert not plano.transferencias and len(plano.fora_do_escopo) == 2
     assert not plano.conciliacoes and not plano.pendencias
+
+
+def test_ted_entre_contas_da_aeroflex_vira_transferencia_e_tarifa_de_ted_nao(cadastro):
+    """Cliente, 21/10/2026 (movimento de 20/10): TED da Caixa C/C para o Itaú C/C. A tarifa do TED nunca é transferência."""
+    resposta = {
+        "banco_0104": [_pix("BANCO CAIXA 21-10.pdf", "0005769805",
+                            [("ENVIO DE TED 07872967000102 AEROFLEX INDUSTRIA DE AEROSOL LTDA 123 11:49:29", "debito", 400000.0),
+                             ("TARIFA TED GUICHE CAIXA 123 11:49:29", "debito", 25.0)])],
+        "banco_0341": [_pix("ITAU 6896-9 21-10.pdf", "06896-9",
+                            [("TED RECEBIDA 104.4266.AEROFLEX I", "credito", 400000.0),
+                             ("TED RECEBIDA 237.1234.FORNECEDOR X", "credito", 25.0)])],
+    }
+    for extrato in resposta.values():
+        extrato[0]["lancamentos"] = [dict(l, data="20/10/2026") for l in extrato[0]["lancamentos"]]
+    plano = planejar(ler_resposta_api(resposta, cadastro), cadastro, date(2026, 10, 20))
+    assert {(t.origem.chave, t.destino.chave, t.valor, t.historico) for t in plano.transferencias} == \
+        {("caixa_cc", "itau_cc", Decimal("400000.00"), "TRANSF CEF C/C P/ ITAU C/C")}
+    assert [t.valor for t in plano.tarifas] == [Decimal("25.00")]
+    assert not _pendencias(plano, "PIX entre contas")

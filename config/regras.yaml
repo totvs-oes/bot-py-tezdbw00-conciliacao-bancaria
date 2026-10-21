@@ -32,13 +32,16 @@ constantes:
   beneficiario_rendimento: "AEROFLEX"
   configuracao_conciliacao: "0024"
   historico_transferencia: "TRANSF {so} {to} P/ {sd} {td}"
-  # PIX entre contas correntes da própria Aeroflex (cliente, 20/10/2026): vira transferência quando o DÉBITO de PIX
-  # numa conta tem, no mesmo dia, um CRÉDITO de mesmo valor em outra conta corrente da Aeroflex vindo da própria
-  # Aeroflex. Débito ou crédito que diz ser da Aeroflex e fica sem par -> pendência; PIX comum continua fora do escopo.
+  # PIX ou TED entre contas correntes da própria Aeroflex (cliente, 20 e 21/10/2026): vira transferência quando o
+  # DÉBITO de PIX/TED numa conta tem, no mesmo dia, um CRÉDITO de mesmo valor em outra conta corrente da Aeroflex
+  # vindo da própria Aeroflex. Débito ou crédito que diz ser da Aeroflex e fica sem par -> pendência; PIX/TED comum
+  # (terceiros) continua fora do escopo.
   pix_mesma_titularidade:
-    debito: '\bPIX\b'                                  # PIX ENVIADO / PAGAMENTO PIX / PAGFOR PIX OUTRA INST
-    credito: '\bPIX\b.*\b(RECEB|RECEBIDO)'
-    da_aeroflex: '\bAEROFLE|\bMESMA T\s*I\s*T'          # "DES: AEROFLEX", "PIX RECEBIDO AEROFLE", "MESMA T IT"
+    # PIX ENVIADO / PAGAMENTO PIX / PAGFOR PIX OUTRA INST / ENVIO DE TED — nunca a tarifa ("TARIFA TED GUICHE CAIXA")
+    debito: '^(?!.*\bTAR(IFA)?\b).*\b(PIX|TED)\b'
+    credito: '\b(PIX|TED)\b.*\bRECEB'                   # PIX RECEBIDO / Pix - Recebido / TED RECEBIDA
+    # "DES: AEROFLEX", "PIX RECEBIDO AEROFLE", "MESMA T IT", "TED RECEBIDA 104.4266.AEROFLEX", CNPJ 07.872.967
+    da_aeroflex: '\bAEROFLE|\bMESMA T\s*I\s*T|07872967'
     historico: "TRANSF {so} C/C P/ {sd} C/C"
   abreviacao_tipo:
     corrente: "C/C"
