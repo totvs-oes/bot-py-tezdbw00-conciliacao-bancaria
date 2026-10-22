@@ -9,6 +9,7 @@ import re
 from collections import Counter, defaultdict
 from datetime import date, datetime
 from decimal import Decimal
+from itertools import combinations
 from typing import Iterable, Optional
 
 from conciliacao.classificacao import classificar
@@ -257,6 +258,15 @@ class _Planejador:
                     self._lancar_detalhe(itens, agrupadas[0].conta)
                 continue
 
+            # Relatório antigo esquecido na pasta junto com o novo (BB 21/10/2026: "I" e "II" da manhã + "III" e "IV"
+            # salvos às 14:32): se UM único conjunto de relatórios inteiros soma o agrupado, lança esse e avisa.
+            if (escolhidos := _unico_subconjunto_que_soma(relatorios, total_agrupado)) is not None:
+                ignorados = ", ".join(a for a, _ in relatorios if a not in {e for e, _ in escolhidos})
+                for _, itens in escolhidos:
+                    self._lancar_detalhe(itens, agrupadas[0].conta,
+                                         aviso=f"Ignorado(s) por não fechar com o agrupado: {ignorados}.")
+                continue
+
             # Senão, cada relatório que soma exatamente UMA linha agrupada lança só ela (Itaú: um relatório
             # "Movimentação de Títulos" por carteira, uma linha TAR/CUSTAS por relatório). O resto vira pendência.
             restantes = list(agrupadas)
@@ -278,10 +288,12 @@ class _Planejador:
                 self._pendencia(lancamento.arquivo, f"Tarifa agrupada de {ocorrencia:%d/%m/%Y}: {motivo}",
                                 "Lançar as tarifas individualmente a partir do extrato de tarifas.", lancamento)
 
-    def _lancar_detalhe(self, itens: list[LancamentoExtrato], conta_debito: Conta) -> None:
+    def _lancar_detalhe(self, itens: list[LancamentoExtrato], conta_debito: Conta,
+                        aviso: Optional[str] = None) -> None:
         for item in itens:
             tarifa = self._tarifa(item, item.historico, f"{item.arquivo}#{item.indice}")
             tarifa.conta = conta_debito
+            tarifa.aviso = aviso
             self.plano.tarifas.append(tarifa)
 
     # ------------------------------------------------------------------
@@ -359,6 +371,21 @@ class _Planejador:
 
 
 # ----------------------------------------------------------------------
+MAX_RELATORIOS_COMBINADOS = 8
+
+
+def _unico_subconjunto_que_soma(relatorios: list[tuple[str, list[LancamentoExtrato]]],
+                                total: Decimal) -> Optional[list[tuple[str, list[LancamentoExtrato]]]]:
+    """Subconjunto próprio (não vazio) de relatórios inteiros cuja soma é `total`, se houver exatamente um."""
+    if not 1 < len(relatorios) <= MAX_RELATORIOS_COMBINADOS:
+        return None
+    somas = [sum((l.valor for l in itens), Decimal("0")) for _, itens in relatorios]
+    achados = [indices for tamanho in range(1, len(relatorios))
+               for indices in combinations(range(len(relatorios)), tamanho)
+               if sum((somas[i] for i in indices), Decimal("0")) == total]
+    return [relatorios[i] for i in achados[0]] if len(achados) == 1 else None
+
+
 def _atribuir_chaves(plano: Plano) -> None:
     """Chave estável de idempotência: rotina + data + contas + valor + ordem de ocorrência.
 
