@@ -189,7 +189,7 @@ def test_tarifa_agrupada_com_detalhe_que_nao_bate(resposta_api, cadastro):
 
 
 def test_tarifa_agrupada_ignora_relatorio_antigo_que_sobra_na_pasta(resposta_api, cadastro):
-    """BB 21/10/2026: "I" e "II" (versão errada da manhã) ficaram na pasta junto com "III" e "IV" (corretos, 14:32).
+    """BB 21/10/2026: "I" e "II" (versão da manhã) ficaram na pasta junto com "III" e "IV" (corretos, 14:32).
     Só III + IV somam o agrupado: lança esses e avisa quais foram ignorados."""
     for arquivo, valores in (("TARIFAS BB I.pdf", [2.02, 2.02]), ("TARIFAS BB II.pdf", [9.99]),
                              ("TARIFAS BB III.pdf", [10.00]), ("TARIFAS BB IV.pdf", [4.34])):
@@ -202,13 +202,14 @@ def test_tarifa_agrupada_ignora_relatorio_antigo_que_sobra_na_pasta(resposta_api
     assert not [p for p in _pendencias(plano, "Tarifa agrupada") if p.conta.chave == "bb_cc"]
 
 
-def test_tarifa_agrupada_com_mais_de_um_subconjunto_possivel_vira_pendencia(resposta_api, cadastro):
+def test_tarifa_agrupada_com_mais_de_um_conjunto_possivel_vira_pendencia_com_soma_por_relatorio(resposta_api, cadastro):
     # I + II e II + III somam 14,34: não dá para saber qual é o certo
     for arquivo, valores in (("TARIFAS BB I.pdf", [10.00]), ("TARIFAS BB II.pdf", [4.34]), ("TARIFAS BB III.pdf", [10.00])):
         _com_detalhe_bb(resposta_api, valores, arquivo)
     plano = planejar(ler_resposta_api(resposta_api, cadastro), cadastro, DIA)
     assert not [t for t in plano.tarifas if t.origem_extrato.startswith("TARIFAS BB")]
-    assert "diferente do agrupado" in _pendencias(plano, "Tarifa agrupada")[0].motivo
+    motivo = _pendencias(plano, "Tarifa agrupada")[0].motivo
+    assert "diferente do agrupado" in motivo and "TARIFAS BB II.pdf: R$ 4,34" in motivo
 
 
 def test_extrato_com_conferencia_falha_nao_gera_lancamentos(resposta_api, cadastro):

@@ -280,11 +280,13 @@ class _Planejador:
                     sobras.append((arquivo, itens))
 
             total_sobras = sum((l.valor for _, itens in sobras for l in itens), Decimal("0"))
+            por_relatorio = "; ".join(f"{a}: R$ {formatar_brl(sum((l.valor for l in itens), Decimal('0')))}"
+                                      for a, itens in sobras)
             for lancamento in restantes:
                 motivo = ("Extrato de tarifas detalhado não encontrado para a ocorrência."
                           if not sobras else
                           f"Soma do detalhamento (R$ {formatar_brl(total_sobras)}) diferente do agrupado "
-                          f"(R$ {formatar_brl(lancamento.valor)}).")
+                          f"(R$ {formatar_brl(lancamento.valor)}). Por relatório: {por_relatorio}.")
                 self._pendencia(lancamento.arquivo, f"Tarifa agrupada de {ocorrencia:%d/%m/%Y}: {motivo}",
                                 "Lançar as tarifas individualmente a partir do extrato de tarifas.", lancamento)
 
