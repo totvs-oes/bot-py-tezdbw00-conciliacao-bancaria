@@ -30,6 +30,7 @@ class Regra:
     origem_tipo: Optional[tuple[str, ...]] = None
     origem_conta: Optional[str] = None
     historico_protheus: Optional[str] = None
+    natureza: Optional[str] = None   # (tarifa) natureza própria; sem ela vale constantes.natureza_tarifa
     motivo: Optional[str] = None   # (acao_manual) texto da pendência
     acao: Optional[str] = None
 
@@ -118,6 +119,7 @@ def carregar_cadastro(pasta: Path = PASTA_CONFIG) -> Cadastro:
             origem_tipo=_tupla(r.get("origem_tipo")),
             origem_conta=r.get("origem_conta"),
             historico_protheus=r.get("historico_protheus"),
+            natureza=str(r["natureza"]) if r.get("natureza") else None,
             motivo=r.get("motivo"),
             acao=r.get("acao"),
         )

@@ -17,6 +17,7 @@
 #   origem_tipo   (transferencia) tipo da conta origem no MESMO banco; a conta do extrato é o destino
 #   origem_conta  (consolidacao) chave da conta de origem
 #   motivo/acao   (acao_manual) textos da pendência no relatório
+#   natureza      (tarifa) natureza própria no Protheus; sem ela vale constantes.natureza_tarifa
 #   historico_protheus  modelo do histórico gravado no Protheus (máx. 40 caracteres)
 #                       {so}/{sd} = sigla do banco origem/destino, {to}/{td} = tipo abreviado
 
@@ -172,6 +173,15 @@ regras:
     bancos: ["237"]
     operacao: debito
     historico: '^DOC/TED INTERNET\b'
+
+  # --- BB tarifa de câmbio ("Tar Liquid Orpag Exterior", 22/10/2026): natureza CUSTOS COM IMPORTAÇÃO, não a de
+  # tarifas bancárias (cliente, 23/10/2026). "Débito Serv.Cambio" (sem "TAR") continua na regra cambio_bb.
+  - nome: tarifa_cambio_bb
+    categoria: tarifa
+    operacao: debito
+    bancos: ["001"]
+    historico: '\bTAR(IFA)?\b.*\b(ORPAG|CAMBIO|EXTERIOR)\b'
+    natureza: "2001054"
 
   # --- Tarifas individuais
   - nome: tarifa

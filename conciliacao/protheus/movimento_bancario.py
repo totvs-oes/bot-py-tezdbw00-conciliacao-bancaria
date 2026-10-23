@@ -218,7 +218,7 @@ def incluir_tarifa(sessao: SessaoProtheus, item: Tarifa, constantes: dict,
         except ErroDeTela:
             if tentativa == 3:
                 raise
-    _preencher(tela, _campos_movimento(item, constantes["natureza_tarifa"], constantes["numerario"]))
+    _preencher(tela, _campos_movimento(item, item.natureza or constantes["natureza_tarifa"], constantes["numerario"]))
     tela.print(f"tarifa_{item.conta.banco}_{item.documento}_preenchido")
     if ensaio:
         tela.confirmar(s.BOTAO_CANCELAR)

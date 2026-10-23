@@ -110,6 +110,7 @@ class Classificacao:
     origem_tipo: Optional[tuple[str, ...]] = None
     origem_conta: Optional[str] = None
     historico_protheus: Optional[str] = None
+    natureza: Optional[str] = None
     motivo: Optional[str] = None
     acao: Optional[str] = None
 
@@ -153,6 +154,7 @@ class Transferencia(ItemPlano):
 @dataclass(kw_only=True)
 class Tarifa(ItemPlano):
     conta: Conta
+    natureza: Optional[str] = None   # None = constantes.natureza_tarifa (regra com "natureza" própria muda)
 
     def banco_documento(self) -> str:
         return self.conta.banco

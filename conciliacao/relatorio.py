@@ -68,7 +68,8 @@ def gerar_markdown(plano: Plano, resultado: Optional[ResultadoExecucao] = None, 
         linhas += ["| Status | Documento | Contas | Valor | Histórico | Origem | Obs. |", "|---|---|---|---:|---|---|---|"]
         for item in itens:
             status = resultado.status_itens.get(item.chave, "simulado" if simulado else "não executado")
-            obs = " ".join(filter(None, [item.aviso, resultado.detalhes_itens.get(item.chave)]))
+            natureza = f"Natureza {item.natureza}." if getattr(item, "natureza", None) else None
+            obs = " ".join(filter(None, [natureza, item.aviso, resultado.detalhes_itens.get(item.chave)]))
             linhas.append(f"| {status} | {item.documento or ''} | {_descricao(item)} | {formatar_brl(item.valor)} | "
                           f"{item.historico} | {item.origem_extrato} | {obs} |")
         linhas.append("")
@@ -112,7 +113,7 @@ def plano_para_dict(plano: Plano) -> dict:
         if isinstance(i, Transferencia):
             base |= {"origem": i.origem.chave, "destino": i.destino.chave}
         else:
-            base |= {"conta": i.conta.chave}
+            base |= {"conta": i.conta.chave, "natureza": i.natureza}
         return base
 
     return {

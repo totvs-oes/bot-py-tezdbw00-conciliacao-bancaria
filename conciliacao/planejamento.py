@@ -141,7 +141,9 @@ class _Planejador:
         elif categoria == Categoria.CONSOLIDACAO:
             self.consolidacoes[(lancamento.conta.chave, classificacao.origem_conta)].append(lancamento)
         elif categoria == Categoria.TARIFA:
-            self.plano.tarifas.append(self._tarifa(lancamento, lancamento.historico, f"{lancamento.arquivo}#{lancamento.indice}"))
+            tarifa = self._tarifa(lancamento, lancamento.historico, f"{lancamento.arquivo}#{lancamento.indice}")
+            tarifa.natureza = classificacao.natureza
+            self.plano.tarifas.append(tarifa)
         elif categoria == Categoria.TARIFA_AGRUPADA:
             self.agrupadas.append(lancamento)
         elif categoria == Categoria.RENDIMENTO:

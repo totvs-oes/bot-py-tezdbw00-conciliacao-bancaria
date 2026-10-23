@@ -85,7 +85,8 @@ def _lancamento(cadastro, conta, historico, operacao):
     ("tribanco_cc", "TED C RECEBIDA-MARTINS COMERCIO E S", "credito", "fora_do_escopo", "fora_do_escopo"),
     ("bb_cc", "Liquid Contr Câmbio Exp", "credito", "acao_manual", "cambio_bb"),
     ("bb_cc", "Débito Serv.Cambio", "debito", "acao_manual", "cambio_bb"),
-    ("bb_cc", "Tar Liquid Orpag Exterior", "debito", "tarifa", "tarifa"),
+    # 23/10/2026: tarifa de câmbio do BB tem natureza própria (test_tarifa_de_cambio_bb_usa_natureza_de_importacao)
+    ("bb_cc", "Tar Liquid Orpag Exterior", "debito", "tarifa", "tarifa_cambio_bb"),
     ("bb_cc", "Cap Giro Dig Amortização", "debito", "acao_manual", "amortizacao_contrato"),
     # Santander: créditos de cobrança na caução
     ("santander_caucao_432", "COBRANCA GARANTIA 000000", "credito", "consolidacao", "consolidacao_santander"),
@@ -128,3 +129,12 @@ def test_transferencia_sem_fronteira_nao_vira_transferencia(cadastro):
     # "TRANSACAO" não pode casar com a regra de "TRANSF"
     resultado = classificar(_lancamento(cadastro, "itau_caucao", "TRANSACAO CARTAO", "debito"), cadastro.regras)
     assert resultado.categoria.value == "nao_reconhecido"
+
+
+def test_tarifa_de_cambio_bb_usa_natureza_de_importacao(cadastro):
+    """Cliente, 23/10/2026: tarifa de câmbio do BB vai na natureza CUSTOS COM IMPORTAÇÃO (2001054), não na de
+    tarifas bancárias; as demais tarifas continuam na natureza padrão (sem natureza na regra)."""
+    cambio = classificar(_lancamento(cadastro, "bb_cc", "Tar Liquid Orpag Exterior", "debito"), cadastro.regras)
+    assert cambio.natureza == "2001054"
+    comum = classificar(_lancamento(cadastro, "bb_cc", "Débito Serviço Cobrança", "debito"), cadastro.regras)
+    assert comum.regra == "tarifa" and comum.natureza is None
