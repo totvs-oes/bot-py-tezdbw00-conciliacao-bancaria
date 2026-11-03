@@ -41,6 +41,8 @@ ABAS_DA_ROTINA = {
     "Movimento Bancario": NOMES_MOVIMENTO_BANCARIO,
     "Novo Conciliador Backoffice": ("Novo Conciliador Backoffice",),
 }
+# Classe da wa-tab-page de cada rotina aberta (TWorkspace). Produção, 29/10/2026: legenda sem a versão "[...]"
+CLASSE_ABA_DE_ROTINA = "dict-tworkspace"
 ROTINA_MOVIMENTO_BANCARIO = "Movimento Bancario"
 ROTINA_CONCILIADOR = "Novo Conciliador Backoffice"
 # Ao abrir uma rotina, o Protheus pede de novo Data base/Grupo/Filial/Ambiente (mesmo diálogo da data base)

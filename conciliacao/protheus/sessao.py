@@ -45,8 +45,28 @@ def _sumiu(page: Page, elemento: Locator, timeout: int) -> bool:
 
 def nome_da_rotina_na_aba(legenda: str) -> str:
     """Título da aba -> nome da rotina. Homologação: "Movimento Bancario - 01/010101 [02.9.0006]";
-    produção (14/10/2026): "Movimentos Bancários [02.9.0006]", sem a filial."""
+    produção (14/10/2026): "Movimentos Bancários [02.9.0006]", sem a filial; produção (29/10/2026):
+    "Movimentos Bancários", sem a versão."""
     return re.split(r" - | \[", legenda, maxsplit=1)[0].strip()
+
+
+def rotina_da_aba_ativa(abas: list[dict]) -> str:
+    """Nome da rotina entre as abas ativas (wa-tab-page[active]: {"caption", "workspace"}).
+
+    Aba de rotina = a do workspace do Protheus (classe dict-tworkspace) ou, como antes, a que tem a versão "[...]"
+    no título. Desde 29/10/2026 a produção mostra só "Movimentos Bancários" (sem versão): exigir o "[" fazia o robô
+    achar que nenhuma rotina estava ativa. Abas internas da rotina (pastas de formulário) não são de workspace."""
+    for aba in abas:
+        legenda = aba.get("caption") or ""
+        if aba.get("workspace") or "[" in legenda:
+            return nome_da_rotina_na_aba(legenda)
+    return ""
+
+
+def padrao_aba_da_rotina(nomes: tuple[str, ...]) -> re.Pattern:
+    """Texto do botão da aba (wa-tab-button) de uma das rotinas, com ou sem " - filial" / " [versão]"."""
+    alternativas = "|".join(re.escape(n) for n in nomes)
+    return re.compile(rf"^\s*({alternativas})\s*($| - | \[)")
 
 
 class SessaoProtheus:
@@ -240,8 +260,7 @@ class SessaoProtheus:
             return tela
         # Aberta mas em segundo plano: a aba (wa-tab-button) fica na barra do topo em qualquer tela.
         # Nunca abrir de novo pelo menu: isso cria uma SEGUNDA instância da rotina.
-        nomes_da_aba = "|".join(re.escape(n) for n in s.ABAS_DA_ROTINA[nome])
-        aba = tela.page.locator("wa-tab-button").filter(has_text=re.compile(rf"^\s*({nomes_da_aba})( - | \[)"))
+        aba = tela.page.locator("wa-tab-button").filter(has_text=padrao_aba_da_rotina(s.ABAS_DA_ROTINA[nome]))
         if aba.count():
             aba.first.click()
             tela.esperar_ocioso()
@@ -303,11 +322,12 @@ class SessaoProtheus:
         raise ErroDeTela(f"O menu '{passo}' não expandiu depois de {tentativas} cliques. Diagnóstico: {caminho}")
 
     def _rotina_ativa(self) -> str:
-        """Nome da rotina da aba ativa (só abas de rotina, que têm a versão "[...]" no título)."""
-        legendas = self.tela.page.evaluate(
-            """() => Array.from(document.querySelectorAll('wa-tab-page[active]'))
-                     .map((e) => e.getAttribute('caption') || '').filter((c) => c.includes('['))""")
-        return nome_da_rotina_na_aba(legendas[0]) if legendas else ""
+        """Nome da rotina da aba ativa (só abas de rotina: ver rotina_da_aba_ativa)."""
+        abas = self.tela.page.evaluate(
+            f"""() => Array.from(document.querySelectorAll('wa-tab-page[active]'))
+                     .map((e) => ({{caption: e.getAttribute('caption') || '',
+                                   workspace: e.classList.contains('{s.CLASSE_ABA_DE_ROTINA}')}}))""")
+        return rotina_da_aba_ativa(abas)
 
     def _conferir_rotina_ativa(self, nome: str) -> None:
         """Trava de segurança: nunca preencher nada numa rotina diferente da pedida.
