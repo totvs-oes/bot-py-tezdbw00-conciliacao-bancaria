@@ -79,13 +79,30 @@ def _gravar(tela: Tela, botao: str, rotulo_historico: str, historico: str, cance
             if ainda_preenchido and time.monotonic() - inicio > 8:
                 break  # clique ignorado: formulário intacto, nada gravado -> pode clicar de novo
         else:
-            # Formulário fechou e não veio tela contábil em ESPERA_POS_GRAVAR: gravou sem contabilização on-line
-            log.warning("Gravado sem tela de lançamento contábil em %ss", ESPERA_POS_GRAVAR)
-            _cancelar_formulario_em_branco(tela, rotulo_historico, cancelar)
+            _confirmar_gravacao_sem_tela_contabil(tela, rotulo_historico, cancelar)
             return
         log.info("'%s' ignorado pelo Protheus (tentativa %d); formulário intacto, clicando de novo", botao, tentativa)
     caminho = tela.diagnostico("gravar_sem_efeito")
     raise ErroDeTela(f"'{botao}' clicado 3 vezes sem efeito (formulário continua preenchido). Diagnóstico: {caminho}")
+
+
+def _confirmar_gravacao_sem_tela_contabil(tela: Tela, rotulo_historico: str, cancelar: str) -> None:
+    """Não veio a tela contábil em ESPERA_POS_GRAVAR. Só o formulário reaberto EM BRANCO prova que gravou; sem essa
+    prova, levanta erro (o item fica "incerto", para conferência humana). Em 06/11/2026 o campo Histórico não pôde
+    ser lido por todo esse tempo, o robô deu "concluido" e a transferência BB -> Itaú de R$ 900.000,00 ficou no
+    formulário aberto, sem gravar."""
+    limite = time.monotonic() + ESPERA_REABERTURA
+    while True:
+        if tela.valor_do_campo(rotulo_historico) == "":
+            log.warning("Gravado sem tela de lançamento contábil em %ss", ESPERA_POS_GRAVAR)
+            _fechar_em_branco(tela, rotulo_historico, cancelar)
+            return
+        if time.monotonic() >= limite:
+            break
+        tela.page.wait_for_timeout(1000)
+    caminho = tela.diagnostico("gravacao_nao_confirmada")
+    raise ErroDeTela(f"Gravação não confirmada: sem tela contábil e sem formulário em branco depois do salvar. "
+                     f"Conferir no Protheus se o lançamento existe. Diagnóstico: {caminho}")
 
 
 def _esperar_sumir(tela: Tela, elemento, descricao: str, timeout: int = 60) -> None:
