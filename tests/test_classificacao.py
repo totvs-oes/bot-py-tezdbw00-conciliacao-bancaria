@@ -93,6 +93,12 @@ def _lancamento(cadastro, conta, historico, operacao):
     ("santander_cc", "TED RECEBIDA 02777131000105 000000", "credito", "fora_do_escopo", "fora_do_escopo"),
     ("santander_cc", "PAGFOR PIX OUTRA INST- DIFEREN TIT 000000", "debito", "acao_manual", "pagfor_outra_titularidade"),
     ("santander_cc", "PAGFOR PIX OUTRA INST- MESMA TIT 000000", "debito", "fora_do_escopo", "fora_do_escopo"),
+    ("bradesco_cc", "RECEBIMENTO FORNECEDOR BOTICA COML FARMACEUTICA LTDA 3006349", "credito", "acao_manual", "baixa_manual_cliente"),
+    ("bradesco_cc", "RECEBIMENTO FORNECEDOR GLOBAL SOLUCOES FINANCEIRAS LTDA 506349", "credito", "acao_manual", "baixa_manual_cliente"),
+    ("bradesco_cc", "RECEBIMENTO FORNECEDOR OUTRA EMPRESA LTDA 506349", "credito", "nao_reconhecido", None),
+    ("bradesco_cc", "PARCELAMENTO DE DARF PARCELAMENTO DE DARF-10318 2840303", "debito", "acao_manual", "baixa_manual_cliente"),
+    ("bb_cc", "Transferência recebida 30/10 09:08 ARES ASSESSORIA EM COMER", "credito", "acao_manual", "baixa_manual_cliente"),
+    ("bb_cc", "Transferência enviada 22/10 10:02 ARES ASSESSORIA EM COMER", "debito", "acao_manual", "baixa_manual_cliente"),
     # Santander: créditos de cobrança na caução
     ("santander_caucao_432", "COBRANCA GARANTIA 000000", "credito", "consolidacao", "consolidacao_santander"),
     # Rendimento

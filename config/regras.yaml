@@ -7,7 +7,7 @@
 # Campos de cada regra:
 #   nome          identificador (aparece no relatório)
 #   categoria     transferencia | contrapartida | consolidacao | tarifa | tarifa_agrupada | rendimento | fora_do_escopo
-#                 | acao_manual (não lança; vira pendência com o motivo/acao da regra)
+#                 | acao_manual (baixa manual: não lança nem vira pendência; lista informativa com o motivo/acao da regra)
 #   historico     regex (re.search) sobre o histórico normalizado, ou lista de regex (qualquer uma)
 #   operacao      debito | credito (opcional = qualquer)
 #   tipos_conta   tipos da conta do extrato (opcional = qualquer)
@@ -129,6 +129,17 @@ regras:
     historico: '^PAGFOR\b.*\bDIFEREN'
     motivo: "PAGFOR PIX para outra titularidade (pagamento do Contas a Pagar): não é lançado pelo robô."
     acao: "Fazer a baixa manual do título no Contas a Pagar; sem ela o saldo da conta não fecha na conciliação."
+
+  # --- Baixa manual confirmada pela cliente (09/11/2026): Bradesco BOTICA e GLOBAL SOLUÇÕES, parcelamento de DARF, BB ARES.
+  # Outro pagador ou outra "Transferência" continuam como não reconhecidos até a cliente confirmar.
+  - nome: baixa_manual_cliente
+    categoria: acao_manual
+    historico:
+      - '^RECEBIMENTO FORNECEDOR (BOTICA|GLOBAL SOLUCOES)\b'
+      - '^PARCELAMENTO DE DARF\b'
+      - '^TRANSFERENCIA (RECEBIDA|ENVIADA)\b.*\bARES ASSESSORIA\b'
+    motivo: "Baixa manual: não é lançado pelo robô."
+    acao: "Fazer a baixa manual; sem ela o saldo da conta não fecha na conciliação."
 
   # --- Itaú: aplicação automática ("APL APLIC AUT MAIS" / "RES APLIC AUT MAIS AP") não é lançada (cliente,
   # 15-19/10/2026): não altera o saldo da conta, que é conciliado pelo "SALDO TOTAL DISPONÍVEL DIA" (conta +

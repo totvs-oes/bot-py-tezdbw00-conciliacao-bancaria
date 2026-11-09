@@ -95,7 +95,8 @@ def test_doc_ted_internet_do_bradesco_e_tarifa(extratos, cadastro):
 def test_kg_vira_pendencia_de_baixa_manual_e_dev_pag_bol_e_ignorado(extratos, cadastro):
     """Respostas da cliente em 05/10/2026."""
     plano = planejar(extratos, cadastro, DIA)
-    kg = [p for p in plano.pendencias if p.historico == "KG 3361823"]
+    assert not [p for p in plano.pendencias if p.historico == "KG 3361823"]   # cliente, 09/11/2026: baixa manual não é pendência
+    kg = [p for p in plano.baixa_manual if p.historico == "KG 3361823"]
     assert len(kg) == 1 and "Contas a Pagar" in kg[0].motivo and "baixa manual" in kg[0].acao
     assert Decimal("546127.35") not in [i.valor for i in plano.itens()]
     assert not [p for p in plano.pendencias if (p.historico or "").startswith("DEV PAG BOL")]
@@ -120,7 +121,8 @@ def test_daycoval_liberacao_de_caucao(cadastro):
 def test_daycoval_amortizacao_vira_pendencia(cadastro):
     plano = planejar(ler_resposta_api(_daycoval(), cadastro), cadastro, date(2026, 9, 1))
     assert [t.valor for t in plano.tarifas] == [Decimal("43.79")]
-    amortizacao = _pendencias(plano, "Amortização de contrato")
+    assert not _pendencias(plano, "Amortização de contrato")
+    amortizacao = [p for p in plano.baixa_manual if "Amortização de contrato" in p.motivo]
     assert [p.valor for p in amortizacao] == [Decimal("85563.46")] and "baixa manual" in amortizacao[0].acao
     assert not _pendencias(plano, "não reconhecido")
 
@@ -436,18 +438,42 @@ def test_transferencia_entre_contas_da_aeroflex_pelo_historico_transferencia(cad
 
 
 def test_transferencia_de_terceiro_e_pagfor_de_outra_titularidade_nao_viram_transferencia(cadastro):
-    """Mesmo com um crédito da Aeroflex de valor igual: ARES é de terceiro e DIFEREN TIT é pagamento (baixa manual)."""
+    """Mesmo com um crédito da Aeroflex de valor igual: ARES é de terceiro e DIFEREN TIT é pagamento (baixa manual).
+    Cliente, 09/11/2026: baixa manual não fica em pendência, só na lista informativa."""
     resposta = _dia({
         "banco_0001": [_pix("BANCO DO BRASIL 410004 06-11.pdf", "41000-4",
                             [("Transferência enviada 05/11 10:02 ARES ASSESSORIA EM COMER", "debito", 100.0),
-                             ("Transferência recebida 05/11 09:27 ARES ASSESSORIA EM COMER", "credito", 200.0)])],
+                             ("Transferência recebida 05/11 09:27 ARES ASSESSORIA EM COMER", "credito", 200.0),
+                             ("Transferência enviada 05/11 16:00 CESCONETTO ATACADO DE PA", "debito", 6.48)])],
         "banco_0033": [_pix("SANTANDER 130018420 06-11.pdf", "13001842",
                             [("PAGFOR PIX OUTRA INST- DIFEREN TIT 000000", "debito", 300.0)])],
         "banco_0341": [_pix("ITAU 6896-9 06-11.pdf", "06896-9", [("PIX RECEBIDO AEROFLE05/11", "credito", 300.0)])],
+        "banco_0237": [_pix("BRADESCO 50542-0 06-11.pdf", "0050542-0",
+                            [("RECEBIMENTO FORNECEDOR BOTICA COML FARMACEUTICA LTDA 3006349", "credito", 742.39),
+                             ("RECEBIMENTO FORNECEDOR GLOBAL SOLUCOES FINANCEIRAS LTDA 506349", "credito", 2815.06),
+                             ("PARCELAMENTO DE DARF PARCELAMENTO DE DARF-10318 2840303", "debito", 8874.39)])],
     })
     plano = planejar(ler_resposta_api(resposta, cadastro), cadastro, date(2026, 11, 5))
-    assert not plano.transferencias
-    motivos = {p.historico: p.motivo for p in plano.pendencias}
-    assert "outra titularidade" in motivos["PAGFOR PIX OUTRA INST- DIFEREN TIT 000000"]
-    assert "não reconhecido" in motivos["Transferência enviada 05/11 10:02 ARES ASSESSORIA EM COMER"]
-    assert "não reconhecido" in motivos["Transferência recebida 05/11 09:27 ARES ASSESSORIA EM COMER"]
+    assert not plano.itens()
+    assert {b.valor for b in plano.baixa_manual} == {
+        Decimal(v) for v in ("100.00", "200.00", "300.00", "742.39", "2815.06", "8874.39")}
+    # O que a cliente não confirmou como baixa manual continua avisando
+    assert [p.historico for p in _pendencias(plano, "não reconhecido")] == [
+        "Transferência enviada 05/11 16:00 CESCONETTO ATACADO DE PA"]
+    assert not {b.historico for b in plano.baixa_manual} & {p.historico for p in plano.pendencias}
+    assert "PAGFOR PIX OUTRA INST- DIFEREN TIT 000000" in {b.historico for b in plano.baixa_manual}
+
+
+def test_ted_recebida_da_propria_aeroflex_com_cnpj_na_frente_vira_transferencia(cadastro):
+    """Cliente, 09/11/2026: TED RECEBIDA do Santander fica sem ação, salvo se for transferência entre bancos da Aeroflex."""
+    resposta = _dia({
+        "banco_0237": [_pix("BRADESCO 50542-0 06-11.pdf", "0050542-0",
+                            [("TED D CC HBANK* DEST. AEROFLEX INDUSTRIA D 1596653", "debito", 80000.0)])],
+        "banco_0033": [_pix("SANTANDER 130018420 06-11.pdf", "13001842",
+                            [("07872967000102 TED RECEBIDA 000000", "credito", 80000.0),
+                             ("02777131000105 TED RECEBIDA 000000", "credito", 21593.08)])],
+    })
+    plano = planejar(ler_resposta_api(resposta, cadastro), cadastro, date(2026, 11, 5))
+    assert [(t.origem.chave, t.destino.chave, t.valor) for t in plano.transferencias] == [
+        ("bradesco_cc", "santander_cc", Decimal("80000.00"))]
+    assert [l.valor for l in plano.fora_do_escopo] == [Decimal("21593.08")]

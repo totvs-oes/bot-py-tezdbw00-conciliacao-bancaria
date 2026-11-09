@@ -46,7 +46,8 @@ def gerar_markdown(plano: Plano, resultado: Optional[ResultadoExecucao] = None, 
         f"| Rendimentos | {len(plano.rendimentos)} |",
         f"| Conciliações | {len(plano.conciliacoes)} |",
         f"| **Pendências** | **{len(plano.pendencias)}** |",
-        f"| Fora do escopo (informativo) | {len(plano.fora_do_escopo)} |", "",
+        f"| Fora do escopo (informativo) | {len(plano.fora_do_escopo)} |",
+        f"| Baixa manual (informativo) | {len(plano.baixa_manual)} |", "",
     ]
 
     linhas += ["## Extratos", "", "| Arquivo | Conta | Leitura | Conferência | Lançamentos no dia |", "|---|---|---|---|---|"]
@@ -103,6 +104,13 @@ def gerar_markdown(plano: Plano, resultado: Optional[ResultadoExecucao] = None, 
         for (conta, historico, operacao), qtde in sorted(contagem.items()):
             linhas.append(f"| {conta} | {historico} | {operacao} | {qtde} |")
         linhas.append("")
+
+    # Depois de "Fora do escopo": roteiro_testes recorta as pendências entre "## Pendências" e "## Fora"
+    if plano.baixa_manual:
+        linhas += ["## Baixa manual (informativo)", "", "| Arquivo | Data | Histórico | Valor | Ação |", "|---|---|---|---:|---|"]
+        for b in plano.baixa_manual:
+            linhas.append(f"| {b.arquivo} | {b.data:%d/%m/%Y} | {b.historico} | {formatar_brl(b.valor)} | {b.acao} |")
+        linhas.append("")
     return "\n".join(linhas)
 
 
@@ -123,6 +131,8 @@ def plano_para_dict(plano: Plano) -> dict:
         "pendencias": [{"arquivo": p.arquivo, "data": p.data.isoformat() if p.data else None, "historico": p.historico,
                         "valor": str(p.valor) if p.valor is not None else None, "motivo": p.motivo, "acao": p.acao}
                        for p in plano.pendencias],
+        "baixa_manual": [{"arquivo": b.arquivo, "data": b.data.isoformat(), "historico": b.historico,
+                          "valor": str(b.valor), "motivo": b.motivo, "acao": b.acao} for b in plano.baixa_manual],
     }
 
 

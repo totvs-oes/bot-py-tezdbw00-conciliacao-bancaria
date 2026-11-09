@@ -37,7 +37,7 @@ class Categoria(str, Enum):
     TARIFA_AGRUPADA = "tarifa_agrupada"
     RENDIMENTO = "rendimento"
     FORA_DO_ESCOPO = "fora_do_escopo"
-    ACAO_MANUAL = "acao_manual"   # conhecido, mas quem trata é uma pessoa (motivo/ação vêm da regra)
+    ACAO_MANUAL = "acao_manual"   # baixa manual: quem trata é uma pessoa (motivo/ação vêm da regra); lista informativa
     NAO_RECONHECIDO = "nao_reconhecido"
 
 
@@ -194,6 +194,8 @@ class Plano:
     rendimentos: list[Rendimento] = field(default_factory=list)
     conciliacoes: list[Conciliacao] = field(default_factory=list)
     pendencias: list[Pendencia] = field(default_factory=list)
+    # Linhas de baixa manual: a cliente valida antes do processamento; só informativo, não é pendência (09/11/2026)
+    baixa_manual: list[Pendencia] = field(default_factory=list)
     fora_do_escopo: list[LancamentoExtrato] = field(default_factory=list)
     extratos: list[ExtratoLido] = field(default_factory=list)
 
