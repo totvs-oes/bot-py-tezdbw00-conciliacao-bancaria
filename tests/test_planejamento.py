@@ -397,3 +397,57 @@ def test_ted_entre_contas_da_aeroflex_vira_transferencia_e_tarifa_de_ted_nao(cad
         {("caixa_cc", "itau_cc", Decimal("400000.00"), "TRANSF CEF C/C P/ ITAU C/C")}
     assert [t.valor for t in plano.tarifas] == [Decimal("25.00")]
     assert not _pendencias(plano, "PIX entre contas")
+
+
+def _dia(resposta, dia="05/11/2026"):
+    for extratos in resposta.values():
+        extratos[0]["lancamentos"] = [dict(l, data=dia) for l in extratos[0]["lancamentos"]]
+    return resposta
+
+
+def test_ted_do_bradesco_para_o_itau_sem_recebida_no_historico_vira_transferencia(cadastro):
+    """09/09 (R$ 2.000.000) e 13/10/2026 (R$ 1.500.000): o Itaú mostra "TED 237.6349.AEROFLEX I", sem "RECEBIDA"."""
+    resposta = _dia({
+        "banco_0237": [_pix("BRADESCO 50542-0 14-10.pdf", "0050542-0",
+                            [("TED D CC HBANK* DEST. AEROFLEX INDUSTRIA D 1596653", "debito", 1500000.0)])],
+        "banco_0341": [_pix("ITAU 6896-9 14-10.pdf", "06896-9", [("TED 237.6349.AEROFLEX I", "credito", 1500000.0)])],
+    })
+    plano = planejar(ler_resposta_api(resposta, cadastro), cadastro, date(2026, 11, 5))
+    assert [(t.origem.chave, t.destino.chave, t.valor) for t in plano.transferencias] == [
+        ("bradesco_cc", "itau_cc", Decimal("1500000.00"))]
+    assert not _pendencias(plano, "entre contas") and not _pendencias(plano, "não reconhecido")
+
+
+def test_transferencia_entre_contas_da_aeroflex_pelo_historico_transferencia(cadastro):
+    """Cliente, 09/11/2026: a transferência entre bancos também vem como "TRANSF" / "TRANSFERÊNCIA"."""
+    resposta = _dia({
+        "banco_0001": [_pix("BANCO DO BRASIL 410004 06-11.pdf", "41000-4",
+                            [("Transferência enviada 05/11 10:17 AEROFLEX INDUSTRIA DE AER", "debito", 50000.0)])],
+        "banco_0341": [_pix("ITAU 6896-9 06-11.pdf", "06896-9", [("PIX RECEBIDO AEROFLE05/11", "credito", 50000.0)])],
+        "banco_0237": [_pix("BRADESCO 50542-0 06-11.pdf", "0050542-0",
+                            [("TRANSF ENVIADA AEROFLEX", "debito", 7000.0)])],
+        "banco_0246": [_pix("ABC 6609345-9 06-11.pdf", "0066093459",
+                            [("Transferência recebida 05/11 AEROFLEX INDUSTRIA", "credito", 7000.0)])],
+    })
+    plano = planejar(ler_resposta_api(resposta, cadastro), cadastro, date(2026, 11, 5))
+    assert {(t.origem.chave, t.destino.chave, t.valor) for t in plano.transferencias} == {
+        ("bb_cc", "itau_cc", Decimal("50000.00")), ("bradesco_cc", "abc_cc", Decimal("7000.00"))}
+    assert not _pendencias(plano, "entre contas") and not _pendencias(plano, "não reconhecido")
+
+
+def test_transferencia_de_terceiro_e_pagfor_de_outra_titularidade_nao_viram_transferencia(cadastro):
+    """Mesmo com um crédito da Aeroflex de valor igual: ARES é de terceiro e DIFEREN TIT é pagamento (baixa manual)."""
+    resposta = _dia({
+        "banco_0001": [_pix("BANCO DO BRASIL 410004 06-11.pdf", "41000-4",
+                            [("Transferência enviada 05/11 10:02 ARES ASSESSORIA EM COMER", "debito", 100.0),
+                             ("Transferência recebida 05/11 09:27 ARES ASSESSORIA EM COMER", "credito", 200.0)])],
+        "banco_0033": [_pix("SANTANDER 130018420 06-11.pdf", "13001842",
+                            [("PAGFOR PIX OUTRA INST- DIFEREN TIT 000000", "debito", 300.0)])],
+        "banco_0341": [_pix("ITAU 6896-9 06-11.pdf", "06896-9", [("PIX RECEBIDO AEROFLE05/11", "credito", 300.0)])],
+    })
+    plano = planejar(ler_resposta_api(resposta, cadastro), cadastro, date(2026, 11, 5))
+    assert not plano.transferencias
+    motivos = {p.historico: p.motivo for p in plano.pendencias}
+    assert "outra titularidade" in motivos["PAGFOR PIX OUTRA INST- DIFEREN TIT 000000"]
+    assert "não reconhecido" in motivos["Transferência enviada 05/11 10:02 ARES ASSESSORIA EM COMER"]
+    assert "não reconhecido" in motivos["Transferência recebida 05/11 09:27 ARES ASSESSORIA EM COMER"]

@@ -88,6 +88,11 @@ def _lancamento(cadastro, conta, historico, operacao):
     # 23/10/2026: tarifa de câmbio do BB tem natureza própria (test_tarifa_de_cambio_bb_usa_natureza_de_importacao)
     ("bb_cc", "Tar Liquid Orpag Exterior", "debito", "tarifa", "tarifa_cambio_bb"),
     ("bb_cc", "Cap Giro Dig Amortização", "debito", "acao_manual", "amortizacao_contrato"),
+    # 09/11/2026: apontamentos da cliente
+    ("santander_cc", "02777131000105 TED RECEBIDA 000000", "credito", "fora_do_escopo", "fora_do_escopo"),
+    ("santander_cc", "TED RECEBIDA 02777131000105 000000", "credito", "fora_do_escopo", "fora_do_escopo"),
+    ("santander_cc", "PAGFOR PIX OUTRA INST- DIFEREN TIT 000000", "debito", "acao_manual", "pagfor_outra_titularidade"),
+    ("santander_cc", "PAGFOR PIX OUTRA INST- MESMA TIT 000000", "debito", "fora_do_escopo", "fora_do_escopo"),
     # Santander: créditos de cobrança na caução
     ("santander_caucao_432", "COBRANCA GARANTIA 000000", "credito", "consolidacao", "consolidacao_santander"),
     # Rendimento

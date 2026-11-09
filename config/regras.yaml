@@ -38,9 +38,12 @@ constantes:
   # vindo da própria Aeroflex. Débito ou crédito que diz ser da Aeroflex e fica sem par -> pendência; PIX/TED comum
   # (terceiros) continua fora do escopo.
   pix_mesma_titularidade:
-    # PIX ENVIADO / PAGAMENTO PIX / PAGFOR PIX OUTRA INST / ENVIO DE TED — nunca a tarifa ("TARIFA TED GUICHE CAIXA")
-    debito: '^(?!.*\bTAR(IFA)?\b).*\b(PIX|TED)\b'
-    credito: '\b(PIX|TED)\b.*\bRECEB'                   # PIX RECEBIDO / Pix - Recebido / TED RECEBIDA
+    # PIX ENVIADO / PAGAMENTO PIX / PAGFOR PIX OUTRA INST / ENVIO DE TED / TRANSFERENCIA ENVIADA (cliente, 09/11/2026) —
+    # nunca a tarifa ("TARIFA TED GUICHE CAIXA") nem PAGFOR de outra titularidade ("DIFEREN TIT": baixa manual)
+    debito: '^(?!.*\bTAR(IFA)?\b)(?!.*\bDIFEREN)(.*\b(PIX|TED)\b|TRANSF(ERENCIA)?\b)'
+    # PIX RECEBIDO / Pix - Recebido / TED RECEBIDA / Itaú "TED 237.6349.AEROFLEX I" (sem RECEBIDA: 09/09 e 13/10/2026) /
+    # BB "TRANSFERENCIA RECEBIDA"
+    credito: '\b(PIX|TED)\b.*\bRECEB|^TED \d+\.\d+\.AEROFLE|^TRANSF(ERENCIA)? RECEB'
     # "DES: AEROFLEX", "PIX RECEBIDO AEROFLE", "MESMA T IT", "TED RECEBIDA 104.4266.AEROFLEX", CNPJ 07.872.967
     da_aeroflex: '\bAEROFLE|\bMESMA T\s*I\s*T|07872967'
     historico: "TRANSF {so} C/C P/ {sd} C/C"
@@ -116,6 +119,15 @@ regras:
     operacao: debito
     historico: '\bCONTA DE LUZ\b|\bMENSALIDADE DE SEGURO\b'   # Bradesco "CONTA DE LUZ CELESC"; Santander seguro de vida
     motivo: "Pagamento do Contas a Pagar debitado no banco (conta de consumo / seguro): não é lançado pelo robô."
+    acao: "Fazer a baixa manual do título no Contas a Pagar; sem ela o saldo da conta não fecha na conciliação."
+
+  # --- Santander "PAGFOR PIX OUTRA INST - DIFEREN TIT": pagamento a terceiro, baixa manual (cliente, 09/11/2026).
+  # O "- MESMA TIT" continua sendo transferência entre contas da Aeroflex.
+  - nome: pagfor_outra_titularidade
+    categoria: acao_manual
+    operacao: debito
+    historico: '^PAGFOR\b.*\bDIFEREN'
+    motivo: "PAGFOR PIX para outra titularidade (pagamento do Contas a Pagar): não é lançado pelo robô."
     acao: "Fazer a baixa manual do título no Contas a Pagar; sem ela o saldo da conta não fecha na conciliação."
 
   # --- Itaú: aplicação automática ("APL APLIC AUT MAIS" / "RES APLIC AUT MAIS AP") não é lançada (cliente,
@@ -219,6 +231,7 @@ regras:
       - 'BOLETO RECEBIDO|^RECEBIMENTOS$'
       - '\bPIX (RECEBIDO|ENVIADO|QR CODE)|PIX RECEBIDO|^PIX - ENVIADO|PAGAMENTO PIX'
       - '^PAGAMENTOS\b|^SISPAG\b|^TED\b|TED ENVIADA|^PAGFOR\b'
+      - '\bTED RECEBIDA\b'   # Santander com o CNPJ na frente: "02777131000105 TED RECEBIDA 000000" (cliente, 09/11/2026)
       - '^DEV PAG BOL\b'   # Itaú: estorno de pagamento recusado pelo banco; sem ação (cliente, 05/10/2026)
       - '^DEVOLUCAO DE TED\b'   # Safra: pagamento estornado pelo banco; sem ação (cliente, 09/10/2026)
       - '^IMPOSTOS\b|^CONTR IMP\b|PRESTACAO CONSORCIO|DEBITO AUT(\.|OMATICO\b)'
